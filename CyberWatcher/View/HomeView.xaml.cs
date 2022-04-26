@@ -40,7 +40,7 @@ namespace CyberWatcher.View
                 lblScanOutput.Content = "SCAN STILL RUNNING";
                 Scan.IsEnabled = false;
                 pbStatus.Visibility = Visibility.Visible;
-
+                pbStatus.IsIndeterminate = true;
             }
         }
 
@@ -91,8 +91,8 @@ namespace CyberWatcher.View
                 pbStatus.Visibility = Visibility.Hidden;
                 Scan.IsEnabled = true;
                 ScanRunning = false;
-                //In case redirect is lagging an error come up informing the user to click results
-                lblScanOutput.Content = MPVM.FinishedScan(string.Empty);
+               
+                lblScanOutput.Content = MPVM.FinishedScan();
             });
 
         }

@@ -11,6 +11,7 @@ using CyberWatcher.Model.Nmap;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Diagnostics;
 
 namespace CyberWatcher.ViewModel
 {
@@ -27,9 +28,10 @@ namespace CyberWatcher.ViewModel
         private ObservableCollection<string> _hostDetails = new ObservableCollection<string>();
         private ObservableCollection<string> _hostPortDetails = new ObservableCollection<string>();
 
-        public FileInfo LastScan;
-        public event EventHandler ScanComplete;
         
+        public event EventHandler ScanComplete;
+        public  XmlDocument doc = new XmlDocument();
+
         public static string NmapScanResults;
 
         private ICommand _btnScan;
@@ -40,17 +42,13 @@ namespace CyberWatcher.ViewModel
                 return _btnScan ?? (_btnScan = new RelayCommand(p => DoScan()));
             }
         }
-        public  XmlDocument doc = new XmlDocument();
 
+        public string xmlFile = StaticUtilities.LastScan.Name;
 
         public HomeViewModel()
         { 
-            
-            LastScan = new DirectoryInfo(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput").GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
-            
-           // doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + LastScan.Name);
             xmlNmap();
-            
+            doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + xmlFile);
             
             devices = DeviceSelectorChoices.DevicePickerSelectors;
             foreach (DeviceInfo info in devices)
@@ -84,9 +82,9 @@ namespace CyberWatcher.ViewModel
 
             }
         }
-        public string FinishedScan(string nmapScanResult)
+        public string FinishedScan()
         {
-            LastScan = new DirectoryInfo(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput").GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
+            StaticUtilities.LastScan = new DirectoryInfo(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput").GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
 
             return NmapScanResults;
 
@@ -96,8 +94,8 @@ namespace CyberWatcher.ViewModel
         //change name of mathod!!
         public void xmlNmap()
         {
-            doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + LastScan.Name);
-            
+            doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + xmlFile);
+            Debug.WriteLine(xmlFile);
             XmlNodeList addresses = doc.SelectNodes("/nmaprun/host[status/@state='up']/address");
 
             for (int i = 0; i < addresses.Count; i++)
