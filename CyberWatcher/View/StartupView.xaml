@@ -15,11 +15,23 @@
                     <Label Content="Username:" Foreground="White" />
                     <TextBox x:Name="txtUserLog" Text="{Binding TxtUserLog, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18"/>
                     <Label Content="Password:" Foreground="White"/>
-                    <TextBox x:Name="txtPassLog" Text="{Binding TxtPassLog, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}" PreviewKeyDown="RichTextBox_PreviewKeyDown" FontSize="18"/>
+                    <TextBox x:Name="txtPassLog" Text="{Binding TxtPassLog, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}" FontSize="18"/>
 
                     <Grid Height="40" Margin="0,0,-0.2,0">
-                        <Button x:Name="btnForgotPass" Content="Forgot Password" Margin="143,6,11,4" Background="Gray" Foreground="White" />
-                        <Button Content="Login" x:Name="btnLogin" Background="Gray" Foreground="White" Margin="6,6,138,4" Command="{Binding BtnLogin}"/>
+                        <Button x:Name="btnForgotPass" Content="Forgot Password" Margin="143,6,6,4" Background="Gray" Foreground="White" >
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button Content="Login" x:Name="btnLogin" Background="Gray" Foreground="White" Margin="6,6,138,4" Command="{Binding BtnLogin}">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
                     </Grid>
 
                 </StackPanel>
@@ -42,9 +54,17 @@
                     <Label Content="Username:" Foreground="White" />
                     <TextBox x:Name="txtUserReg" Text="{Binding TxtUserReg, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18" Margin="0,0,9.8,0"/>
                     <Label Content="Password:" Foreground="White"/>
-                    <TextBox x:Name="txtPassReg" Text="{Binding TxtPassReg, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}" PreviewKeyDown="RichTextBox_PreviewKeyDown" FontSize="18" Margin="0,0,14.8,0"/>
+                    <TextBox x:Name="txtPassReg" Text="{Binding TxtPassReg, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18" Margin="0,0,14.8,0"/>
+                    <Label Content="Email:" Foreground="White"/>
+                    <TextBox x:Name="txtEmailReg" Text="{Binding TxtEmailReg, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}" FontSize="18" Margin="0,0,14.8,0"/>
                     <Grid Height="40" Margin="0,0,-0.2,0">
-                        <Button Content="Register" x:Name="btnRegUser" Background="Gray" Foreground="White" Margin="6,6,16,4" Command="{Binding BtnReg}"/>
+                        <Button Content="Register" x:Name="btnRegUser" Background="Gray" Foreground="White" Margin="6,6,16,4" Command="{Binding BtnReg}">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
                     </Grid>
 
                 </StackPanel>

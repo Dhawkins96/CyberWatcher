@@ -3,6 +3,7 @@ using CyberWatcher.Model.Password_Manager;
 using CyberWatcher.View;
 using System;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Windows;
@@ -17,6 +18,7 @@ namespace CyberWatcher.ViewModel
         public string _txtPassLog;
         public string _txtUserReg;
         public string _txtPassReg;
+        public string _txtEmailReg;
 
         private ICommand _btnLogin;
         private ICommand _btnReg;
@@ -75,70 +77,82 @@ namespace CyberWatcher.ViewModel
                 OnPropertyChanged(TxtPassReg);
             }
         }
-
+        public string TxtEmailReg
+        {
+            get { return _txtEmailReg; }
+            set
+            {
+                _txtEmailReg = value;
+                OnPropertyChanged(TxtEmailReg);
+            }
+        }
         public void Login(string username, string password)
         {
-            try
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
             {
-                DbConnection.DataSource();
-                con.connOpen();
-                SqlCommand command = new SqlCommand();
-                command.CommandText = "Select PK_UserID from [dbo].[UserDB] WHERE Username=@Username AND UserPassword=@Password";
-                command.Parameters.AddWithValue("@Username", username);
-                command.Parameters.AddWithValue("@Password", Encrypt.HashString(password));
-                command.Connection = DbConnection.connectionString;
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
+                try
                 {
-                    StaticUtilities.UserID = Convert.ToInt32(reader[0]);
-                    Debug.WriteLine(StaticUtilities.UserID);
-                    MainWindow main = new MainWindow();
-                    main.Show();
-                    Application.Current.MainWindow.Close();
+                    SqlCommand cmd = new SqlCommand("Select PK_UserID from [dbo].[UserDB] WHERE Username=@Username AND UserPassword=@Password", cn);
+                    cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(password));
+
+                    cn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        StaticUtilities.UserID = Convert.ToInt32(reader[0]);
+                        Debug.WriteLine(StaticUtilities.UserID);
+                        MainWindow main = new MainWindow();
+                        main.Show();
+                        Application.Current.MainWindow.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Information");
+                    }
+
+
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Error", "Information");
+                    MessageBox.Show(ex.Message, "Information");
+
                 }
-
-                
+                finally
+                {
+                    cn.Close();
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Information");
-                
-            }
-            finally
-            {
-                con.connClose();
-            }
-
         }
         public void Registrator()
         {
-            try
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
             {
-                DbConnection.DataSource(); ;
-                con.connOpen();
-                SqlCommand command = new SqlCommand();
-                command.CommandText = "INSERT INTO [dbo].[UserDB] (Username, UserPassword) values (@username, @password)";
-                command.Parameters.AddWithValue("@username", TxtUserReg);
-                command.Parameters.AddWithValue("@password", Encrypt.HashString(TxtPassReg));
-                command.Connection = DbConnection.connectionString;
-                command.ExecuteNonQuery();
-                MessageBox.Show("Account created", "Information");
-                con.connClose();
-                Login(TxtUserReg, TxtPassReg);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Information");
-                
-            }
-            finally
-            {
-                con.connClose();
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO[dbo].[UserDB](Username, UserPassword, UserEmail) values(@username, @password, @email)", cn);
+                    cmd.Parameters.AddWithValue("@Username", TxtPassReg);
+                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(TxtPassReg));
+
+                    SqlParameter email = new SqlParameter("@Email", SqlDbType.VarChar);
+                    cmd.Parameters.Add(email).Value = TxtEmailReg;
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Account created", "Information");
+                    
+                    Login(TxtUserReg, TxtPassReg);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Information");
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
             }
         }
 

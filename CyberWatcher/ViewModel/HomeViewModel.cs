@@ -25,7 +25,7 @@ namespace CyberWatcher.ViewModel
         private ObservableCollection<string> _host = new ObservableCollection<string>();
         private string _selectedHost;
         
-        private ObservableCollection<string> _hostDetails = new ObservableCollection<string>();
+        private ObservableCollection<HostDets> _hostDetails = new ObservableCollection<HostDets>();
         private ObservableCollection<string> _hostPortDetails = new ObservableCollection<string>();
 
         
@@ -100,16 +100,17 @@ namespace CyberWatcher.ViewModel
 
             for (int i = 0; i < addresses.Count; i++)
             {
-                string attrVal = addresses[i].Attributes["addr"].Value;
-                string attrVal1 = addresses[i].Attributes["addrtype"].Value;
-                if(attrVal1 == "ipv4")
+                string addr = addresses[i].Attributes["addr"].Value;
+                string addrType = addresses[i].Attributes["addrtype"].Value;
+                if(addrType == "ipv4")
                 {
-                    Host.Add(attrVal);
+                    Host.Add(addr);
                 }
                 
             }
             
         }
+       
 
         public void GetHostInfo()
         {
@@ -117,7 +118,7 @@ namespace CyberWatcher.ViewModel
             nsmgr.AddNamespace("ns", "file:///C:/Users/Daisy/source/repos/WPF_CyberWatcher/CyberWatcher/ExternalTools/nmap.xsl");
 
             HostDetails.Clear();
-            
+            HostDets det = new HostDets();
             XmlNodeList chosenIP = doc.SelectNodes("descendant::host[address/@addr='" + SelectedHost + "']", nsmgr);
             foreach (XmlNode host in chosenIP)
             {
@@ -125,7 +126,9 @@ namespace CyberWatcher.ViewModel
                 for(int i = 0; i < status.Count; i++)
                 {
                     string state = status[i].Attributes["state"].Value;
-                    HostDetails.Add(state);
+                    
+                    det.HostState = state;
+                    
                 }
 
                 XmlNodeList address = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/address", nsmgr);
@@ -136,8 +139,9 @@ namespace CyberWatcher.ViewModel
                     string addVendor = address[i].Attributes["vendor"]?.Value;
                     if (addrType == "mac")
                     {
-                        HostDetails.Add(addr);
-                        HostDetails.Add(addVendor);
+                        det.HostMac = addr;
+                        det.HostVendor = addVendor;
+                                                
                     }
 
                 }
@@ -147,8 +151,9 @@ namespace CyberWatcher.ViewModel
                 {
                     string osName = osMatch[i].Attributes["name"].Value;
                     string osAccuracy = osMatch[i].Attributes["accuracy"].Value;
-                    HostDetails.Add(osName);
-                    HostDetails.Add(osAccuracy);
+                    det.HostOsName = osName;
+                    det.HostOsAccuracy = osAccuracy;
+                   
                 }
                 XmlNodeList osClass = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/os/osmatch/osclass", nsmgr);
                 for (int i = 0; i < osClass.Count; i++)
@@ -157,11 +162,15 @@ namespace CyberWatcher.ViewModel
                     string osFamily = osClass[i].Attributes["osfamily"]?.Value;
                     string osType = osClass[i].Attributes["ostype"]?.Value;
                     string osGen = osClass[i].Attributes["osgen"]?.Value;
-                    HostDetails.Add(osVendor);
-                    HostDetails.Add(osFamily);
-                    HostDetails.Add(osType);
-                    HostDetails.Add(osGen);
+                    det.HostOsVendor = osVendor;
+                    det.HostOsFamily = osFamily;
+                    det.HostOsType = osType;
+                    det.HostOsGen = osGen;
+                    
                 }
+                HostDetails.Add(det);
+                
+                
             }
 
         }
@@ -252,7 +261,7 @@ namespace CyberWatcher.ViewModel
             }
         }
 
-        public ObservableCollection<string> HostDetails
+        public ObservableCollection<HostDets> HostDetails
         {
             get { return _hostDetails; }
             set
@@ -321,5 +330,17 @@ namespace CyberWatcher.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+    }
+    public class HostDets
+    {
+        public string HostState { get; set; }
+        public string HostMac { get; set; }
+        public string HostVendor { get; set; }
+        public string HostOsName { get; set; }
+        public string HostOsAccuracy { get; set; }
+        public string HostOsVendor { get; set; }
+        public string HostOsFamily { get; set; }
+        public string HostOsType { get; set; }
+        public string HostOsGen { get; set; }
     }
 }

@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:CyberWatcher.View"
              xmlns:p="clr-namespace:CyberWatcher.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             >
+             d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Style>
         <Style>
             <Style.Triggers>
@@ -25,7 +24,7 @@
         </Style>
     </UserControl.Style>
     <UserControl.Resources>
-        <DataTemplate x:Key="ResultsListViewTemplate" DataType="model:DeviceInformationDisplay">
+        <DataTemplate x:Key="ResultsListViewTemplate">
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -39,7 +38,7 @@
                             <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" TextWrapping="Wrap"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Id:" Margin="0,0,5,0"/>
+                            <TextBlock Text="Kind:" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding Kind, Mode=OneWay}" TextWrapping="Wrap"/>
                         </StackPanel>
                     </StackPanel>
@@ -49,6 +48,7 @@
     </UserControl.Resources>
 
     <Grid Background="#303030">
+      
 
         <TextBlock Text="Home"
                    FontSize="24"
@@ -58,10 +58,9 @@
                    VerticalAlignment="Top"
                    Margin="5,12,0,0" />
 
-        <Grid Height="350"
-                      Width="750">
-            <TextBlock HorizontalAlignment="Left" Text="Connected Devices:" Margin="166,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" />
-            <ComboBox HorizontalAlignment="Left" Margin="281,19,0,0" VerticalAlignment="Top" Width="120" 
+        <Grid Margin="25,40,23,27.6">
+            <TextBlock HorizontalAlignment="Left" Text="Connected Devices:" Margin="152,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" />
+            <ComboBox HorizontalAlignment="Left" Margin="267,1,0,0" VerticalAlignment="Top" Width="120" 
                       ItemsSource="{Binding Collection}" 
                       SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" BorderBrush="#FFFCF7F7">
 
@@ -73,43 +72,87 @@
             </ComboBox>
             <ListView x:Name="resultsListView" Background="Transparent" Foreground="White"
                       ItemsSource="{Binding ResultCollection}"          
-                ItemTemplate="{StaticResource ResultsListViewTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="172,51,317,189"/>
+                ItemTemplate="{StaticResource ResultsListViewTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="158,33,331,206"/>
 
 
 
 
-            <ProgressBar Height="22" Margin="527,60,15,0" VerticalAlignment="Top" BorderBrush="#6637FF0A"  
+            <ProgressBar Height="22" Margin="457,60,84,0" VerticalAlignment="Top" BorderBrush="#6637FF0A"  
                          Name="pbStatus" IsIndeterminate="False" Visibility="Hidden" />
 
             <Button x:Name="Scan" HorizontalAlignment="Left" Height="53" VerticalAlignment="Top" Width="56"  
-                    BorderThickness="2"   Click="Scan_Click"  Margin="675,-1,0,0" Content="Scan" BorderBrush="Black"/>
+                    BorderThickness="2"   Click="Scan_Click"  Margin="611,-1,0,0" Content="Scan" BorderBrush="Black"/>
 
 
 
             <CheckBox x:Name="LocalNetwork"  Content="Local Network?" x:FieldModifier="public" Foreground="White" 
-                      FontSize="18" HorizontalAlignment="Left" Margin="515,13,0,0" VerticalAlignment="Top" 
+                      FontSize="18" HorizontalAlignment="Left" Margin="452,14,0,0" VerticalAlignment="Top" 
                       Checked="LocalNetwork_Checked_1" Unchecked="LocalNetwork_Checked_1" Height="22" Width="156"/>
 
 
-            <ListView x:Name="lstHosts" HorizontalAlignment="Left" Height="104" 
+            <StackPanel Margin="10,168,206,23">
+                <Grid Height="158" Margin="0,0,0.4,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="141*" />
+                        <ColumnDefinition Width="290*" />
+                        <ColumnDefinition Width="104*" />
+
+                    </Grid.ColumnDefinitions>
+
+                    <ListView x:Name="lstHosts" Grid.Column="0" HorizontalAlignment="Left" Height="158" 
                       ItemsSource="{Binding Host}" SelectedItem="{Binding SelectedHost, Mode=TwoWay}"
-                      Margin="25,218,0,0" VerticalAlignment="Top" Width="132" Foreground="Black">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding }"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Label x:Name="lblScanOutput" Content="" HorizontalAlignment="Left" Margin="528,78,0,0" VerticalAlignment="Top" Width="205" Foreground="White" FontSize="16"/>
-            <ListView x:Name="lstHostDetails" HorizontalAlignment="Left" Height="104" 
+                      VerticalAlignment="Top"  
+                      Background="Transparent" Foreground="White" Width="138" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Host IP:" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding ''}" FontWeight="Bold" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </StackPanel>
+
+            <Label x:Name="lblScanOutput" Content="" HorizontalAlignment="Left" Margin="462,57,0,0" VerticalAlignment="Top" Width="205" Foreground="White" FontSize="16"/>
+
+
+
+            <ListView x:Name="lstHostDetails" HorizontalAlignment="Left" Height="126" 
                 ItemsSource="{Binding HostDetails}" 
                 Margin="209,216,0,0" VerticalAlignment="Top" Width="170" Foreground="Black">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding ''}"/>
+                        <Grid>
+                            <StackPanel UseLayoutRounding="False"  >
+
+                                <TextBlock Text="Host State:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostState}"/>
+                                <TextBlock Text="Host Mac:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostMac}"/>
+                                <TextBlock Text="Host Vendor:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostVendor, TargetNullValue=No information}"/>
+
+                                <TextBlock Text="OS Name:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostOsName}"/>
+                                <TextBlock Text="OS Accuracy:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostOsAccuracy}"/>
+                                <TextBlock Text="OS Vendor:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostOsVendor}"/>
+                                <TextBlock Text="OS Family:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostOsFamily}"/>
+                                <TextBlock Text="OS Type:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostOsType}"/>
+                                <TextBlock Text="OS Generation:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostOsGen}"/>
+                            </StackPanel>
+
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
             <ListView x:Name="lstHostPort" HorizontalAlignment="Left" Height="104" 
                 ItemsSource="{Binding HostPortDetails}" 
                 Margin="455,216,0,0" VerticalAlignment="Top" Width="132" Foreground="Black">
@@ -119,11 +162,10 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
         </Grid>
 
         <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-          Grid.IsSharedSizeScope="True" Margin="32,61,628,229.6" Background="Transparent">
+          Grid.IsSharedSizeScope="True" Margin="24,48,636,242.6" Background="Transparent">
 
             <Grid.Resources>
                 <Style TargetType="local:MonitorView">
