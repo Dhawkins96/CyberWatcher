@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="CyberWatcher.View.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CyberWatcher.View"
+             xmlns:p="clr-namespace:CyberWatcher.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+    <UserControl.Style>
+        <Style>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="UserControl.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                             From="0.0"
+                                             To="1.0"
+                                             Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    <UserControl.Resources>
+        <DataTemplate x:Key="ResultsListViewTemplate" DataType="model:DeviceInformationDisplay">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="100"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="1" Margin="5">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Id:" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Kind, Mode=OneWay}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="#303030">
+
+        <TextBlock Text="Home"
+                   FontSize="24"
+                   FontFamily="/Fonts/OpenSans-Regular.ttf #Open Sans Regular"
+                   Foreground="#DDDDDD"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="5,12,0,0" />
+
+        <Grid Height="350"
+                      Width="750">
+            <TextBlock HorizontalAlignment="Left" Text="Connected Devices:" Margin="166,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" />
+            <ComboBox HorizontalAlignment="Left" Margin="281,19,0,0" VerticalAlignment="Top" Width="120" 
+                      ItemsSource="{Binding Collection}" 
+                      SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" BorderBrush="#FFFCF7F7">
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=DisplayName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ListView x:Name="resultsListView" Background="Transparent" Foreground="White"
+                      ItemsSource="{Binding ResultCollection}"          
+                ItemTemplate="{StaticResource ResultsListViewTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="172,51,317,189"/>
+
+
+
+
+            <ProgressBar Height="22" Margin="527,60,15,0" VerticalAlignment="Top" BorderBrush="#6637FF0A"  
+                         Name="pbStatus" IsIndeterminate="False" Visibility="Hidden" />
+
+            <Button x:Name="Scan" HorizontalAlignment="Left" Height="53" VerticalAlignment="Top" Width="56"  
+                    BorderThickness="2"   Click="Scan_Click"  Margin="675,-1,0,0" Content="Scan" BorderBrush="Black"/>
+
+
+
+            <CheckBox x:Name="LocalNetwork"  Content="Local Network?" x:FieldModifier="public" Foreground="White" 
+                      FontSize="18" HorizontalAlignment="Left" Margin="515,13,0,0" VerticalAlignment="Top" 
+                      Checked="LocalNetwork_Checked_1" Unchecked="LocalNetwork_Checked_1" Height="22" Width="156"/>
+
+
+            <ListView x:Name="lstHosts" HorizontalAlignment="Left" Height="104" 
+                      ItemsSource="{Binding Host}" SelectedItem="{Binding SelectedHost, Mode=TwoWay}"
+                      Margin="25,218,0,0" VerticalAlignment="Top" Width="132" Foreground="Black">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding }"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label x:Name="lblScanOutput" Content="" HorizontalAlignment="Left" Margin="528,78,0,0" VerticalAlignment="Top" Width="205" Foreground="White" FontSize="16"/>
+            <ListView x:Name="lstHostDetails" HorizontalAlignment="Left" Height="104" 
+                ItemsSource="{Binding HostDetails}" 
+                Margin="209,216,0,0" VerticalAlignment="Top" Width="170" Foreground="Black">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ''}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView x:Name="lstHostPort" HorizontalAlignment="Left" Height="104" 
+                ItemsSource="{Binding HostPortDetails}" 
+                Margin="455,216,0,0" VerticalAlignment="Top" Width="132" Foreground="Black">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ''}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+        <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+          Grid.IsSharedSizeScope="True" Margin="32,61,628,229.6" Background="Transparent">
+
+            <Grid.Resources>
+                <Style TargetType="local:MonitorView">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="local:MonitorView">
+                                <Viewbox>
+                                    <ContentPresenter />
+                                </Viewbox>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+
+            <ItemsControl ItemsSource="{Binding Monitors}" Background="Transparent" Margin="0,0,0,-1">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Background="Transparent">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Orientation"
+                                        Value="Vertical" />
+
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:MonitorView />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

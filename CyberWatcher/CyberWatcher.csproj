@@ -1,0 +1,1136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0B669B6D-B1B4-44E5-AFDC-3CF43EB8A3B6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>CyberWatcher</RootNamespace>
+    <AssemblyName>CyberWatcher</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject>CyberWatcher.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Activities.Build" />
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Helper\Encrypt.cs" />
+    <Compile Include="Helper\StaticUtilities.cs" />
+    <Compile Include="Helper\ToggleButtonProperties.cs" />
+    <Compile Include="Model\Bandwidth Speed\BandwidthMonitorBase.cs" />
+    <Compile Include="Model\Bandwidth Speed\DownloadMonitor.cs" />
+    <Compile Include="Model\Bandwidth Speed\IMonitor.cs" />
+    <Compile Include="Model\Bandwidth Speed\LatencyMonitor.cs" />
+    <Compile Include="Model\Bandwidth Speed\MonitorIcon.cs" />
+    <Compile Include="Helper\ObservableObject.cs" />
+    <Compile Include="Model\Bandwidth Speed\UploadMonitor.cs" />
+    <Compile Include="Model\DeviceInformationDisplay.cs" />
+    <Compile Include="Model\Nmap\NmapScan.cs" />
+    <Compile Include="Model\Nmap\NmapXMLModels.cs" />
+    <Compile Include="Model\Password Manager\DbConnection.cs" />
+    <Compile Include="Model\Password Manager\PasswordGenerate.cs" />
+    <Compile Include="Model\User\insertData.cs" />
+    <Compile Include="Model\User\SelectItem.cs" />
+    <Compile Include="ViewModel\PasswordViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\UserAccountViewModel.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
+    <Compile Include="ViewModel\HelpViewModel.cs" />
+    <Compile Include="ViewModel\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\StartupViewModel.cs" />
+    <Compile Include="View\MonitorView.xaml.cs">
+      <DependentUpon>MonitorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PasswordView.xaml.cs">
+      <DependentUpon>PasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserAccountView.xaml.cs">
+      <DependentUpon>UserAccountView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HelpView.xaml.cs">
+      <DependentUpon>HelpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartupView.xaml.cs">
+      <DependentUpon>StartupView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resources\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\CheckBoxs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Slider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MonitorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HelpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\MainModel.cs" />
+    <Compile Include="Helper\RelayCommand.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Resource Include="Fonts\Cairo-SemiBold.ttf" />
+    <Resource Include="Fonts\OpenSans-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Assets\IconEmail.png" />
+    <Resource Include="Assets\IconGlyphDesktop.png" />
+    <Resource Include="Assets\IconGlyphExit.png" />
+    <Resource Include="Assets\IconGlyphLoupe.png" />
+    <Resource Include="Assets\IconGlyphMaxWindow.png" />
+    <Resource Include="Assets\IconGlyphMinus.png" />
+    <Resource Include="Assets\IconGlyphPlus.png" />
+    <Resource Include="Assets\IconGlyphWeb.png" />
+    <Resource Include="Assets\IconLogin.png" />
+    <Resource Include="Assets\IconPassword.png" />
+    <Resource Include="Assets\IconWeb.png" />
+    <Content Include="ExternalTools\nmap-mac-prefixes" />
+    <Content Include="ExternalTools\nmap-os-db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExternalTools\nmap-payloads" />
+    <Content Include="ExternalTools\nmap-protocols" />
+    <Content Include="ExternalTools\nmap-rpc" />
+    <Content Include="ExternalTools\nmap-service-probes" />
+    <Content Include="ExternalTools\nmap-services" />
+    <Content Include="ExternalTools\nmap_performance.reg" />
+    <Content Include="ExternalTools\nselib\afp.lua" />
+    <Content Include="ExternalTools\nselib\ajp.lua" />
+    <Content Include="ExternalTools\nselib\amqp.lua" />
+    <Content Include="ExternalTools\nselib\anyconnect.lua" />
+    <Content Include="ExternalTools\nselib\asn1.lua" />
+    <Content Include="ExternalTools\nselib\base32.lua" />
+    <Content Include="ExternalTools\nselib\base64.lua" />
+    <Content Include="ExternalTools\nselib\bin.lua" />
+    <Content Include="ExternalTools\nselib\bitcoin.lua" />
+    <Content Include="ExternalTools\nselib\bits.lua" />
+    <Content Include="ExternalTools\nselib\bittorrent.lua" />
+    <Content Include="ExternalTools\nselib\bjnp.lua" />
+    <Content Include="ExternalTools\nselib\brute.lua" />
+    <Content Include="ExternalTools\nselib\cassandra.lua" />
+    <Content Include="ExternalTools\nselib\citrixxml.lua" />
+    <Content Include="ExternalTools\nselib\coap.lua" />
+    <Content Include="ExternalTools\nselib\comm.lua" />
+    <Content Include="ExternalTools\nselib\creds.lua" />
+    <Content Include="ExternalTools\nselib\cvs.lua" />
+    <Content Include="ExternalTools\nselib\datafiles.lua" />
+    <Content Include="ExternalTools\nselib\data\dns-srv-names" />
+    <Content Include="ExternalTools\nselib\data\favicon-db" />
+    <Content Include="ExternalTools\nselib\data\http-default-accounts-fingerprints.lua" />
+    <Content Include="ExternalTools\nselib\data\http-devframework-fingerprints.lua" />
+    <Content Include="ExternalTools\nselib\data\http-fingerprints.lua" />
+    <Content Include="ExternalTools\nselib\data\idnaMappings.lua" />
+    <Content Include="ExternalTools\nselib\data\ike-fingerprints.lua" />
+    <Content Include="ExternalTools\nselib\data\jdwp-class\JDWPExecCmd.class" />
+    <Content Include="ExternalTools\nselib\data\jdwp-class\JDWPSystemInfo.class" />
+    <Content Include="ExternalTools\nselib\data\mgroupnames.db" />
+    <Content Include="ExternalTools\nselib\data\mysql-cis.audit" />
+    <Content Include="ExternalTools\nselib\data\oracle-sids" />
+    <Content Include="ExternalTools\nselib\data\packetdecoders.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\backdoor.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\default.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\drives.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\examples.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\experimental.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\network.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\nmap_service.vcproj" />
+    <Content Include="ExternalTools\nselib\data\psexec\pwdump.lua" />
+    <Content Include="ExternalTools\nselib\data\psexec\README" />
+    <Content Include="ExternalTools\nselib\data\publickeydb" />
+    <Content Include="ExternalTools\nselib\data\ssl-fingerprints" />
+    <Content Include="ExternalTools\nselib\data\targets-ipv6-wordlist" />
+    <Content Include="ExternalTools\nselib\datetime.lua" />
+    <Content Include="ExternalTools\nselib\dhcp.lua" />
+    <Content Include="ExternalTools\nselib\dhcp6.lua" />
+    <Content Include="ExternalTools\nselib\dicom.lua" />
+    <Content Include="ExternalTools\nselib\dns.lua" />
+    <Content Include="ExternalTools\nselib\dnsbl.lua" />
+    <Content Include="ExternalTools\nselib\dnssd.lua" />
+    <Content Include="ExternalTools\nselib\drda.lua" />
+    <Content Include="ExternalTools\nselib\eap.lua" />
+    <Content Include="ExternalTools\nselib\eigrp.lua" />
+    <Content Include="ExternalTools\nselib\formulas.lua" />
+    <Content Include="ExternalTools\nselib\ftp.lua" />
+    <Content Include="ExternalTools\nselib\geoip.lua" />
+    <Content Include="ExternalTools\nselib\giop.lua" />
+    <Content Include="ExternalTools\nselib\gps.lua" />
+    <Content Include="ExternalTools\nselib\http.lua" />
+    <Content Include="ExternalTools\nselib\httpspider.lua" />
+    <Content Include="ExternalTools\nselib\iax2.lua" />
+    <Content Include="ExternalTools\nselib\idna.lua" />
+    <Content Include="ExternalTools\nselib\ike.lua" />
+    <Content Include="ExternalTools\nselib\imap.lua" />
+    <Content Include="ExternalTools\nselib\informix.lua" />
+    <Content Include="ExternalTools\nselib\ipmi.lua" />
+    <Content Include="ExternalTools\nselib\ipOps.lua" />
+    <Content Include="ExternalTools\nselib\ipp.lua" />
+    <Content Include="ExternalTools\nselib\irc.lua" />
+    <Content Include="ExternalTools\nselib\iscsi.lua" />
+    <Content Include="ExternalTools\nselib\isns.lua" />
+    <Content Include="ExternalTools\nselib\jdwp.lua" />
+    <Content Include="ExternalTools\nselib\json.lua" />
+    <Content Include="ExternalTools\nselib\knx.lua" />
+    <Content Include="ExternalTools\nselib\ldap.lua" />
+    <Content Include="ExternalTools\nselib\lfs.luadoc" />
+    <Content Include="ExternalTools\nselib\libssh2-utility.lua" />
+    <Content Include="ExternalTools\nselib\libssh2.luadoc" />
+    <Content Include="ExternalTools\nselib\listop.lua" />
+    <Content Include="ExternalTools\nselib\lpeg-utility.lua" />
+    <Content Include="ExternalTools\nselib\lpeg.luadoc" />
+    <Content Include="ExternalTools\nselib\ls.lua" />
+    <Content Include="ExternalTools\nselib\match.lua" />
+    <Content Include="ExternalTools\nselib\membase.lua" />
+    <Content Include="ExternalTools\nselib\mobileme.lua" />
+    <Content Include="ExternalTools\nselib\mongodb.lua" />
+    <Content Include="ExternalTools\nselib\mqtt.lua" />
+    <Content Include="ExternalTools\nselib\msrpc.lua" />
+    <Content Include="ExternalTools\nselib\msrpcperformance.lua" />
+    <Content Include="ExternalTools\nselib\msrpctypes.lua" />
+    <Content Include="ExternalTools\nselib\mssql.lua" />
+    <Content Include="ExternalTools\nselib\multicast.lua" />
+    <Content Include="ExternalTools\nselib\mysql.lua" />
+    <Content Include="ExternalTools\nselib\natpmp.lua" />
+    <Content Include="ExternalTools\nselib\nbd.lua" />
+    <Content Include="ExternalTools\nselib\ncp.lua" />
+    <Content Include="ExternalTools\nselib\ndmp.lua" />
+    <Content Include="ExternalTools\nselib\netbios.lua" />
+    <Content Include="ExternalTools\nselib\nmap.luadoc" />
+    <Content Include="ExternalTools\nselib\nrpc.lua" />
+    <Content Include="ExternalTools\nselib\nsedebug.lua" />
+    <Content Include="ExternalTools\nselib\omp2.lua" />
+    <Content Include="ExternalTools\nselib\oops.lua" />
+    <Content Include="ExternalTools\nselib\openssl.luadoc" />
+    <Content Include="ExternalTools\nselib\ospf.lua" />
+    <Content Include="ExternalTools\nselib\outlib.lua" />
+    <Content Include="ExternalTools\nselib\packet.lua" />
+    <Content Include="ExternalTools\nselib\pcre.luadoc" />
+    <Content Include="ExternalTools\nselib\pgsql.lua" />
+    <Content Include="ExternalTools\nselib\pop3.lua" />
+    <Content Include="ExternalTools\nselib\pppoe.lua" />
+    <Content Include="ExternalTools\nselib\proxy.lua" />
+    <Content Include="ExternalTools\nselib\punycode.lua" />
+    <Content Include="ExternalTools\nselib\rand.lua" />
+    <Content Include="ExternalTools\nselib\rdp.lua" />
+    <Content Include="ExternalTools\nselib\re.lua" />
+    <Content Include="ExternalTools\nselib\redis.lua" />
+    <Content Include="ExternalTools\nselib\rmi.lua" />
+    <Content Include="ExternalTools\nselib\rpc.lua" />
+    <Content Include="ExternalTools\nselib\rpcap.lua" />
+    <Content Include="ExternalTools\nselib\rsync.lua" />
+    <Content Include="ExternalTools\nselib\rtsp.lua" />
+    <Content Include="ExternalTools\nselib\sasl.lua" />
+    <Content Include="ExternalTools\nselib\shortport.lua" />
+    <Content Include="ExternalTools\nselib\sip.lua" />
+    <Content Include="ExternalTools\nselib\slaxml.lua" />
+    <Content Include="ExternalTools\nselib\smb.lua" />
+    <Content Include="ExternalTools\nselib\smb2.lua" />
+    <Content Include="ExternalTools\nselib\smbauth.lua" />
+    <Content Include="ExternalTools\nselib\smtp.lua" />
+    <Content Include="ExternalTools\nselib\snmp.lua" />
+    <Content Include="ExternalTools\nselib\socks.lua" />
+    <Content Include="ExternalTools\nselib\srvloc.lua" />
+    <Content Include="ExternalTools\nselib\ssh1.lua" />
+    <Content Include="ExternalTools\nselib\ssh2.lua" />
+    <Content Include="ExternalTools\nselib\sslcert.lua" />
+    <Content Include="ExternalTools\nselib\sslv2.lua" />
+    <Content Include="ExternalTools\nselib\stdnse.lua" />
+    <Content Include="ExternalTools\nselib\strbuf.lua" />
+    <Content Include="ExternalTools\nselib\strict.lua" />
+    <Content Include="ExternalTools\nselib\stringaux.lua" />
+    <Content Include="ExternalTools\nselib\stun.lua" />
+    <Content Include="ExternalTools\nselib\tab.lua" />
+    <Content Include="ExternalTools\nselib\tableaux.lua" />
+    <Content Include="ExternalTools\nselib\target.lua" />
+    <Content Include="ExternalTools\nselib\tftp.lua" />
+    <Content Include="ExternalTools\nselib\tls.lua" />
+    <Content Include="ExternalTools\nselib\tn3270.lua" />
+    <Content Include="ExternalTools\nselib\tns.lua" />
+    <Content Include="ExternalTools\nselib\unicode.lua" />
+    <Content Include="ExternalTools\nselib\unittest.lua" />
+    <Content Include="ExternalTools\nselib\unpwdb.lua" />
+    <Content Include="ExternalTools\nselib\upnp.lua" />
+    <Content Include="ExternalTools\nselib\url.lua" />
+    <Content Include="ExternalTools\nselib\versant.lua" />
+    <Content Include="ExternalTools\nselib\vnc.lua" />
+    <Content Include="ExternalTools\nselib\vulns.lua" />
+    <Content Include="ExternalTools\nselib\vuzedht.lua" />
+    <Content Include="ExternalTools\nselib\wsdd.lua" />
+    <Content Include="ExternalTools\nselib\xdmcp.lua" />
+    <Content Include="ExternalTools\nselib\xmpp.lua" />
+    <Content Include="ExternalTools\nselib\zlib.luadoc" />
+    <Content Include="ExternalTools\nse_main.lua" />
+    <Content Include="ExternalTools\scripts\acarsd-info.nse" />
+    <Content Include="ExternalTools\scripts\address-info.nse" />
+    <Content Include="ExternalTools\scripts\afp-brute.nse" />
+    <Content Include="ExternalTools\scripts\afp-ls.nse" />
+    <Content Include="ExternalTools\scripts\afp-path-vuln.nse" />
+    <Content Include="ExternalTools\scripts\afp-serverinfo.nse" />
+    <Content Include="ExternalTools\scripts\afp-showmount.nse" />
+    <Content Include="ExternalTools\scripts\ajp-auth.nse" />
+    <Content Include="ExternalTools\scripts\ajp-brute.nse" />
+    <Content Include="ExternalTools\scripts\ajp-headers.nse" />
+    <Content Include="ExternalTools\scripts\ajp-methods.nse" />
+    <Content Include="ExternalTools\scripts\ajp-request.nse" />
+    <Content Include="ExternalTools\scripts\allseeingeye-info.nse" />
+    <Content Include="ExternalTools\scripts\amqp-info.nse" />
+    <Content Include="ExternalTools\scripts\asn-query.nse" />
+    <Content Include="ExternalTools\scripts\auth-owners.nse" />
+    <Content Include="ExternalTools\scripts\auth-spoof.nse" />
+    <Content Include="ExternalTools\scripts\backorifice-brute.nse" />
+    <Content Include="ExternalTools\scripts\backorifice-info.nse" />
+    <Content Include="ExternalTools\scripts\bacnet-info.nse" />
+    <Content Include="ExternalTools\scripts\banner.nse" />
+    <Content Include="ExternalTools\scripts\bitcoin-getaddr.nse" />
+    <Content Include="ExternalTools\scripts\bitcoin-info.nse" />
+    <Content Include="ExternalTools\scripts\bitcoinrpc-info.nse" />
+    <Content Include="ExternalTools\scripts\bittorrent-discovery.nse" />
+    <Content Include="ExternalTools\scripts\bjnp-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-ataoe-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-avahi-dos.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-bjnp-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-db2-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-dhcp-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-dhcp6-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-dns-service-discovery.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-dropbox-listener.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-eigrp-discovery.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-hid-discoveryd.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-igmp-discovery.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-jenkins-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-listener.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-ms-sql-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-netbios-master-browser.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-networker-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-novell-locate.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-ospf2-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-pc-anywhere.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-pc-duo.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-pim-discovery.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-ping.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-pppoe-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-rip-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-ripng-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-sonicwall-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-sybase-asa-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-tellstick-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-upnp-info.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-versant-locate.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-wake-on-lan.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-wpad-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-wsdd-discover.nse" />
+    <Content Include="ExternalTools\scripts\broadcast-xdmcp-discover.nse" />
+    <Content Include="ExternalTools\scripts\cassandra-brute.nse" />
+    <Content Include="ExternalTools\scripts\cassandra-info.nse" />
+    <Content Include="ExternalTools\scripts\cccam-version.nse" />
+    <Content Include="ExternalTools\scripts\cics-enum.nse" />
+    <Content Include="ExternalTools\scripts\cics-info.nse" />
+    <Content Include="ExternalTools\scripts\cics-user-brute.nse" />
+    <Content Include="ExternalTools\scripts\cics-user-enum.nse" />
+    <Content Include="ExternalTools\scripts\citrix-brute-xml.nse" />
+    <Content Include="ExternalTools\scripts\citrix-enum-apps-xml.nse" />
+    <Content Include="ExternalTools\scripts\citrix-enum-apps.nse" />
+    <Content Include="ExternalTools\scripts\citrix-enum-servers-xml.nse" />
+    <Content Include="ExternalTools\scripts\citrix-enum-servers.nse" />
+    <Content Include="ExternalTools\scripts\clamav-exec.nse" />
+    <Content Include="ExternalTools\scripts\clock-skew.nse" />
+    <Content Include="ExternalTools\scripts\coap-resources.nse" />
+    <Content Include="ExternalTools\scripts\couchdb-databases.nse" />
+    <Content Include="ExternalTools\scripts\couchdb-stats.nse" />
+    <Content Include="ExternalTools\scripts\creds-summary.nse" />
+    <Content Include="ExternalTools\scripts\cups-info.nse" />
+    <Content Include="ExternalTools\scripts\cups-queue-info.nse" />
+    <Content Include="ExternalTools\scripts\cvs-brute-repository.nse" />
+    <Content Include="ExternalTools\scripts\cvs-brute.nse" />
+    <Content Include="ExternalTools\scripts\daap-get-library.nse" />
+    <Content Include="ExternalTools\scripts\daytime.nse" />
+    <Content Include="ExternalTools\scripts\db2-das-info.nse" />
+    <Content Include="ExternalTools\scripts\deluge-rpc-brute.nse" />
+    <Content Include="ExternalTools\scripts\dhcp-discover.nse" />
+    <Content Include="ExternalTools\scripts\dicom-brute.nse" />
+    <Content Include="ExternalTools\scripts\dicom-ping.nse" />
+    <Content Include="ExternalTools\scripts\dict-info.nse" />
+    <Content Include="ExternalTools\scripts\distcc-cve2004-2687.nse" />
+    <Content Include="ExternalTools\scripts\dns-blacklist.nse" />
+    <Content Include="ExternalTools\scripts\dns-brute.nse" />
+    <Content Include="ExternalTools\scripts\dns-cache-snoop.nse" />
+    <Content Include="ExternalTools\scripts\dns-check-zone.nse" />
+    <Content Include="ExternalTools\scripts\dns-client-subnet-scan.nse" />
+    <Content Include="ExternalTools\scripts\dns-fuzz.nse" />
+    <Content Include="ExternalTools\scripts\dns-ip6-arpa-scan.nse" />
+    <Content Include="ExternalTools\scripts\dns-nsec-enum.nse" />
+    <Content Include="ExternalTools\scripts\dns-nsec3-enum.nse" />
+    <Content Include="ExternalTools\scripts\dns-nsid.nse" />
+    <Content Include="ExternalTools\scripts\dns-random-srcport.nse" />
+    <Content Include="ExternalTools\scripts\dns-random-txid.nse" />
+    <Content Include="ExternalTools\scripts\dns-recursion.nse" />
+    <Content Include="ExternalTools\scripts\dns-service-discovery.nse" />
+    <Content Include="ExternalTools\scripts\dns-srv-enum.nse" />
+    <Content Include="ExternalTools\scripts\dns-update.nse" />
+    <Content Include="ExternalTools\scripts\dns-zeustracker.nse" />
+    <Content Include="ExternalTools\scripts\dns-zone-transfer.nse" />
+    <Content Include="ExternalTools\scripts\docker-version.nse" />
+    <Content Include="ExternalTools\scripts\domcon-brute.nse" />
+    <Content Include="ExternalTools\scripts\domcon-cmd.nse" />
+    <Content Include="ExternalTools\scripts\domino-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\dpap-brute.nse" />
+    <Content Include="ExternalTools\scripts\drda-brute.nse" />
+    <Content Include="ExternalTools\scripts\drda-info.nse" />
+    <Content Include="ExternalTools\scripts\duplicates.nse" />
+    <Content Include="ExternalTools\scripts\eap-info.nse" />
+    <Content Include="ExternalTools\scripts\enip-info.nse" />
+    <Content Include="ExternalTools\scripts\epmd-info.nse" />
+    <Content Include="ExternalTools\scripts\eppc-enum-processes.nse" />
+    <Content Include="ExternalTools\scripts\fcrdns.nse" />
+    <Content Include="ExternalTools\scripts\finger.nse" />
+    <Content Include="ExternalTools\scripts\fingerprint-strings.nse" />
+    <Content Include="ExternalTools\scripts\firewalk.nse" />
+    <Content Include="ExternalTools\scripts\firewall-bypass.nse" />
+    <Content Include="ExternalTools\scripts\flume-master-info.nse" />
+    <Content Include="ExternalTools\scripts\fox-info.nse" />
+    <Content Include="ExternalTools\scripts\freelancer-info.nse" />
+    <Content Include="ExternalTools\scripts\ftp-anon.nse" />
+    <Content Include="ExternalTools\scripts\ftp-bounce.nse" />
+    <Content Include="ExternalTools\scripts\ftp-brute.nse" />
+    <Content Include="ExternalTools\scripts\ftp-libopie.nse" />
+    <Content Include="ExternalTools\scripts\ftp-proftpd-backdoor.nse" />
+    <Content Include="ExternalTools\scripts\ftp-syst.nse" />
+    <Content Include="ExternalTools\scripts\ftp-vsftpd-backdoor.nse" />
+    <Content Include="ExternalTools\scripts\ftp-vuln-cve2010-4221.nse" />
+    <Content Include="ExternalTools\scripts\ganglia-info.nse" />
+    <Content Include="ExternalTools\scripts\giop-info.nse" />
+    <Content Include="ExternalTools\scripts\gkrellm-info.nse" />
+    <Content Include="ExternalTools\scripts\gopher-ls.nse" />
+    <Content Include="ExternalTools\scripts\gpsd-info.nse" />
+    <Content Include="ExternalTools\scripts\hadoop-datanode-info.nse" />
+    <Content Include="ExternalTools\scripts\hadoop-jobtracker-info.nse" />
+    <Content Include="ExternalTools\scripts\hadoop-namenode-info.nse" />
+    <Content Include="ExternalTools\scripts\hadoop-secondary-namenode-info.nse" />
+    <Content Include="ExternalTools\scripts\hadoop-tasktracker-info.nse" />
+    <Content Include="ExternalTools\scripts\hbase-master-info.nse" />
+    <Content Include="ExternalTools\scripts\hbase-region-info.nse" />
+    <Content Include="ExternalTools\scripts\hddtemp-info.nse" />
+    <Content Include="ExternalTools\scripts\hnap-info.nse" />
+    <Content Include="ExternalTools\scripts\hostmap-bfk.nse" />
+    <Content Include="ExternalTools\scripts\hostmap-crtsh.nse" />
+    <Content Include="ExternalTools\scripts\hostmap-robtex.nse" />
+    <Content Include="ExternalTools\scripts\http-adobe-coldfusion-apsa1301.nse" />
+    <Content Include="ExternalTools\scripts\http-affiliate-id.nse" />
+    <Content Include="ExternalTools\scripts\http-apache-negotiation.nse" />
+    <Content Include="ExternalTools\scripts\http-apache-server-status.nse" />
+    <Content Include="ExternalTools\scripts\http-aspnet-debug.nse" />
+    <Content Include="ExternalTools\scripts\http-auth-finder.nse" />
+    <Content Include="ExternalTools\scripts\http-auth.nse" />
+    <Content Include="ExternalTools\scripts\http-avaya-ipoffice-users.nse" />
+    <Content Include="ExternalTools\scripts\http-awstatstotals-exec.nse" />
+    <Content Include="ExternalTools\scripts\http-axis2-dir-traversal.nse" />
+    <Content Include="ExternalTools\scripts\http-backup-finder.nse" />
+    <Content Include="ExternalTools\scripts\http-barracuda-dir-traversal.nse" />
+    <Content Include="ExternalTools\scripts\http-bigip-cookie.nse" />
+    <Content Include="ExternalTools\scripts\http-brute.nse" />
+    <Content Include="ExternalTools\scripts\http-cakephp-version.nse" />
+    <Content Include="ExternalTools\scripts\http-chrono.nse" />
+    <Content Include="ExternalTools\scripts\http-cisco-anyconnect.nse" />
+    <Content Include="ExternalTools\scripts\http-coldfusion-subzero.nse" />
+    <Content Include="ExternalTools\scripts\http-comments-displayer.nse" />
+    <Content Include="ExternalTools\scripts\http-config-backup.nse" />
+    <Content Include="ExternalTools\scripts\http-cookie-flags.nse" />
+    <Content Include="ExternalTools\scripts\http-cors.nse" />
+    <Content Include="ExternalTools\scripts\http-cross-domain-policy.nse" />
+    <Content Include="ExternalTools\scripts\http-csrf.nse" />
+    <Content Include="ExternalTools\scripts\http-date.nse" />
+    <Content Include="ExternalTools\scripts\http-default-accounts.nse" />
+    <Content Include="ExternalTools\scripts\http-devframework.nse" />
+    <Content Include="ExternalTools\scripts\http-dlink-backdoor.nse" />
+    <Content Include="ExternalTools\scripts\http-dombased-xss.nse" />
+    <Content Include="ExternalTools\scripts\http-domino-enum-passwords.nse" />
+    <Content Include="ExternalTools\scripts\http-drupal-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\http-drupal-enum.nse" />
+    <Content Include="ExternalTools\scripts\http-enum.nse" />
+    <Content Include="ExternalTools\scripts\http-errors.nse" />
+    <Content Include="ExternalTools\scripts\http-exif-spider.nse" />
+    <Content Include="ExternalTools\scripts\http-favicon.nse" />
+    <Content Include="ExternalTools\scripts\http-feed.nse" />
+    <Content Include="ExternalTools\scripts\http-fetch.nse" />
+    <Content Include="ExternalTools\scripts\http-fileupload-exploiter.nse" />
+    <Content Include="ExternalTools\scripts\http-form-brute.nse" />
+    <Content Include="ExternalTools\scripts\http-form-fuzzer.nse" />
+    <Content Include="ExternalTools\scripts\http-frontpage-login.nse" />
+    <Content Include="ExternalTools\scripts\http-generator.nse" />
+    <Content Include="ExternalTools\scripts\http-git.nse" />
+    <Content Include="ExternalTools\scripts\http-gitweb-projects-enum.nse" />
+    <Content Include="ExternalTools\scripts\http-google-malware.nse" />
+    <Content Include="ExternalTools\scripts\http-grep.nse" />
+    <Content Include="ExternalTools\scripts\http-headers.nse" />
+    <Content Include="ExternalTools\scripts\http-hp-ilo-info.nse" />
+    <Content Include="ExternalTools\scripts\http-huawei-hg5xx-vuln.nse" />
+    <Content Include="ExternalTools\scripts\http-icloud-findmyiphone.nse" />
+    <Content Include="ExternalTools\scripts\http-icloud-sendmsg.nse" />
+    <Content Include="ExternalTools\scripts\http-iis-short-name-brute.nse" />
+    <Content Include="ExternalTools\scripts\http-iis-webdav-vuln.nse" />
+    <Content Include="ExternalTools\scripts\http-internal-ip-disclosure.nse" />
+    <Content Include="ExternalTools\scripts\http-joomla-brute.nse" />
+    <Content Include="ExternalTools\scripts\http-jsonp-detection.nse" />
+    <Content Include="ExternalTools\scripts\http-litespeed-sourcecode-download.nse" />
+    <Content Include="ExternalTools\scripts\http-ls.nse" />
+    <Content Include="ExternalTools\scripts\http-majordomo2-dir-traversal.nse" />
+    <Content Include="ExternalTools\scripts\http-malware-host.nse" />
+    <Content Include="ExternalTools\scripts\http-mcmp.nse" />
+    <Content Include="ExternalTools\scripts\http-method-tamper.nse" />
+    <Content Include="ExternalTools\scripts\http-methods.nse" />
+    <Content Include="ExternalTools\scripts\http-mobileversion-checker.nse" />
+    <Content Include="ExternalTools\scripts\http-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\http-open-proxy.nse" />
+    <Content Include="ExternalTools\scripts\http-open-redirect.nse" />
+    <Content Include="ExternalTools\scripts\http-passwd.nse" />
+    <Content Include="ExternalTools\scripts\http-php-version.nse" />
+    <Content Include="ExternalTools\scripts\http-phpmyadmin-dir-traversal.nse" />
+    <Content Include="ExternalTools\scripts\http-phpself-xss.nse" />
+    <Content Include="ExternalTools\scripts\http-proxy-brute.nse" />
+    <Content Include="ExternalTools\scripts\http-put.nse" />
+    <Content Include="ExternalTools\scripts\http-qnap-nas-info.nse" />
+    <Content Include="ExternalTools\scripts\http-referer-checker.nse" />
+    <Content Include="ExternalTools\scripts\http-rfi-spider.nse" />
+    <Content Include="ExternalTools\scripts\http-robots.txt.nse" />
+    <Content Include="ExternalTools\scripts\http-robtex-reverse-ip.nse" />
+    <Content Include="ExternalTools\scripts\http-robtex-shared-ns.nse" />
+    <Content Include="ExternalTools\scripts\http-sap-netweaver-leak.nse" />
+    <Content Include="ExternalTools\scripts\http-security-headers.nse" />
+    <Content Include="ExternalTools\scripts\http-server-header.nse" />
+    <Content Include="ExternalTools\scripts\http-shellshock.nse" />
+    <Content Include="ExternalTools\scripts\http-sitemap-generator.nse" />
+    <Content Include="ExternalTools\scripts\http-slowloris-check.nse" />
+    <Content Include="ExternalTools\scripts\http-slowloris.nse" />
+    <Content Include="ExternalTools\scripts\http-sql-injection.nse" />
+    <Content Include="ExternalTools\scripts\http-stored-xss.nse" />
+    <Content Include="ExternalTools\scripts\http-svn-enum.nse" />
+    <Content Include="ExternalTools\scripts\http-svn-info.nse" />
+    <Content Include="ExternalTools\scripts\http-title.nse" />
+    <Content Include="ExternalTools\scripts\http-tplink-dir-traversal.nse" />
+    <Content Include="ExternalTools\scripts\http-trace.nse" />
+    <Content Include="ExternalTools\scripts\http-traceroute.nse" />
+    <Content Include="ExternalTools\scripts\http-trane-info.nse" />
+    <Content Include="ExternalTools\scripts\http-unsafe-output-escaping.nse" />
+    <Content Include="ExternalTools\scripts\http-useragent-tester.nse" />
+    <Content Include="ExternalTools\scripts\http-userdir-enum.nse" />
+    <Content Include="ExternalTools\scripts\http-vhosts.nse" />
+    <Content Include="ExternalTools\scripts\http-virustotal.nse" />
+    <Content Include="ExternalTools\scripts\http-vlcstreamer-ls.nse" />
+    <Content Include="ExternalTools\scripts\http-vmware-path-vuln.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2006-3392.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2009-3960.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2010-0738.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2010-2861.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2011-3192.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2011-3368.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2012-1823.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2013-0156.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2013-6786.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2013-7091.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2014-2126.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2014-2127.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2014-2128.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2014-2129.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2014-3704.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2014-8877.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2015-1427.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2015-1635.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2017-1001000.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2017-5638.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2017-5689.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-cve2017-8917.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-misfortune-cookie.nse" />
+    <Content Include="ExternalTools\scripts\http-vuln-wnr1000-creds.nse" />
+    <Content Include="ExternalTools\scripts\http-waf-detect.nse" />
+    <Content Include="ExternalTools\scripts\http-waf-fingerprint.nse" />
+    <Content Include="ExternalTools\scripts\http-webdav-scan.nse" />
+    <Content Include="ExternalTools\scripts\http-wordpress-brute.nse" />
+    <Content Include="ExternalTools\scripts\http-wordpress-enum.nse" />
+    <Content Include="ExternalTools\scripts\http-wordpress-users.nse" />
+    <Content Include="ExternalTools\scripts\http-xssed.nse" />
+    <Content Include="ExternalTools\scripts\https-redirect.nse" />
+    <Content Include="ExternalTools\scripts\iax2-brute.nse" />
+    <Content Include="ExternalTools\scripts\iax2-version.nse" />
+    <Content Include="ExternalTools\scripts\icap-info.nse" />
+    <Content Include="ExternalTools\scripts\iec-identify.nse" />
+    <Content Include="ExternalTools\scripts\ike-version.nse" />
+    <Content Include="ExternalTools\scripts\imap-brute.nse" />
+    <Content Include="ExternalTools\scripts\imap-capabilities.nse" />
+    <Content Include="ExternalTools\scripts\imap-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\impress-remote-discover.nse" />
+    <Content Include="ExternalTools\scripts\informix-brute.nse" />
+    <Content Include="ExternalTools\scripts\informix-query.nse" />
+    <Content Include="ExternalTools\scripts\informix-tables.nse" />
+    <Content Include="ExternalTools\scripts\ip-forwarding.nse" />
+    <Content Include="ExternalTools\scripts\ip-geolocation-geoplugin.nse" />
+    <Content Include="ExternalTools\scripts\ip-geolocation-ipinfodb.nse" />
+    <Content Include="ExternalTools\scripts\ip-geolocation-map-bing.nse" />
+    <Content Include="ExternalTools\scripts\ip-geolocation-map-google.nse" />
+    <Content Include="ExternalTools\scripts\ip-geolocation-map-kml.nse" />
+    <Content Include="ExternalTools\scripts\ip-geolocation-maxmind.nse" />
+    <Content Include="ExternalTools\scripts\ip-https-discover.nse" />
+    <Content Include="ExternalTools\scripts\ipidseq.nse" />
+    <Content Include="ExternalTools\scripts\ipmi-brute.nse" />
+    <Content Include="ExternalTools\scripts\ipmi-cipher-zero.nse" />
+    <Content Include="ExternalTools\scripts\ipmi-version.nse" />
+    <Content Include="ExternalTools\scripts\ipv6-multicast-mld-list.nse" />
+    <Content Include="ExternalTools\scripts\ipv6-node-info.nse" />
+    <Content Include="ExternalTools\scripts\ipv6-ra-flood.nse" />
+    <Content Include="ExternalTools\scripts\irc-botnet-channels.nse" />
+    <Content Include="ExternalTools\scripts\irc-brute.nse" />
+    <Content Include="ExternalTools\scripts\irc-info.nse" />
+    <Content Include="ExternalTools\scripts\irc-sasl-brute.nse" />
+    <Content Include="ExternalTools\scripts\irc-unrealircd-backdoor.nse" />
+    <Content Include="ExternalTools\scripts\iscsi-brute.nse" />
+    <Content Include="ExternalTools\scripts\iscsi-info.nse" />
+    <Content Include="ExternalTools\scripts\isns-info.nse" />
+    <Content Include="ExternalTools\scripts\jdwp-exec.nse" />
+    <Content Include="ExternalTools\scripts\jdwp-info.nse" />
+    <Content Include="ExternalTools\scripts\jdwp-inject.nse" />
+    <Content Include="ExternalTools\scripts\jdwp-version.nse" />
+    <Content Include="ExternalTools\scripts\knx-gateway-discover.nse" />
+    <Content Include="ExternalTools\scripts\knx-gateway-info.nse" />
+    <Content Include="ExternalTools\scripts\krb5-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\ldap-brute.nse" />
+    <Content Include="ExternalTools\scripts\ldap-novell-getpass.nse" />
+    <Content Include="ExternalTools\scripts\ldap-rootdse.nse" />
+    <Content Include="ExternalTools\scripts\ldap-search.nse" />
+    <Content Include="ExternalTools\scripts\lexmark-config.nse" />
+    <Content Include="ExternalTools\scripts\llmnr-resolve.nse" />
+    <Content Include="ExternalTools\scripts\lltd-discovery.nse" />
+    <Content Include="ExternalTools\scripts\lu-enum.nse" />
+    <Content Include="ExternalTools\scripts\maxdb-info.nse" />
+    <Content Include="ExternalTools\scripts\mcafee-epo-agent.nse" />
+    <Content Include="ExternalTools\scripts\membase-brute.nse" />
+    <Content Include="ExternalTools\scripts\membase-http-info.nse" />
+    <Content Include="ExternalTools\scripts\memcached-info.nse" />
+    <Content Include="ExternalTools\scripts\metasploit-info.nse" />
+    <Content Include="ExternalTools\scripts\metasploit-msgrpc-brute.nse" />
+    <Content Include="ExternalTools\scripts\metasploit-xmlrpc-brute.nse" />
+    <Content Include="ExternalTools\scripts\mikrotik-routeros-brute.nse" />
+    <Content Include="ExternalTools\scripts\mmouse-brute.nse" />
+    <Content Include="ExternalTools\scripts\mmouse-exec.nse" />
+    <Content Include="ExternalTools\scripts\modbus-discover.nse" />
+    <Content Include="ExternalTools\scripts\mongodb-brute.nse" />
+    <Content Include="ExternalTools\scripts\mongodb-databases.nse" />
+    <Content Include="ExternalTools\scripts\mongodb-info.nse" />
+    <Content Include="ExternalTools\scripts\mqtt-subscribe.nse" />
+    <Content Include="ExternalTools\scripts\mrinfo.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-brute.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-config.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-dac.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-dump-hashes.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-empty-password.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-hasdbaccess.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-info.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-query.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-tables.nse" />
+    <Content Include="ExternalTools\scripts\ms-sql-xp-cmdshell.nse" />
+    <Content Include="ExternalTools\scripts\msrpc-enum.nse" />
+    <Content Include="ExternalTools\scripts\mtrace.nse" />
+    <Content Include="ExternalTools\scripts\murmur-version.nse" />
+    <Content Include="ExternalTools\scripts\mysql-audit.nse" />
+    <Content Include="ExternalTools\scripts\mysql-brute.nse" />
+    <Content Include="ExternalTools\scripts\mysql-databases.nse" />
+    <Content Include="ExternalTools\scripts\mysql-dump-hashes.nse" />
+    <Content Include="ExternalTools\scripts\mysql-empty-password.nse" />
+    <Content Include="ExternalTools\scripts\mysql-enum.nse" />
+    <Content Include="ExternalTools\scripts\mysql-info.nse" />
+    <Content Include="ExternalTools\scripts\mysql-query.nse" />
+    <Content Include="ExternalTools\scripts\mysql-users.nse" />
+    <Content Include="ExternalTools\scripts\mysql-variables.nse" />
+    <Content Include="ExternalTools\scripts\mysql-vuln-cve2012-2122.nse" />
+    <Content Include="ExternalTools\scripts\nat-pmp-info.nse" />
+    <Content Include="ExternalTools\scripts\nat-pmp-mapport.nse" />
+    <Content Include="ExternalTools\scripts\nbd-info.nse" />
+    <Content Include="ExternalTools\scripts\nbns-interfaces.nse" />
+    <Content Include="ExternalTools\scripts\nbstat.nse" />
+    <Content Include="ExternalTools\scripts\ncp-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\ncp-serverinfo.nse" />
+    <Content Include="ExternalTools\scripts\ndmp-fs-info.nse" />
+    <Content Include="ExternalTools\scripts\ndmp-version.nse" />
+    <Content Include="ExternalTools\scripts\nessus-brute.nse" />
+    <Content Include="ExternalTools\scripts\nessus-xmlrpc-brute.nse" />
+    <Content Include="ExternalTools\scripts\netbus-auth-bypass.nse" />
+    <Content Include="ExternalTools\scripts\netbus-brute.nse" />
+    <Content Include="ExternalTools\scripts\netbus-info.nse" />
+    <Content Include="ExternalTools\scripts\netbus-version.nse" />
+    <Content Include="ExternalTools\scripts\nexpose-brute.nse" />
+    <Content Include="ExternalTools\scripts\nfs-ls.nse" />
+    <Content Include="ExternalTools\scripts\nfs-showmount.nse" />
+    <Content Include="ExternalTools\scripts\nfs-statfs.nse" />
+    <Content Include="ExternalTools\scripts\nje-node-brute.nse" />
+    <Content Include="ExternalTools\scripts\nje-pass-brute.nse" />
+    <Content Include="ExternalTools\scripts\nntp-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\nping-brute.nse" />
+    <Content Include="ExternalTools\scripts\nrpe-enum.nse" />
+    <Content Include="ExternalTools\scripts\ntp-info.nse" />
+    <Content Include="ExternalTools\scripts\ntp-monlist.nse" />
+    <Content Include="ExternalTools\scripts\omp2-brute.nse" />
+    <Content Include="ExternalTools\scripts\omp2-enum-targets.nse" />
+    <Content Include="ExternalTools\scripts\omron-info.nse" />
+    <Content Include="ExternalTools\scripts\openflow-info.nse" />
+    <Content Include="ExternalTools\scripts\openlookup-info.nse" />
+    <Content Include="ExternalTools\scripts\openvas-otp-brute.nse" />
+    <Content Include="ExternalTools\scripts\openwebnet-discovery.nse" />
+    <Content Include="ExternalTools\scripts\oracle-brute-stealth.nse" />
+    <Content Include="ExternalTools\scripts\oracle-brute.nse" />
+    <Content Include="ExternalTools\scripts\oracle-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\oracle-sid-brute.nse" />
+    <Content Include="ExternalTools\scripts\oracle-tns-version.nse" />
+    <Content Include="ExternalTools\scripts\ovs-agent-version.nse" />
+    <Content Include="ExternalTools\scripts\p2p-conficker.nse" />
+    <Content Include="ExternalTools\scripts\path-mtu.nse" />
+    <Content Include="ExternalTools\scripts\pcanywhere-brute.nse" />
+    <Content Include="ExternalTools\scripts\pcworx-info.nse" />
+    <Content Include="ExternalTools\scripts\pgsql-brute.nse" />
+    <Content Include="ExternalTools\scripts\pjl-ready-message.nse" />
+    <Content Include="ExternalTools\scripts\pop3-brute.nse" />
+    <Content Include="ExternalTools\scripts\pop3-capabilities.nse" />
+    <Content Include="ExternalTools\scripts\pop3-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\port-states.nse" />
+    <Content Include="ExternalTools\scripts\pptp-version.nse" />
+    <Content Include="ExternalTools\scripts\puppet-naivesigning.nse" />
+    <Content Include="ExternalTools\scripts\qconn-exec.nse" />
+    <Content Include="ExternalTools\scripts\qscan.nse" />
+    <Content Include="ExternalTools\scripts\quake1-info.nse" />
+    <Content Include="ExternalTools\scripts\quake3-info.nse" />
+    <Content Include="ExternalTools\scripts\quake3-master-getservers.nse" />
+    <Content Include="ExternalTools\scripts\rdp-enum-encryption.nse" />
+    <Content Include="ExternalTools\scripts\rdp-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\rdp-vuln-ms12-020.nse" />
+    <Content Include="ExternalTools\scripts\realvnc-auth-bypass.nse" />
+    <Content Include="ExternalTools\scripts\redis-brute.nse" />
+    <Content Include="ExternalTools\scripts\redis-info.nse" />
+    <Content Include="ExternalTools\scripts\resolveall.nse" />
+    <Content Include="ExternalTools\scripts\reverse-index.nse" />
+    <Content Include="ExternalTools\scripts\rexec-brute.nse" />
+    <Content Include="ExternalTools\scripts\rfc868-time.nse" />
+    <Content Include="ExternalTools\scripts\riak-http-info.nse" />
+    <Content Include="ExternalTools\scripts\rlogin-brute.nse" />
+    <Content Include="ExternalTools\scripts\rmi-dumpregistry.nse" />
+    <Content Include="ExternalTools\scripts\rmi-vuln-classloader.nse" />
+    <Content Include="ExternalTools\scripts\rpc-grind.nse" />
+    <Content Include="ExternalTools\scripts\rpcap-brute.nse" />
+    <Content Include="ExternalTools\scripts\rpcap-info.nse" />
+    <Content Include="ExternalTools\scripts\rpcinfo.nse" />
+    <Content Include="ExternalTools\scripts\rsa-vuln-roca.nse" />
+    <Content Include="ExternalTools\scripts\rsync-brute.nse" />
+    <Content Include="ExternalTools\scripts\rsync-list-modules.nse" />
+    <Content Include="ExternalTools\scripts\rtsp-methods.nse" />
+    <Content Include="ExternalTools\scripts\rtsp-url-brute.nse" />
+    <Content Include="ExternalTools\scripts\rusers.nse" />
+    <Content Include="ExternalTools\scripts\s7-info.nse" />
+    <Content Include="ExternalTools\scripts\samba-vuln-cve-2012-1182.nse" />
+    <Content Include="ExternalTools\scripts\script.db" />
+    <Content Include="ExternalTools\scripts\servicetags.nse" />
+    <Content Include="ExternalTools\scripts\shodan-api.nse" />
+    <Content Include="ExternalTools\scripts\sip-brute.nse" />
+    <Content Include="ExternalTools\scripts\sip-call-spoof.nse" />
+    <Content Include="ExternalTools\scripts\sip-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\sip-methods.nse" />
+    <Content Include="ExternalTools\scripts\skypev2-version.nse" />
+    <Content Include="ExternalTools\scripts\smb-brute.nse" />
+    <Content Include="ExternalTools\scripts\smb-double-pulsar-backdoor.nse" />
+    <Content Include="ExternalTools\scripts\smb-enum-domains.nse" />
+    <Content Include="ExternalTools\scripts\smb-enum-groups.nse" />
+    <Content Include="ExternalTools\scripts\smb-enum-processes.nse" />
+    <Content Include="ExternalTools\scripts\smb-enum-services.nse" />
+    <Content Include="ExternalTools\scripts\smb-enum-sessions.nse" />
+    <Content Include="ExternalTools\scripts\smb-enum-shares.nse" />
+    <Content Include="ExternalTools\scripts\smb-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\smb-flood.nse" />
+    <Content Include="ExternalTools\scripts\smb-ls.nse" />
+    <Content Include="ExternalTools\scripts\smb-mbenum.nse" />
+    <Content Include="ExternalTools\scripts\smb-os-discovery.nse" />
+    <Content Include="ExternalTools\scripts\smb-print-text.nse" />
+    <Content Include="ExternalTools\scripts\smb-protocols.nse" />
+    <Content Include="ExternalTools\scripts\smb-psexec.nse" />
+    <Content Include="ExternalTools\scripts\smb-security-mode.nse" />
+    <Content Include="ExternalTools\scripts\smb-server-stats.nse" />
+    <Content Include="ExternalTools\scripts\smb-system-info.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-conficker.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-cve-2017-7494.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-cve2009-3103.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-ms06-025.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-ms07-029.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-ms08-067.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-ms10-054.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-ms10-061.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-ms17-010.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-regsvc-dos.nse" />
+    <Content Include="ExternalTools\scripts\smb-vuln-webexec.nse" />
+    <Content Include="ExternalTools\scripts\smb-webexec-exploit.nse" />
+    <Content Include="ExternalTools\scripts\smb2-capabilities.nse" />
+    <Content Include="ExternalTools\scripts\smb2-security-mode.nse" />
+    <Content Include="ExternalTools\scripts\smb2-time.nse" />
+    <Content Include="ExternalTools\scripts\smb2-vuln-uptime.nse" />
+    <Content Include="ExternalTools\scripts\smtp-brute.nse" />
+    <Content Include="ExternalTools\scripts\smtp-commands.nse" />
+    <Content Include="ExternalTools\scripts\smtp-enum-users.nse" />
+    <Content Include="ExternalTools\scripts\smtp-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\smtp-open-relay.nse" />
+    <Content Include="ExternalTools\scripts\smtp-strangeport.nse" />
+    <Content Include="ExternalTools\scripts\smtp-vuln-cve2010-4344.nse" />
+    <Content Include="ExternalTools\scripts\smtp-vuln-cve2011-1720.nse" />
+    <Content Include="ExternalTools\scripts\smtp-vuln-cve2011-1764.nse" />
+    <Content Include="ExternalTools\scripts\sniffer-detect.nse" />
+    <Content Include="ExternalTools\scripts\snmp-brute.nse" />
+    <Content Include="ExternalTools\scripts\snmp-hh3c-logins.nse" />
+    <Content Include="ExternalTools\scripts\snmp-info.nse" />
+    <Content Include="ExternalTools\scripts\snmp-interfaces.nse" />
+    <Content Include="ExternalTools\scripts\snmp-ios-config.nse" />
+    <Content Include="ExternalTools\scripts\snmp-netstat.nse" />
+    <Content Include="ExternalTools\scripts\snmp-processes.nse" />
+    <Content Include="ExternalTools\scripts\snmp-sysdescr.nse" />
+    <Content Include="ExternalTools\scripts\snmp-win32-services.nse" />
+    <Content Include="ExternalTools\scripts\snmp-win32-shares.nse" />
+    <Content Include="ExternalTools\scripts\snmp-win32-software.nse" />
+    <Content Include="ExternalTools\scripts\snmp-win32-users.nse" />
+    <Content Include="ExternalTools\scripts\socks-auth-info.nse" />
+    <Content Include="ExternalTools\scripts\socks-brute.nse" />
+    <Content Include="ExternalTools\scripts\socks-open-proxy.nse" />
+    <Content Include="ExternalTools\scripts\ssh-auth-methods.nse" />
+    <Content Include="ExternalTools\scripts\ssh-brute.nse" />
+    <Content Include="ExternalTools\scripts\ssh-hostkey.nse" />
+    <Content Include="ExternalTools\scripts\ssh-publickey-acceptance.nse" />
+    <Content Include="ExternalTools\scripts\ssh-run.nse" />
+    <Content Include="ExternalTools\scripts\ssh2-enum-algos.nse" />
+    <Content Include="ExternalTools\scripts\sshv1.nse" />
+    <Content Include="ExternalTools\scripts\ssl-ccs-injection.nse" />
+    <Content Include="ExternalTools\scripts\ssl-cert-intaddr.nse" />
+    <Content Include="ExternalTools\scripts\ssl-cert.nse" />
+    <Content Include="ExternalTools\scripts\ssl-date.nse" />
+    <Content Include="ExternalTools\scripts\ssl-dh-params.nse" />
+    <Content Include="ExternalTools\scripts\ssl-enum-ciphers.nse" />
+    <Content Include="ExternalTools\scripts\ssl-heartbleed.nse" />
+    <Content Include="ExternalTools\scripts\ssl-known-key.nse" />
+    <Content Include="ExternalTools\scripts\ssl-poodle.nse" />
+    <Content Include="ExternalTools\scripts\sslv2-drown.nse" />
+    <Content Include="ExternalTools\scripts\sslv2.nse" />
+    <Content Include="ExternalTools\scripts\sstp-discover.nse" />
+    <Content Include="ExternalTools\scripts\stun-info.nse" />
+    <Content Include="ExternalTools\scripts\stun-version.nse" />
+    <Content Include="ExternalTools\scripts\stuxnet-detect.nse" />
+    <Content Include="ExternalTools\scripts\supermicro-ipmi-conf.nse" />
+    <Content Include="ExternalTools\scripts\svn-brute.nse" />
+    <Content Include="ExternalTools\scripts\targets-asn.nse" />
+    <Content Include="ExternalTools\scripts\targets-ipv6-map4to6.nse" />
+    <Content Include="ExternalTools\scripts\targets-ipv6-multicast-echo.nse" />
+    <Content Include="ExternalTools\scripts\targets-ipv6-multicast-invalid-dst.nse" />
+    <Content Include="ExternalTools\scripts\targets-ipv6-multicast-mld.nse" />
+    <Content Include="ExternalTools\scripts\targets-ipv6-multicast-slaac.nse" />
+    <Content Include="ExternalTools\scripts\targets-ipv6-wordlist.nse" />
+    <Content Include="ExternalTools\scripts\targets-sniffer.nse" />
+    <Content Include="ExternalTools\scripts\targets-traceroute.nse" />
+    <Content Include="ExternalTools\scripts\targets-xml.nse" />
+    <Content Include="ExternalTools\scripts\teamspeak2-version.nse" />
+    <Content Include="ExternalTools\scripts\telnet-brute.nse" />
+    <Content Include="ExternalTools\scripts\telnet-encryption.nse" />
+    <Content Include="ExternalTools\scripts\telnet-ntlm-info.nse" />
+    <Content Include="ExternalTools\scripts\tftp-enum.nse" />
+    <Content Include="ExternalTools\scripts\tls-alpn.nse" />
+    <Content Include="ExternalTools\scripts\tls-nextprotoneg.nse" />
+    <Content Include="ExternalTools\scripts\tls-ticketbleed.nse" />
+    <Content Include="ExternalTools\scripts\tn3270-screen.nse" />
+    <Content Include="ExternalTools\scripts\tor-consensus-checker.nse" />
+    <Content Include="ExternalTools\scripts\traceroute-geolocation.nse" />
+    <Content Include="ExternalTools\scripts\tso-brute.nse" />
+    <Content Include="ExternalTools\scripts\tso-enum.nse" />
+    <Content Include="ExternalTools\scripts\ubiquiti-discovery.nse" />
+    <Content Include="ExternalTools\scripts\unittest.nse" />
+    <Content Include="ExternalTools\scripts\unusual-port.nse" />
+    <Content Include="ExternalTools\scripts\upnp-info.nse" />
+    <Content Include="ExternalTools\scripts\uptime-agent-info.nse" />
+    <Content Include="ExternalTools\scripts\url-snarf.nse" />
+    <Content Include="ExternalTools\scripts\ventrilo-info.nse" />
+    <Content Include="ExternalTools\scripts\versant-info.nse" />
+    <Content Include="ExternalTools\scripts\vmauthd-brute.nse" />
+    <Content Include="ExternalTools\scripts\vmware-version.nse" />
+    <Content Include="ExternalTools\scripts\vnc-brute.nse" />
+    <Content Include="ExternalTools\scripts\vnc-info.nse" />
+    <Content Include="ExternalTools\scripts\vnc-title.nse" />
+    <Content Include="ExternalTools\scripts\voldemort-info.nse" />
+    <Content Include="ExternalTools\scripts\vtam-enum.nse" />
+    <Content Include="ExternalTools\scripts\vulners.nse" />
+    <Content Include="ExternalTools\scripts\vuze-dht-info.nse" />
+    <Content Include="ExternalTools\scripts\wdb-version.nse" />
+    <Content Include="ExternalTools\scripts\weblogic-t3-info.nse" />
+    <Content Include="ExternalTools\scripts\whois-domain.nse" />
+    <Content Include="ExternalTools\scripts\whois-ip.nse" />
+    <Content Include="ExternalTools\scripts\wsdd-discover.nse" />
+    <Content Include="ExternalTools\scripts\x11-access.nse" />
+    <Content Include="ExternalTools\scripts\xdmcp-discover.nse" />
+    <Content Include="ExternalTools\scripts\xmlrpc-methods.nse" />
+    <Content Include="ExternalTools\scripts\xmpp-brute.nse" />
+    <Content Include="ExternalTools\scripts\xmpp-info.nse" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\CyberWatcherLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\alarm_icon.png" />
+    <Resource Include="Assets\analytics_icon.png" />
+    <Resource Include="Assets\android_icon.png" />
+    <Resource Include="Assets\angular_icon.png" />
+    <Resource Include="Assets\audio_icon.png" />
+    <Resource Include="Assets\back_icon.png" />
+    <Resource Include="Assets\book_icon.png" />
+    <Resource Include="Assets\calendar_icon.png" />
+    <Resource Include="Assets\chart_icon.png" />
+    <Resource Include="Assets\clap_icon.png" />
+    <Resource Include="Assets\close_icon.png" />
+    <Resource Include="Assets\close_mo_icon.png" />
+    <Resource Include="Assets\Desktop_Icon.png" />
+    <Resource Include="Assets\Document_Icon.png" />
+    <Resource Include="Assets\Download_Icon.png" />
+    <Resource Include="Assets\drive_icon.png" />
+    <Resource Include="Assets\export_icon.png" />
+    <Resource Include="Assets\file_icon.png" />
+    <Resource Include="Assets\film_icon.png" />
+    <Resource Include="Assets\flutter_icon.png" />
+    <Resource Include="Assets\folder_icon.png" />
+    <Resource Include="Assets\headphone_icon.png" />
+    <Resource Include="Assets\Home_Icon.png" />
+    <Resource Include="Assets\html_icon.png" />
+    <Resource Include="Assets\Images_Icon.png" />
+    <Resource Include="Assets\invoice_icon.png" />
+    <Resource Include="Assets\javascript_icon.png" />
+    <Resource Include="Assets\Movies_Icon.png" />
+    <Resource Include="Assets\movie_icon.png" />
+    <Resource Include="Assets\musical_icon.png" />
+    <Resource Include="Assets\Music_Icon.png" />
+    <Resource Include="Assets\network_icon.png" />
+    <Resource Include="Assets\notepad_icon.png" />
+    <Resource Include="Assets\note_icon.png" />
+    <Resource Include="Assets\order_icon.png" />
+    <Resource Include="Assets\password_icon.png" />
+    <Resource Include="Assets\pctrash_icon.png" />
+    <Resource Include="Assets\pc_icon.png" />
+    <Resource Include="Assets\picture_icon.png" />
+    <Resource Include="Assets\printer_icon.png" />
+    <Resource Include="Assets\print_icon.png" />
+    <Resource Include="Assets\python_icon.png" />
+    <Resource Include="Assets\services_icon.png" />
+    <Resource Include="Assets\stock_icon.png" />
+    <Resource Include="Assets\studio_icon.png" />
+    <Resource Include="Assets\swift_icon.png" />
+    <Resource Include="Assets\usb_icon.png" />
+    <Resource Include="Assets\vsc_icon.png" />
+    <Resource Include="Assets\vs_icon.png" />
+    <Resource Include="Assets\webcam_icon.png" />
+    <Resource Include="Assets\wifi_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next">
+      <Version>4.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts">
+      <Version>10.0.22000.196</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.WindowsRuntime.UI.Xaml">
+      <Version>4.7.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ExternalTools\libcrypto-1_1.dll" />
+    <Content Include="ExternalTools\libssh2.dll" />
+    <Content Include="ExternalTools\libssl-1_1.dll" />
+    <Content Include="ExternalTools\nmap.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExternalTools\nselib\data\drupal-modules.lst" />
+    <Content Include="ExternalTools\nselib\data\drupal-themes.lst" />
+    <Content Include="ExternalTools\nselib\data\enterprise_numbers.txt" />
+    <Content Include="ExternalTools\nselib\data\http-folders.txt" />
+    <Content Include="ExternalTools\nselib\data\http-sql-errors.lst" />
+    <Content Include="ExternalTools\nselib\data\http-web-files-extensions.lst" />
+    <Content Include="ExternalTools\nselib\data\jdwp-class\JDWPExecCmd.java" />
+    <Content Include="ExternalTools\nselib\data\jdwp-class\JDWPSystemInfo.java" />
+    <Content Include="ExternalTools\nselib\data\jdwp-class\README.txt" />
+    <Content Include="ExternalTools\nselib\data\oracle-default-accounts.lst" />
+    <Content Include="ExternalTools\nselib\data\passwords.lst" />
+    <Content Include="ExternalTools\nselib\data\pixel.gif" />
+    <Content Include="ExternalTools\nselib\data\psexec\nmap_service.c" />
+    <Content Include="ExternalTools\nselib\data\rtsp-urls.txt" />
+    <Content Include="ExternalTools\nselib\data\snmpcommunities.lst" />
+    <Content Include="ExternalTools\nselib\data\tftplist.txt" />
+    <Content Include="ExternalTools\nselib\data\usernames.lst" />
+    <Content Include="ExternalTools\nselib\data\vhosts-default.lst" />
+    <Content Include="ExternalTools\nselib\data\vhosts-full.lst" />
+    <Content Include="ExternalTools\nselib\data\wp-plugins.lst" />
+    <Content Include="ExternalTools\nselib\data\wp-themes.lst" />
+    <Content Include="ExternalTools\nmap.xsl" />
+    <Content Include="ExternalTools\python27.dll" />
+    <Content Include="ExternalTools\zlibwapi.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\Nmap\NmapOutput\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
