@@ -39,7 +39,7 @@ namespace CyberWatcher.ViewModel
             //Insert();
             Display();
         }
-        public int user = StaticUtilities.UserID;
+        
         private void Display()
         {
             
@@ -47,7 +47,7 @@ namespace CyberWatcher.ViewModel
             {
                 SqlCommand cmd = new SqlCommand("SELECT PassUsername, PassPassword, PassSite, PassEmail FROM [dbo].[PassManDB]" +
                     " WHERE FK_UserID=@UserId", cn);
-                cmd.Parameters.AddWithValue("@UserId", user);
+                cmd.Parameters.AddWithValue("@UserId", StaticUtilities.UserID);
                 cn.Open();
 
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -59,7 +59,7 @@ namespace CyberWatcher.ViewModel
                     SQLPass = new ObservableCollection<SQLPass>();
                 }
                 
-                SQLPass.Clear();  
+                SQLPass.Clear();
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
                      
@@ -92,7 +92,7 @@ namespace CyberWatcher.ViewModel
                     SqlParameter email = new SqlParameter("@PassEmail", SqlDbType.VarChar);
                     cmd.Parameters.Add(email).Value = TxtPassEmail;
 
-                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = user;
+                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
                     cmd.Parameters.AddWithValue("@PassSite", DbType.String).Value = TxtPassSite;
                     cn.Open();
                     cmd.ExecuteNonQuery();
@@ -134,7 +134,7 @@ namespace CyberWatcher.ViewModel
                     SqlParameter email = new SqlParameter("@PassEmail", SqlDbType.VarChar);
                     cmd.Parameters.Add(email).Value = TxtPassEmail;
 
-                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = user;
+                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
                     cmd.Parameters.AddWithValue("@PassSite", DbType.String).Value = TxtPassSite;
                     cn.Open();
                     cmd.ExecuteNonQuery();

@@ -13,7 +13,6 @@ namespace CyberWatcher.ViewModel
 {
     public class StartupViewModel : INotifyPropertyChanged
     {
-        DbConnection con = new DbConnection();
         public string _txtUserLog;
         public string _txtPassLog;
         public string _txtUserReg;
@@ -27,11 +26,81 @@ namespace CyberWatcher.ViewModel
         {
             
         }
+
+        public void Login(string username, string password)
+        {
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Select PK_UserID from [dbo].[UserDB] WHERE Username=@Username AND UserPassword=@Password", cn);
+                    cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(password));
+
+                    cn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        StaticUtilities.UserID = Convert.ToInt32(reader[0]);
+                        
+                        MainWindow main = new MainWindow();
+                        main.Show();
+                        Application.Current.MainWindow.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error", "Information");
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Information");
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+        }
+        public void RegUser()
+        {
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO[dbo].[UserDB](Username, UserPassword, UserEmail) values(@username, @password, @email)", cn);
+                    cmd.Parameters.AddWithValue("@Username", TxtPassReg);
+                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(TxtPassReg));
+
+                    SqlParameter email = new SqlParameter("@Email", SqlDbType.VarChar);
+                    cmd.Parameters.Add(email).Value = TxtEmailReg;
+                    cn.Open();
+
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Account created", "Information");
+
+                    Login(TxtUserReg, TxtPassReg);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Information");
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+        }
         public ICommand BtnReg
         {
             get
             {
-                return _btnReg ?? (_btnReg = new RelayCommand(p => Registrator()));
+                return _btnReg ?? (_btnReg = new RelayCommand(p => RegUser()));
             }
         }
         public ICommand BtnLogin
@@ -86,75 +155,7 @@ namespace CyberWatcher.ViewModel
                 OnPropertyChanged(TxtEmailReg);
             }
         }
-        public void Login(string username, string password)
-        {
-            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("Select PK_UserID from [dbo].[UserDB] WHERE Username=@Username AND UserPassword=@Password", cn);
-                    cmd.Parameters.AddWithValue("@Username", username);
-                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(password));
-
-                    cn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        StaticUtilities.UserID = Convert.ToInt32(reader[0]);
-                        Debug.WriteLine(StaticUtilities.UserID);
-                        MainWindow main = new MainWindow();
-                        main.Show();
-                        Application.Current.MainWindow.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error", "Information");
-                    }
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Information");
-
-                }
-                finally
-                {
-                    cn.Close();
-                }
-            }
-        }
-        public void Registrator()
-        {
-            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO[dbo].[UserDB](Username, UserPassword, UserEmail) values(@username, @password, @email)", cn);
-                    cmd.Parameters.AddWithValue("@Username", TxtPassReg);
-                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(TxtPassReg));
-
-                    SqlParameter email = new SqlParameter("@Email", SqlDbType.VarChar);
-                    cmd.Parameters.Add(email).Value = TxtEmailReg;
-                    cn.Open();
-
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Account created", "Information");
-                    
-                    Login(TxtUserReg, TxtPassReg);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Information");
-
-                }
-                finally
-                {
-                    cn.Close();
-                }
-            }
-        }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propName)

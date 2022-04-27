@@ -96,12 +96,12 @@
     <Compile Include="Helper\ObservableObject.cs" />
     <Compile Include="Model\Bandwidth Speed\UploadMonitor.cs" />
     <Compile Include="Model\DeviceInformationDisplay.cs" />
+    <Compile Include="Model\Nmap\NmapClasses.cs" />
     <Compile Include="Model\Nmap\NmapScan.cs" />
     <Compile Include="Model\Nmap\NmapXMLModels.cs" />
     <Compile Include="Model\Password Manager\DbConnection.cs" />
     <Compile Include="Model\Password Manager\PasswordGenerate.cs" />
     <Compile Include="ViewModel\PasswordViewModel.cs" />
-    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\UserAccountViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
@@ -112,9 +112,6 @@
     </Compile>
     <Compile Include="View\PasswordView.xaml.cs">
       <DependentUpon>PasswordView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SettingsView.xaml.cs">
-      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserAccountView.xaml.cs">
       <DependentUpon>UserAccountView.xaml</DependentUpon>
@@ -169,10 +166,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PasswordView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1008,6 +1001,7 @@
     <Content Include="ExternalTools\scripts\xmlrpc-methods.nse" />
     <Content Include="ExternalTools\scripts\xmpp-brute.nse" />
     <Content Include="ExternalTools\scripts\xmpp-info.nse" />
+    <Resource Include="Fonts\password.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

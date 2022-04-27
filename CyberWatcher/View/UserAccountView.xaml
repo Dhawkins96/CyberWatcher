@@ -42,12 +42,12 @@
             <StackPanel Margin="43,42,0,18.4" HorizontalAlignment="Left" Width="320">
 
                 <Label Content="Username:" Foreground="White" />
-                <Label x:Name="lblUsername" Content="{Binding LblUsername}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="16" Height="7"/>
+                <Label x:Name="lblUsername" Content="{Binding LblUsername, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="16" />
 
                 <Label Content="Email:" Foreground="White"/>
-                <Label x:Name="lblEmail" Content="{Binding LblEmail}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="298" Foreground="White" FontSize="16"/>
+                <Label x:Name="lblEmail" Content="{Binding LblUserEmail, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="298" Foreground="White" FontSize="16"/>
                 <Grid Height="40">
-                    <Button Content="Logout" x:Name="btnLogout" Background="Gray" Foreground="White"  Command="{Binding BtnReg}" Height="40" VerticalAlignment="Top" Margin="59,0,53,0" >
+                    <Button Content="Logout" x:Name="btnLogout" Background="Gray" Foreground="White"  Command="{Binding BtnLogout}" Height="40" VerticalAlignment="Top" Margin="59,0,53,0" >
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -58,7 +58,7 @@
 
             </StackPanel>
         </Border>
-        <Button Content="Delete User" x:Name="btnDelete" Background="Red" Foreground="White" Margin="59,2.2,563,37.6" Command="{Binding BtnReg}" Grid.Row="1">
+        <Button Content="Delete User" x:Name="btnDelete" Background="Red" Foreground="White" Margin="59,2.2,563,37.6" Command="{Binding BtnDeleteUser}" Grid.Row="1">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

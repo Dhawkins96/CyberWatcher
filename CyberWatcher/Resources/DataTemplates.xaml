@@ -23,12 +23,6 @@
         <view:PasswordView/>
     </DataTemplate>
 
-    <!--Settings Page-->
-
-    <DataTemplate DataType="{x:Type viewmodel:SettingsViewModel}">
-        <view:SettingsView/>
-    </DataTemplate>
-
     <!--UserAccount Page-->
 
     <DataTemplate DataType="{x:Type viewmodel:UserAccountViewModel}">

@@ -14,6 +14,7 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -34,8 +35,11 @@ namespace CyberWatcher.View
         public HomeView()
         {
             InitializeComponent();
+            
+            
+            
 
-            if(ScanRunning == true)
+            if (ScanRunning == true)
             {
                 lblScanOutput.Content = "SCAN STILL RUNNING";
                 Scan.IsEnabled = false;

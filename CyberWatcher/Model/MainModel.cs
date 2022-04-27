@@ -33,13 +33,6 @@ namespace CyberWatcher.Model
         public string PasswordImage { get; set; }
     }
 
-    // Settings Page
-    public class SettingsItems
-    {
-        public string SettingsName { get; set; }
-        public string SettingsImage { get; set; }
-    }
-
     // UserAccount Page
     public class UserAccountItems
     {
