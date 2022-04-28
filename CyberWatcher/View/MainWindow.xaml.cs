@@ -13,13 +13,14 @@ namespace CyberWatcher.View
     public partial class MainWindow : Window
     {
         public List<IMonitor> Monitors { get; }
+
         public MainWindow()
         {
             InitializeComponent();
+
             Monitors = new List<IMonitor> {
                 new DownloadMonitor(),
-                new UploadMonitor(),
-                new LatencyMonitor()
+                new UploadMonitor()
             };
         }
         public async Task StartMonitoring()

@@ -12,6 +12,11 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Diagnostics;
+using System.Data.SqlClient;
+using System.Windows;
+using CyberWatcher.Model.Password_Manager;
+using System.Data;
+using System.Windows.Data;
 
 namespace CyberWatcher.ViewModel
 {
@@ -24,45 +29,100 @@ namespace CyberWatcher.ViewModel
 
         private ObservableCollection<string> _host = new ObservableCollection<string>();
         private string _selectedHost;
-        
-        private ObservableCollection<string> _hostDetails = new ObservableCollection<string>();
-        private ObservableCollection<string> _hostPortDetails = new ObservableCollection<string>();
+        private ListViewPorts _selectedPort;
 
-        
+        private ObservableCollection<HostDetails> _ListHostDetails = new ObservableCollection<HostDetails>();
+        private ObservableCollection<PortService> _ListhostPortDetails = new ObservableCollection<PortService>();
+        private ObservableCollection<ScanInfo> _ListScanDetails = new ObservableCollection<ScanInfo>();
+
+        public string xmlFile;
         public event EventHandler ScanComplete;
         public  XmlDocument doc = new XmlDocument();
+        private ObservableCollection<ListViewPorts> _items = new ObservableCollection<ListViewPorts>();
 
-        public static string NmapScanResults;
-
-        private ICommand _btnScan;
-        public ICommand BtnScan
+        public ObservableCollection<ListViewPorts> Items
         {
-            get
-            {
-                return _btnScan ?? (_btnScan = new RelayCommand(p => DoScan()));
+            get { return _items; }
+            set 
+            { 
+                _items = value;
+                
             }
         }
 
-        public string xmlFile = StaticUtilities.LastScan.Name;
+        public static string NmapScanResults;
 
         public HomeViewModel()
-        { 
-            xmlNmap();
-            doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + xmlFile);
-            
+        {
+            GetScanInfo();
+            GetUserNmap();
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Items);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("states");
+            view.GroupDescriptions.Add(groupDescription);
+
+
+
             devices = DeviceSelectorChoices.DevicePickerSelectors;
             foreach (DeviceInfo info in devices)
             {
                 Collection.Add(info);
             }
-
+            SelectedDevice = Collection.First();
         }
 
-        public void DoScan()
+        public void GetUserNmap()
         {
-            //input in here for command button to run nmap scan!!
+            
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Select NmapName From [dbo].[XMLNmapDB] WHERE " +
+                        "PK_NmapID =(Select Max(PK_NmapID) FROM [dbo].[XMLNmapDB] WHERE FK_UserId=@UserID)", cn);
 
+                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
+                    
+                    cn.Open();
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataSet ds = new DataSet();
+                    adapter.Fill(ds, "UserDB");
+                    cmd.ExecuteNonQuery();
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                        {
+                            xmlFile = dr[0].ToString();
+                        }
+                    if(xmlFile == null)
+                    {
+                        Debug.WriteLine("No Scans found");
+                    }
+                    else
+                    {
+                        
+                        doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + xmlFile);
+                        xmlNmap();
+                        GetScanInfo();
+                        Debug.WriteLine(xmlFile);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "SQL Database Error");
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+           
         }
+        
+
+       
+
 
         public string LoadNmapScanInBackground()
         {
@@ -94,30 +154,29 @@ namespace CyberWatcher.ViewModel
         //change name of mathod!!
         public void xmlNmap()
         {
-            doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + xmlFile);
-            Debug.WriteLine(xmlFile);
             XmlNodeList addresses = doc.SelectNodes("/nmaprun/host[status/@state='up']/address");
 
             for (int i = 0; i < addresses.Count; i++)
             {
-                string attrVal = addresses[i].Attributes["addr"].Value;
-                string attrVal1 = addresses[i].Attributes["addrtype"].Value;
-                if(attrVal1 == "ipv4")
+                string addr = addresses[i].Attributes["addr"].Value;
+                string addrType = addresses[i].Attributes["addrtype"].Value;
+                if(addrType == "ipv4")
                 {
-                    Host.Add(attrVal);
+                    Host.Add(addr);
                 }
                 
             }
-            
+            SelectedHost = Host.First();
         }
+       
 
         public void GetHostInfo()
         {
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
             nsmgr.AddNamespace("ns", "file:///C:/Users/Daisy/source/repos/WPF_CyberWatcher/CyberWatcher/ExternalTools/nmap.xsl");
 
-            HostDetails.Clear();
-            
+            ListHostDetails.Clear();
+            HostDetails hd = new HostDetails();
             XmlNodeList chosenIP = doc.SelectNodes("descendant::host[address/@addr='" + SelectedHost + "']", nsmgr);
             foreach (XmlNode host in chosenIP)
             {
@@ -125,7 +184,9 @@ namespace CyberWatcher.ViewModel
                 for(int i = 0; i < status.Count; i++)
                 {
                     string state = status[i].Attributes["state"].Value;
-                    HostDetails.Add(state);
+
+                    hd.HostState = state;
+                    
                 }
 
                 XmlNodeList address = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/address", nsmgr);
@@ -136,8 +197,9 @@ namespace CyberWatcher.ViewModel
                     string addVendor = address[i].Attributes["vendor"]?.Value;
                     if (addrType == "mac")
                     {
-                        HostDetails.Add(addr);
-                        HostDetails.Add(addVendor);
+                        hd.HostMac = addr;
+                        hd.HostVendor = addVendor;
+                                                
                     }
 
                 }
@@ -147,8 +209,9 @@ namespace CyberWatcher.ViewModel
                 {
                     string osName = osMatch[i].Attributes["name"].Value;
                     string osAccuracy = osMatch[i].Attributes["accuracy"].Value;
-                    HostDetails.Add(osName);
-                    HostDetails.Add(osAccuracy);
+                    hd.HostOsName = osName;
+                    hd.HostOsAccuracy = osAccuracy;
+                   
                 }
                 XmlNodeList osClass = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/os/osmatch/osclass", nsmgr);
                 for (int i = 0; i < osClass.Count; i++)
@@ -157,56 +220,113 @@ namespace CyberWatcher.ViewModel
                     string osFamily = osClass[i].Attributes["osfamily"]?.Value;
                     string osType = osClass[i].Attributes["ostype"]?.Value;
                     string osGen = osClass[i].Attributes["osgen"]?.Value;
-                    HostDetails.Add(osVendor);
-                    HostDetails.Add(osFamily);
-                    HostDetails.Add(osType);
-                    HostDetails.Add(osGen);
+                    hd.HostOsVendor = osVendor;
+                    hd.HostOsFamily = osFamily;
+                    hd.HostOsType = osType;
+                    hd.HostOsGen = osGen;
+                    
                 }
+                ListHostDetails.Add(hd);
+                
+                
             }
 
         }
-
+       
         public void GetPortInfo()
         {
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
             nsmgr.AddNamespace("ns", "file:///C:/Users/Daisy/source/repos/WPF_CyberWatcher/CyberWatcher/ExternalTools/nmap.xsl");
 
-            HostPortDetails.Clear();
-
+            Items.Clear();
+            
             XmlNodeList chosenIP = doc.SelectNodes("descendant::host[address/@addr='" + SelectedHost + "']", nsmgr);
             foreach (XmlNode host in chosenIP)
             {
-                XmlNodeList port = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/ports/port", nsmgr);
-                for (int i = 0; i < port.Count; i++) 
+                XmlNodeList openPort = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/ports/port[state/@state = 'open']", nsmgr);
+                for (int i = 0; i < openPort.Count; i++) 
                 {
-                    string portId = port[i].Attributes["portid"].Value;
-                    string portProto = port[i].Attributes["protocol"].Value;
-
-                    HostPortDetails.Add(portId);
-                    HostPortDetails.Add(portProto);
+                    Items.Add(new ListViewPorts()
+                    {
+                        PortID = openPort[i].Attributes["portid"].Value,
+                        PortProtocol = openPort[i].Attributes["protocol"].Value,
+                        states = States.Open
+                        
+                    });
+                    
                 }
-                XmlNodeList state = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/ports/port/state", nsmgr);
-                for(int i = 0; i < state.Count; i++)
+                XmlNodeList closePort = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/ports/port[state/@state = 'closed']", nsmgr);
+                for (int i = 0; i < closePort.Count; i++)
                 {
-                    string portState = state[i].Attributes["state"].Value;
+                    Items.Add(new ListViewPorts()
+                    {
+                        PortID = closePort[i].Attributes["portid"].Value,
+                        PortProtocol = closePort[i].Attributes["protocol"].Value,
+                        states = States.Close
 
-                    HostPortDetails.Add(portState);
+                    });
+
                 }
+                XmlNodeList filteredPort = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/ports/port[state/@state = 'filtered']", nsmgr);
+                for (int i = 0; i < filteredPort.Count; i++)
+                {
+                    Items.Add(new ListViewPorts()
+                    {
+                        PortID = filteredPort[i].Attributes["portid"].Value,
+                        PortProtocol = filteredPort[i].Attributes["protocol"].Value,
+                        states = States.Filtered
 
-                XmlNodeList service = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/ports/port/service", nsmgr);
+                    });
+
+                }
+            }
+            ListHostPortDetails.Clear();
+        }
+
+        public void GetScanInfo()
+        {
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+            nsmgr.AddNamespace("ns", "file:///C:/Users/Daisy/source/repos/WPF_CyberWatcher/CyberWatcher/ExternalTools/nmap.xsl");
+            ScanInfo sc = new ScanInfo();
+            XmlNodeList scan = doc.SelectNodes("/nmaprun/runstats/finished", nsmgr);
+
+            ListScanDetails.Clear();
+
+            for (int i = 0; i < scan.Count; i++)
+            {
+                string time = scan[i].Attributes["timestr"].Value;
+                string sum = scan[i].Attributes["summary"].Value;
+                sc.ScanTime = time;
+                sc.Summary = sum;
+
+            }
+            ListScanDetails.Add(sc);
+        }
+       
+        public void GetServiceInfo()
+        {
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+            nsmgr.AddNamespace("ns", "file:///C:/Users/Daisy/source/repos/WPF_CyberWatcher/CyberWatcher/ExternalTools/nmap.xsl");
+
+            PortService ps = new PortService();
+            ListHostPortDetails.Clear();
+            XmlNodeList chosenIP = doc.SelectNodes("descendant::host[address/@addr='" + SelectedHost + "']", nsmgr);
+            foreach (XmlNode host in chosenIP)
+            {
+               
+                XmlNodeList service = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/ports/port[@portid='" + SelectedPort.PortID + "']/service", nsmgr);
                 for (int i = 0; i < service.Count; i++)
                 {
                     string serName = service[i].Attributes["name"].Value;
                     string serProduct = service[i].Attributes["product"]?.Value;
                     string serVersion = service[i].Attributes["version"]?.Value;
 
-                    HostPortDetails.Add(serName);
-                    HostPortDetails.Add(serProduct);
-                    HostPortDetails.Add(serVersion);
+                    ps.ServiceName = serName;
+                    ps.Product = serProduct;
+                    ps.Verison = serVersion;
                 }
-
-
-            } 
+                ListHostPortDetails.Add(ps);
+            }
 
         }
 
@@ -251,22 +371,31 @@ namespace CyberWatcher.ViewModel
                 _host = value;
             }
         }
+        
 
-        public ObservableCollection<string> HostDetails
+        public ObservableCollection<HostDetails> ListHostDetails
         {
-            get { return _hostDetails; }
+            get { return _ListHostDetails; }
             set
             {
-                _hostDetails = value;
+                _ListHostDetails = value;
             }
         }
 
-        public ObservableCollection<string> HostPortDetails
+        public ObservableCollection<PortService> ListHostPortDetails
         {
-            get { return _hostPortDetails; }
+            get { return _ListhostPortDetails; }
             set
             {
-                _hostPortDetails = value;
+                _ListhostPortDetails = value;
+            }
+        }
+        public ObservableCollection<ScanInfo> ListScanDetails
+        {
+            get { return _ListScanDetails; }
+            set
+            {
+                _ListScanDetails = value;
             }
         }
 
@@ -278,8 +407,30 @@ namespace CyberWatcher.ViewModel
                 if(_selectedHost != value)
                 {
                     _selectedHost = value;
+                    
                     GetHostInfo();
                     GetPortInfo();
+                    
+                }
+            }
+        }
+        public ListViewPorts SelectedPort
+        {
+            get 
+            { 
+               
+                return _selectedPort; 
+            }
+            set
+            {
+                if (_selectedPort != value)
+                {
+                    _selectedPort = value;
+                    if(SelectedPort != null)
+                    {
+                        
+                        GetServiceInfo();
+                    }
                 }
             }
         }
@@ -322,4 +473,5 @@ namespace CyberWatcher.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
+    
 }

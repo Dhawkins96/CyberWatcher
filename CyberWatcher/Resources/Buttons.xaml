@@ -3,7 +3,6 @@
                     xmlns:local="clr-namespace:CyberWatcher.Helper">
 
 
-    <!-- Styl wyłączenia  -->
     <Style TargetType="{x:Type Button}"
            x:Key="Button_Exit">
         <Setter Property="Background" Value="Transparent" />
@@ -23,7 +22,6 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Styl Maksymalizacji i minimalizacji -->
     <Style TargetType="{x:Type Button}" x:Key="Button_MaxAndMin">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#72767D" />
@@ -43,7 +41,6 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Styl Wyboru przycisku  -->
     <Style TargetType="{x:Type Button}" x:Key="Button_Choice">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
@@ -62,8 +59,6 @@
         </Style.Triggers>
     </Style>
 
-
-    <!--Styl przycisku długości hasła (+/-)-->
     <Style TargetType="{x:Type Button}" x:Key="Button_PlusAndMinus">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
@@ -82,8 +77,6 @@
         </Style.Triggers>
     </Style>
 
-
-    <!--Styl przycisków stron / programów -->
     <Style x:Key="ToggleButton_Chose" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="#32353B" />
         <Setter Property="Margin" Value="10,5" />
@@ -124,8 +117,6 @@
         </Style.Triggers>
     </Style>
 
-
-    <!-- Styl wyboru Web lub App -->
     <Style x:Key="ToggleButton_Chose2" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="#2F3136" />
         <Setter Property="BorderThickness" Value="0" />

@@ -1,71 +1,147 @@
-﻿using CyberWatcher.Model;
+﻿using CyberWatcher.Helper;
+using CyberWatcher.Model.Password_Manager;
+using CyberWatcher.View;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
+using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CyberWatcher.ViewModel
 {
     public class UserAccountViewModel : INotifyPropertyChanged
     {
-        private CollectionViewSource UserAccountItemsCollection;
-        public ICollectionView UserAccountSourceCollection => UserAccountItemsCollection.View;
+        private int UserID;
+
+        protected string _lblUsername;
+        protected string _lblUserEmail;
+        private ICommand _btnLogout;
+        private ICommand _btnDeleteUser;
 
         public UserAccountViewModel()
         {
-            ObservableCollection<UserAccountItems> UserAccountItems = new ObservableCollection<UserAccountItems>
-            {
-                new UserAccountItems { UserAccountName = "Visual Studio 2019", UserAccountImage = "/Assets/vs_icon.png" },
-                new UserAccountItems { UserAccountName = "Android Studio", UserAccountImage = "/Assets/android_icon.png" },
-                new UserAccountItems { UserAccountName = "Python", UserAccountImage = "/Assets/python_icon.png" },
-                new UserAccountItems { UserAccountName = "Swift", UserAccountImage = "/Assets/swift_icon.png" },
-                new UserAccountItems { UserAccountName = "Visual Studio Code", UserAccountImage = "/Assets/vsc_icon.png" },
-                new UserAccountItems { UserAccountName = "Javascript", UserAccountImage = "/Assets/javascript_icon.png" },
-                new UserAccountItems { UserAccountName = "HTML 5", UserAccountImage = "/Assets/html_icon.png" },
-                new UserAccountItems { UserAccountName = "Angular", UserAccountImage = "/Assets/angular_icon.png" },
-                new UserAccountItems { UserAccountName = "Flutter", UserAccountImage = "/Assets/flutter_icon.png" }
-            };
-
-            UserAccountItemsCollection = new CollectionViewSource { Source = UserAccountItems };
-            UserAccountItemsCollection.Filter += MenuItems_Filter;
+            GetUserInfo();
+            UserID = StaticUtilities.UserID;
 
         }
 
-        private string filterText;
-        public string FilterText
+        public void GetUserInfo()
         {
-            get => filterText;
-            set
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
             {
-                filterText = value;
-                UserAccountItemsCollection.View.Refresh();
-                OnPropertyChanged("FilterText");
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("SELECT Username, UserEmail FROM [dbo].[UserDB]" +
+                    " WHERE PK_UserID=@UserId", cn);
+                    cmd.Parameters.AddWithValue("@UserId", StaticUtilities.UserID);
+                    cn.Open();
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    DataSet ds = new DataSet();
+                    adapter.Fill(ds, "UserDB");
+                    cmd.ExecuteNonQuery();
+
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+
+                        LblUsername = dr[0].ToString();
+                        LblUserEmail = dr[1].ToString();
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Information");
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
             }
         }
 
-        private void MenuItems_Filter(object sender, FilterEventArgs e)
+        private void DeleteUser()
         {
-            if (string.IsNullOrEmpty(FilterText))
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
             {
-                e.Accepted = true;
-                return;
-            }
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("DELETE FROM [dbo].[UserDB] WHERE PK_UserID=@UserID", cn);
+                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
+                    
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
 
-            UserAccountItems _item = e.Item as UserAccountItems;
-            if (_item.UserAccountName.ToUpper().Contains(FilterText.ToUpper()))
+                    Logout();
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Information");
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            Debug.WriteLine("Deleted");
+        }
+
+        public void Logout()
+        {
+            if (UserID != 0)
             {
-                e.Accepted = true;
+                StaticUtilities.UserID = 0;
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+
             }
             else
             {
-                e.Accepted = false;
+                MessageBox.Show("Error", "User Not Logged in");
+            }
+            
+        }
+
+        public ICommand BtnDeleteUser
+        {
+            get
+            {
+                return _btnDeleteUser ?? (_btnDeleteUser = new RelayCommand(p => DeleteUser()));
             }
         }
 
+        public ICommand BtnLogout
+        {
+            get
+            {
+                return _btnLogout ?? (_btnLogout = new RelayCommand(p => Logout()));
+            }
+        }
+
+        public string LblUsername
+        {
+            get { return _lblUsername; }
+            set
+            {
+                _lblUsername = value;
+                OnPropertyChanged(LblUsername);
+            }
+        }
+        public string LblUserEmail
+        {
+            get { return _lblUserEmail; }
+            set
+            {
+                _lblUserEmail = value;
+                OnPropertyChanged(LblUserEmail);
+            }
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propName)
         {

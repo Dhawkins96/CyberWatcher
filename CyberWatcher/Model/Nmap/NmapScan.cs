@@ -1,12 +1,16 @@
 ﻿using CyberWatcher.Helper;
+using CyberWatcher.Model.Password_Manager;
 using CyberWatcher.View;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace CyberWatcher.Model.Nmap
@@ -37,12 +41,8 @@ namespace CyberWatcher.Model.Nmap
                     //sb.Append("-p- ");
                     sb.Append("-A ");
                     sb.Append("-v ");
-                    //sb.Append("-Pn ");
-                    //smb enumeration as this port has a poor security track record.
-                    //Brute force SSH, Telnet, FTP
-                    //sb.Append("--script ssh-brute,telnet-brute,ftp-brute,smb-os-discovery, ");
-
-                    // Test popular ports 
+                    
+                    // Saves to XML 
                     sb.Append("-oX " + @"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\Output-%T%D.xml ");
 
                     //local network scan takes local ip from dns and scans class subnet
@@ -54,21 +54,14 @@ namespace CyberWatcher.Model.Nmap
                     //add the arguments to the end of the nmap scan
                     myProcess.StartInfo.Arguments = sb.ToString();
                     //hide the window to avoid a popup
-                    myProcess.StartInfo.CreateNoWindow = true;                    
-                    //myProcess.StartInfo.RedirectStandardOutput = true;
-                    //myProcess.StartInfo.RedirectStandardError = true;
+                    myProcess.StartInfo.CreateNoWindow = true;
                     myProcess.Exited += new EventHandler(myProcess_Exited);
                     await Task.Run(() => myProcess.Start());
 
-                    ////outputs the result as a string to the results page. 
-                    //var stdOutSb = new StringBuilder();
                     while (!myProcess.HasExited)
                     {
                         ScanFinished = "Loading";
-                        //stdOutSb.Append(myProcess.StandardOutput.ReadToEnd());
-                        //stdOutSb.Append(myProcess.StandardError.ReadToEnd());
                     }
-
 
                     return ScanFinished;
                 }
@@ -80,8 +73,37 @@ namespace CyberWatcher.Model.Nmap
             }
         }
 
-        private void myProcess_Exited(object sender, System.EventArgs e)
+        private void Insert()
         {
+            StaticUtilities.LastScan = new DirectoryInfo(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput").GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
+            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("insert into [dbo].[XMLNmapDB] (FK_UserID, NmapName) values (@UserID, @NmapName)", cn);
+
+                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
+                    cmd.Parameters.AddWithValue("@NmapName", DbType.String).Value = StaticUtilities.LastScan.Name;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "SQL Database Error");
+
+                }
+                finally
+                {
+                    cn.Close();
+                }
+            }
+            Debug.WriteLine("inserted");
+        }
+
+        private void myProcess_Exited(object sender, EventArgs e)
+        {
+            Insert();
             ScanFinished = "Scan Finished";
         }
 

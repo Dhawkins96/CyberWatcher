@@ -25,9 +25,8 @@ namespace CyberWatcher.ViewModel
                 ObservableCollection<MenuItems> menuItems = new ObservableCollection<MenuItems>
                 {
 
-                    new MenuItems { MenuName = "Help", MenuImage = "/Assets/Music_Icon.png" },
-                    new MenuItems { MenuName = "Settings", MenuImage = "/Assets/Document_Icon.png" },
-                    new MenuItems { MenuName = "User Account", MenuImage = "/Assets/Download_Icon.png" }
+                   
+                    
                 };
                 MenuItemsCollection = new CollectionViewSource { Source = menuItems };
                 SelectedViewModel = new StartupViewModel();
@@ -39,7 +38,6 @@ namespace CyberWatcher.ViewModel
                     new MenuItems { MenuName = "Home", MenuImage = "/Assets/Home_Icon.png" },
                     new MenuItems { MenuName = "Password", MenuImage = "/Assets/Desktop_Icon.png" },
                     new MenuItems { MenuName = "Help", MenuImage = "/Assets/Music_Icon.png" },
-                    new MenuItems { MenuName = "Settings", MenuImage = "/Assets/Document_Icon.png" },
                     new MenuItems { MenuName = "User Account", MenuImage = "/Assets/Download_Icon.png" }
                 };
                 MenuItemsCollection = new CollectionViewSource { Source = menuItems };
@@ -118,9 +116,6 @@ namespace CyberWatcher.ViewModel
                     break;
                 case "Password":
                     SelectedViewModel = new PasswordViewModel();
-                    break;
-                case "Settings":
-                    SelectedViewModel = new SettingsViewModel();
                     break;
                 case "User Account":
                     SelectedViewModel = new UserAccountViewModel();

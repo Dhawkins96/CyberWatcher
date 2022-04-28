@@ -9,26 +9,14 @@ namespace CyberWatcher.Model.Password_Manager
 {
     public class DbConnection
     {
-        public static SqlConnection connectionString;
-
-        public static SqlConnection DataSource()
+        public static string GetConnection()
         {
-            connectionString = new SqlConnection(@"Server = daisy; DataBase = CyberWatcher; Integrated Security = true");
-            return connectionString;
+            string cs = @"Server = daisy; DataBase = CyberWatcher; Integrated Security = true";
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(cs);
+            builder.ColumnEncryptionSetting = SqlConnectionColumnEncryptionSetting.Enabled;
+            return builder.ConnectionString;
+           
         }
 
-        public void connOpen()
-        {
-            DataSource();
-            connectionString.Open();
-        }
-
-        public void connClose()
-        {
-            DataSource();
-            connectionString.Close();
-        }
-
-       
     }
 }

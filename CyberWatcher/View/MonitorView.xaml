@@ -16,6 +16,7 @@
 
         <TextBlock Grid.Column="0"
                    Text="{Binding Icon.Text}"
+                   FontSize="12"
                    Foreground="{Binding Icon.Brush}"
                    ToolTip="{Binding Icon.Name}"
                    FontWeight="DemiBold"

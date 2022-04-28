@@ -24,6 +24,10 @@
     </UserControl.Style>
 
     <Grid Background="#303030">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="377*"/>
+            <RowDefinition Height="73*"/>
+        </Grid.RowDefinitions>
 
         <TextBlock Text="User Account Details"
                    FontSize="24"
@@ -31,45 +35,37 @@
                    Foreground="#DDDDDD"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Margin="5,12,0,0" />
+                   Margin="5,12,0,0" Height="33" Width="232" />
 
-        <Grid Height="40"
-              Width="180"
-              HorizontalAlignment="Right"
-              VerticalAlignment="Top"
-              Margin="0,10,15,0">
 
-            <TextBox x:Name="SearchBox"
-                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource SearchBoxStyle}" />
+        <Border  CornerRadius="20" Margin="20,20,29,18.8">
+            <StackPanel Margin="43,42,0,18.4" HorizontalAlignment="Left" Width="320">
 
-            <TextBlock Text="Search"
-                       Style="{StaticResource SearchTextStyle}" />
+                <Label Content="Username:" Foreground="White" />
+                <Label x:Name="lblUsername" Content="{Binding LblUsername, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="16" />
 
-        </Grid>
+                <Label Content="Email:" Foreground="White"/>
+                <Label x:Name="lblEmail" Content="{Binding LblUserEmail, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="298" Foreground="White" FontSize="16"/>
+                <Grid Height="40">
+                    <Button Content="Logout" x:Name="btnLogout" Background="Gray" Foreground="White"  Command="{Binding BtnLogout}" Height="40" VerticalAlignment="Top" Margin="59,0,53,0" >
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
 
-        <ItemsControl ItemsSource="{Binding UserAccountSourceCollection}"
-                      Height="285"
-                      Width="650"                      
-                      HorizontalAlignment="Center"
-                      Margin="0,0,0,20">
+            </StackPanel>
+        </Border>
+        <Button Content="Delete User" x:Name="btnDelete" Background="Red" Foreground="White" Margin="59,2.2,563,37.6" Command="{Binding BtnDeleteUser}" Grid.Row="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <RadioButton Content="{Binding UserAccountName}"                               
-                                 Tag="{Binding UserAccountImage}"
-                                 Style="{StaticResource UserAccountButtonStyle}"
-                                 GroupName="PasswordGroup" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="2"
-                                 Rows="4" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-        </ItemsControl>
 
 
     </Grid>
