@@ -72,7 +72,7 @@
                 <ColumnDefinition Width="25"/>
                 <ColumnDefinition Width="178.4"/>
                 <ColumnDefinition Width="7.2"/>
-                <ColumnDefinition Width="819.2"/>
+                <ColumnDefinition Width="920"/>
                 <ColumnDefinition Width="0"/>
 
             </Grid.ColumnDefinitions>
@@ -82,7 +82,7 @@
                 <RowDefinition Height="0"/>
                 <RowDefinition Height="66.4"/>
                 <RowDefinition Height="15.2"/>
-                <RowDefinition Height="482.4"/>
+                <RowDefinition Height="542.4"/>
                 <RowDefinition Height="0"/>
 
             </Grid.RowDefinitions>
@@ -91,7 +91,7 @@
 
             <Grid Grid.Row="3"
                   Grid.Column="1"
-                  Margin="0.4,12,1,-14" Grid.RowSpan="2">
+                  Margin="0.4,12,0.8,-4" Grid.RowSpan="2">
 
                 <ItemsControl ItemsSource="{Binding SourceCollection}">
                     <ItemsControl.ItemTemplate>
@@ -112,13 +112,17 @@
 
             <!--Page Container-->
 
-            <Grid Grid.Row="2"
+            <Grid Grid.Row="1"
                   Grid.Column="3"
-                  Grid.RowSpan="3"
-                  Background="Transparent" Margin="4.8,1,0.4,-7">
+                  Grid.RowSpan="4"
+                  Background="Transparent" Margin="5.2,57.2,0.4,-15" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="0*"/>
+                </Grid.ColumnDefinitions>
 
                 <ContentControl x:Name="Pages"
-                                Content="{Binding SelectedViewModel}" Margin="0,-2,10,24" Height="484" VerticalAlignment="Bottom"/>
+                                Content="{Binding SelectedViewModel}" Margin="0,0,0,0" Height="575" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
 
             </Grid>
 

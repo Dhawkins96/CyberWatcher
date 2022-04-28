@@ -13,6 +13,8 @@ namespace CyberWatcher.ViewModel
 {
     public class UserAccountViewModel : INotifyPropertyChanged
     {
+        private int UserID;
+
         protected string _lblUsername;
         protected string _lblUserEmail;
         private ICommand _btnLogout;
@@ -21,6 +23,8 @@ namespace CyberWatcher.ViewModel
         public UserAccountViewModel()
         {
             GetUserInfo();
+            UserID = StaticUtilities.UserID;
+
         }
 
         public void GetUserInfo()
@@ -90,8 +94,18 @@ namespace CyberWatcher.ViewModel
 
         public void Logout()
         {
-            StaticUtilities.UserID = 0;
-            Application.Current.Shutdown();
+            if (UserID != 0)
+            {
+                StaticUtilities.UserID = 0;
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+
+            }
+            else
+            {
+                MessageBox.Show("Error", "User Not Logged in");
+            }
+            
         }
 
         public ICommand BtnDeleteUser

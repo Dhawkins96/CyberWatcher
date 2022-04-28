@@ -42,4 +42,10 @@ namespace CyberWatcher.Model.Nmap
         public string Verison { get; set; }
 
     }
+
+    public class ScanInfo
+    {
+        public string ScanTime { get; set; }
+        public string Summary { get; set; }
+    }
 }

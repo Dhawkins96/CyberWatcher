@@ -1067,9 +1067,6 @@
     <Resource Include="Assets\wifi_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BCrypt.Net-Next">
-      <Version>4.0.3</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">
       <Version>10.0.22000.196</Version>
     </PackageReference>

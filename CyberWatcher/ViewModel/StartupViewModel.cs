@@ -72,8 +72,8 @@ namespace CyberWatcher.ViewModel
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO[dbo].[UserDB](Username, UserPassword, UserEmail) values(@username, @password, @email)", cn);
-                    cmd.Parameters.AddWithValue("@Username", TxtPassReg);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[UserDB](Username, UserPassword, UserEmail) values (@Username, @Password, @Email)", cn);
+                    cmd.Parameters.AddWithValue("@Username", TxtUserReg);
                     cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(TxtPassReg));
 
                     SqlParameter email = new SqlParameter("@Email", SqlDbType.VarChar);

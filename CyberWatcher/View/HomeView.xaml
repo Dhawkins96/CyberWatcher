@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CyberWatcher.View"
              xmlns:p="clr-namespace:CyberWatcher.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="480" d:DesignWidth="800">
+             d:DesignHeight="575" d:DesignWidth="915">
     <UserControl.Style>
         <Style>
             <Style.Triggers>
@@ -35,17 +35,17 @@
 
 
         <Grid Margin="5">
-            <StackPanel Margin="1,27,508,315">
-                <Grid Height="125" >
+            <StackPanel Margin="1,27,625.2,349.2">
+                <Grid Height="183" Margin="0,0,18.2,0" >
                     <Grid.RowDefinitions>
                         <RowDefinition/>
 
                     </Grid.RowDefinitions>
 
                     <TextBlock HorizontalAlignment="Left" Text="Connected Devices:"  TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="18" Width="106" Margin="3,2,0,0" />
-                    <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Top" Width="120" 
+                    <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Top" Width="127" 
                       ItemsSource="{Binding Collection}"  IsSynchronizedWithCurrentItem="True"
-                      SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" BorderBrush="#FFFCF7F7" Height="20" Margin="121,-1,0,0">
+                      SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" BorderBrush="#FFFCF7F7" Height="20" Margin="121,-1,-115.6,0">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding DisplayName}"/>
@@ -53,7 +53,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <ListView x:Name="resultsListView" Background="Transparent" Foreground="White"  
+                    <ListView x:Name="resultsListView" Background="Transparent" Foreground="White"  BorderBrush="Transparent"
                         ItemsSource="{Binding ResultCollection}" ItemContainerStyle="{StaticResource ListViewNoSelection}"
                          ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,23,8,-0.2">
 
@@ -86,33 +86,67 @@
 
             </StackPanel>
 
-            <Grid Margin="301,4,192,306">
+            <Grid Margin="263,4,205.2,307.2">
 
                 <CheckBox x:Name="LocalNetwork"  Content="Scan Local Network?" x:FieldModifier="public" Foreground="White" 
                       FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                      Checked="LocalNetwork_Checked_1" Unchecked="LocalNetwork_Checked_1" Height="14" Width="106" Style="{DynamicResource CheckBox_Style}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="-4,-2,0,0">
+                      Checked="LocalNetwork_Checked_1" Unchecked="LocalNetwork_Checked_1" Height="14" Width="106" Style="{DynamicResource CheckBox_Style}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="43,3,0,0">
                     <CheckBox.LayoutTransform>
                         <ScaleTransform ScaleX="2" ScaleY="2" />
                     </CheckBox.LayoutTransform>
                 </CheckBox>
 
 
-                <Button x:Name="Scan" HorizontalAlignment="Left" Height="42" VerticalAlignment="Top" Width="46"  
-                    BorderThickness="2"   Click="Scan_Click"   Content="Scan" BorderBrush="Black" Margin="214,-6,0,0">
+                <Button x:Name="Scan" HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="58"  
+                    BorderThickness="2"   Click="Scan_Click"   Content="Scan" BorderBrush="Black" Margin="310,3,0,0">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
                         </Style>
                     </Button.Resources>
                 </Button>
-                <Label x:Name="lblScanOutput" Content="" HorizontalAlignment="Left" Margin="18,36,0,0" VerticalAlignment="Top" Width="212" Foreground="White" FontSize="16" FontWeight="Bold"/>
+                <Label x:Name="lblScanOutput" Content="" HorizontalAlignment="Left" Margin="113,63,0,0" VerticalAlignment="Top" Width="212" Foreground="White" FontSize="16" FontWeight="Bold"/>
 
-                <ProgressBar Height="29" Margin="14,35,29,0" VerticalAlignment="Top" BorderBrush="#66FFFFFF"  
-                         Name="pbStatus" IsIndeterminate="False" Visibility="Hidden" Foreground="#FF910000" RenderTransformOrigin="0.5,0.5"/>
+                <ListView x:Name="lstScanDetails" Grid.Row="0"  BorderBrush="Transparent"
+                          ItemContainerStyle="{StaticResource ListViewNoSelection}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ItemsSource="{Binding ListScanDetails}" Foreground="White" Background="Transparent" Margin="2,101,2.4,22.4" >
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Last Scan Ran:" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="1" Text="{Binding ScanTime, TargetNullValue=No Pervious Scans Found}" FontSize="15"/>
+                                <TextBlock Grid.Row="2" Text="Summary from Scan:" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="3" Text="{Binding Summary, TargetNullValue=No Pervious Scans Found}" FontSize="15" TextWrapping="WrapWithOverflow"/>
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <ProgressBar Height="29" Margin="24,92,19.4,0" VerticalAlignment="Top" BorderBrush="#66FFFFFF"  
+                         Name="pbStatus" IsIndeterminate="False" Visibility="Hidden"  Foreground="#FF910000" RenderTransformOrigin="0.5,0.5"/>
+                <CheckBox x:Name="ScanPorts"  Content="Scan All Ports?" x:FieldModifier="public" Foreground="White" 
+                    FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    Checked="LocalNetwork_Checked_1" Unchecked="LocalNetwork_Checked_1" Height="14" Width="100" Style="{DynamicResource CheckBox_Style}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="43,28,0,0">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="2" ScaleY="2" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
 
             </Grid>
 
-            <Grid Margin="0,160,0,0">
+            <Grid Margin="0,265,-0.8,-0.8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="174*" />
 
@@ -123,9 +157,9 @@
 
                 </Grid.ColumnDefinitions>
 
-                <ListView x:Name="lstHosts" Grid.Column="0"
+                <ListView x:Name="lstHosts" Grid.Column="0"  BorderBrush="Transparent"
                       ItemsSource="{Binding Host}" SelectedItem="{Binding SelectedHost, Mode=TwoWay}"  
-                      Background="Transparent" Foreground="White" Grid.ColumnSpan="2" Margin="0,0,328.8,0.4" >
+                      Background="Transparent" Foreground="White">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -141,7 +175,7 @@
                         <RowDefinition Height="95*"/>
                     </Grid.RowDefinitions>
 
-                    <ListView x:Name="lstHostDetails" Grid.Row="0"
+                    <ListView x:Name="lstHostDetails" Grid.Row="0"  BorderBrush="Transparent"
                           ItemContainerStyle="{StaticResource ListViewNoSelection}"
                           ItemsSource="{Binding ListHostDetails}" Foreground="White" Background="Transparent"  >
                         <ListView.ItemTemplate>
@@ -159,7 +193,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <ListView x:Name="lstHostOSDetails"
+                    <ListView x:Name="lstHostOSDetails"  BorderBrush="Transparent"
                           ItemContainerStyle="{StaticResource ListViewNoSelection}"
                 ItemsSource="{Binding ListHostDetails}" Foreground="White" Background="Transparent" Grid.Row="1"  >
                         <ListView.ItemTemplate>
@@ -189,7 +223,7 @@
                 </Grid>
 
                 <Grid Grid.Column="2" >
-                    <ListView  ItemsSource="{Binding Items, Mode=TwoWay}"
+                    <ListView  ItemsSource="{Binding Items, Mode=TwoWay}"  BorderBrush="Transparent"
                               Background="Transparent" Foreground="White"
                                SelectedItem="{Binding SelectedPort, Mode=TwoWay}">
                         <ListView.ItemTemplate>
@@ -242,7 +276,7 @@
                     </ListView>
                 </Grid>
                 <Grid Grid.Column="3" >
-                    <ListView x:Name="lstPortServices"
+                    <ListView x:Name="lstPortServices"  BorderBrush="Transparent"
                           ItemContainerStyle="{StaticResource ListViewNoSelection}"
                             ItemsSource="{Binding ListHostPortDetails}" Foreground="White" Background="Transparent">
                         <ListView.ItemTemplate>
@@ -255,7 +289,7 @@
                                         <TextBlock Text="{Binding Product, TargetNullValue=No Information}"/>
                                         <TextBlock Text="Verison:" FontWeight="Bold" TextWrapping="Wrap"/>
                                         <TextBlock Text="{Binding Verison, TargetNullValue=No Information}"/>
-                                        
+
                                     </StackPanel>
 
                                 </Grid>
@@ -268,7 +302,7 @@
 
             </Grid>
             <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                    Margin="659,-7,8,330" Background="Transparent">
+                    Margin="714,19,14.2,365.2" Background="Transparent">
                 <Grid.Resources>
                     <Style TargetType="{x:Type local:MonitorView}">
                         <Setter Property="Template">

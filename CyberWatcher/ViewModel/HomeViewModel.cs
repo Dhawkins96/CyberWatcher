@@ -33,6 +33,7 @@ namespace CyberWatcher.ViewModel
 
         private ObservableCollection<HostDetails> _ListHostDetails = new ObservableCollection<HostDetails>();
         private ObservableCollection<PortService> _ListhostPortDetails = new ObservableCollection<PortService>();
+        private ObservableCollection<ScanInfo> _ListScanDetails = new ObservableCollection<ScanInfo>();
 
         public string xmlFile;
         public event EventHandler ScanComplete;
@@ -53,7 +54,7 @@ namespace CyberWatcher.ViewModel
 
         public HomeViewModel()
         {
-            
+            GetScanInfo();
             GetUserNmap();
 
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Items);
@@ -67,7 +68,7 @@ namespace CyberWatcher.ViewModel
             {
                 Collection.Add(info);
             }
-
+            SelectedDevice = Collection.First();
         }
 
         public void GetUserNmap()
@@ -77,8 +78,8 @@ namespace CyberWatcher.ViewModel
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand("Select NmapName From [dbo].[XMLNmapDB] WHERE FK_UserId=@UserID AND " +
-                        "PK_NmapID =(Select Max(PK_NmapID) FROM [dbo].[XMLNmapDB])", cn);
+                    SqlCommand cmd = new SqlCommand("Select NmapName From [dbo].[XMLNmapDB] WHERE " +
+                        "PK_NmapID =(Select Max(PK_NmapID) FROM [dbo].[XMLNmapDB] WHERE FK_UserId=@UserID)", cn);
 
                     cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
                     
@@ -101,6 +102,8 @@ namespace CyberWatcher.ViewModel
                         
                         doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + xmlFile);
                         xmlNmap();
+                        GetScanInfo();
+                        Debug.WriteLine(xmlFile);
                     }
 
                 }
@@ -163,7 +166,7 @@ namespace CyberWatcher.ViewModel
                 }
                 
             }
-
+            SelectedHost = Host.First();
         }
        
 
@@ -279,6 +282,26 @@ namespace CyberWatcher.ViewModel
             }
             ListHostPortDetails.Clear();
         }
+
+        public void GetScanInfo()
+        {
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+            nsmgr.AddNamespace("ns", "file:///C:/Users/Daisy/source/repos/WPF_CyberWatcher/CyberWatcher/ExternalTools/nmap.xsl");
+            ScanInfo sc = new ScanInfo();
+            XmlNodeList scan = doc.SelectNodes("/nmaprun/runstats/finished", nsmgr);
+
+            ListScanDetails.Clear();
+
+            for (int i = 0; i < scan.Count; i++)
+            {
+                string time = scan[i].Attributes["timestr"].Value;
+                string sum = scan[i].Attributes["summary"].Value;
+                sc.ScanTime = time;
+                sc.Summary = sum;
+
+            }
+            ListScanDetails.Add(sc);
+        }
        
         public void GetServiceInfo()
         {
@@ -365,6 +388,14 @@ namespace CyberWatcher.ViewModel
             set
             {
                 _ListhostPortDetails = value;
+            }
+        }
+        public ObservableCollection<ScanInfo> ListScanDetails
+        {
+            get { return _ListScanDetails; }
+            set
+            {
+                _ListScanDetails = value;
             }
         }
 
