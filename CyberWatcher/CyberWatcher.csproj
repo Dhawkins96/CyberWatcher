@@ -101,6 +101,7 @@
     <Compile Include="Model\Nmap\NmapXMLModels.cs" />
     <Compile Include="Model\Password Manager\DbConnection.cs" />
     <Compile Include="Model\Password Manager\PasswordGenerate.cs" />
+    <Compile Include="Model\User\HelpModel.cs" />
     <Compile Include="ViewModel\PasswordViewModel.cs" />
     <Compile Include="ViewModel\UserAccountViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />

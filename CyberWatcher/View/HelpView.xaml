@@ -39,17 +39,28 @@
                    VerticalAlignment="Top"
                    Margin="5,12,0,0" />
 
-        <ListView x:Name="lstHelp" Width="auto"
-                      ItemsSource="{Binding HelpNav}" SelectedItem="{Binding SelectedHelp, Mode=TwoWay}"  
-                      Background="Transparent" Foreground="White" Margin="0,56,480,0.6" TextOptions.TextFormattingMode="Display" TextOptions.TextHintingMode="Fixed" >
-            <ListView.ItemTemplate>
+        <ItemsControl ItemsSource="{Binding HelpSourceCollection}"
+                      Height="350"
+                      Width="650"
+                      HorizontalAlignment="Center"
+                      Margin="0,40,0,0">
+
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding }" FontWeight="Bold" FontSize="16" TextWrapping="Wrap"/>
-                    </StackPanel>
+                    <RadioButton Content="{Binding Title}"                                
+                                 
+                                 Style="{StaticResource GridButtonStyle}"
+                                 GroupName="DesktopGroup" />
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3"
+                                 Rows="3" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+        </ItemsControl>
 
 
 
