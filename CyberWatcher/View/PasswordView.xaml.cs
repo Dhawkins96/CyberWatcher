@@ -1,7 +1,10 @@
 ﻿using CyberWatcher.Model.Password_Manager;
+using CyberWatcher.ViewModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CyberWatcher.View
 {
@@ -13,6 +16,7 @@ namespace CyberWatcher.View
         public PasswordView()
         {
             InitializeComponent();
+            
         }
         private void MinusSliderValue(object sender, RoutedEventArgs e)
         {
@@ -39,5 +43,31 @@ namespace CyberWatcher.View
             Clipboard.SetDataObject(RandomPassword.Text);
         }
 
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+        public bool ShowHide = true;
+        private void btnShowHide_Click(object sender, RoutedEventArgs e)
+        {
+            if(ShowHide == true)
+            {
+                dgPass.FontFamily = new FontFamily("Arial");
+                btnShowHide.Content = "Hide Passwords";
+                ShowHide = false;
+            }
+            else
+            {
+                dgPass.FontFamily = new FontFamily("file:///c:/Users/Daisy/source/repos/WPF_CyberWatcher/CyberWatcher/Fonts/#password");
+                btnShowHide.Content = "Show Passwords";
+                ShowHide = true;
+
+            }
+                
+           
+        }
     }
 }

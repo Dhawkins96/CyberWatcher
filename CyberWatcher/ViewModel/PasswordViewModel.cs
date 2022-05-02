@@ -121,7 +121,7 @@ namespace CyberWatcher.ViewModel
             }
         }
 
-        //ADD ARE YOU SURE BOX!!!!!
+        
         private void Delete()
         {
             if (TxtPassUser == null || TxtPassPassword == null || TxtPassEmail == null || TxtPassSite == null)

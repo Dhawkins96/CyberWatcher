@@ -9,7 +9,7 @@ namespace CyberWatcher.Model.Bandwidth_Speed
 {
     public abstract class BandwidthMonitorBase : ObservableObject, IMonitor
     {
-        private readonly char[] ByteSuffixes = new char[] { 'B', 'K', 'M', 'G', 'T', 'P', 'E' };
+        private readonly char[] ByteSuffixes = new char[] { 'B', 'K', 'M', 'G' };
         private string _displayValue;
         private long _lastBytes;
 

@@ -5,27 +5,52 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CyberWatcher.View"
              mc:Ignorable="d" 
-             d:DesignHeight="575" d:DesignWidth="915">
+             d:DesignHeight="685" d:DesignWidth="1280">
     <Grid Background="#303030">
-        <Grid Margin="0,0,139.2,0.2">
-            <Border  CornerRadius="20" Margin="20,20,463,19.6">
-                <StackPanel Margin="20">
+        <Grid>
+            <Label Content="Welcome to" HorizontalAlignment="Left" Margin="170,0,0,614.8" VerticalAlignment="Bottom" FontFamily="Arial" Height="44" Width="130" Foreground="White" FontSize="22"/>
+            <Label Content="Cyber Watcher" HorizontalAlignment="Left" Margin="305,0,0,604.8" VerticalAlignment="Bottom" FontWeight="Bold" FontFamily="Arial" Height="70" Width="365" Foreground="White" FontSize="48"/>
+            <TextBlock HorizontalAlignment="Left" TextAlignment="Center" Margin="610,160,0,0" TextWrapping="Wrap" Text="If you are new, hello its nice to meet you, please create an account!" VerticalAlignment="Top" Foreground="#FFFFFDFD" FontFamily="Arial" FontSize="16" Width="310"/>
+            <TextBlock HorizontalAlignment="Left" Margin="90,99,0,0" TextWrapping="Wrap" Text="A home users security dashboard, helping you montior your home security!" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Foreground="White"/>
+            <TextBlock HorizontalAlignment="Right" TextAlignment="Center" Margin="0,230,721,0" TextWrapping="Wrap" Text="Or if you are returning, welcome back, please enter your login details below" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="16" Height="45" Width="379"/>
+            <Canvas Width="75" Height="50" Margin="285,280,920,354.8" RenderTransformOrigin="0.5,0.5">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="105.876"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <Line X1="0" Y1="25" X2="55" Y2="25" Stroke="#ffffff" StrokeThickness="20" Canvas.Left="16" Width="39" Height="32"/>
+                <Line X1="50" Y1="25" X2="50" Y2="25" Stroke="#ffffff" StrokeThickness="50" StrokeEndLineCap="Triangle"/>
+            </Canvas>
+            <Canvas Width="75" Height="50" Margin="745,215,460,419.8" RenderTransformOrigin="0.5,0.5">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="71.36"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <Line X1="0" Y1="25" X2="55" Y2="25" Stroke="#ffffff" StrokeThickness="20" Canvas.Left="16" Width="39" Height="32"/>
+                <Line X1="50" Y1="25" X2="50" Y2="25" Stroke="#ffffff" StrokeThickness="50" StrokeEndLineCap="Triangle"/>
+            </Canvas>
+            <TextBlock HorizontalAlignment="Left" Margin="425,0,0,5.8" TextWrapping="Wrap" Foreground="White" Text="Created by Daisy Hawkins" VerticalAlignment="Bottom" FontFamily="Arial" FontSize="16" FontWeight="Bold"/>
+        </Grid>
+        <Grid Margin="0,330,789,0" HorizontalAlignment="Right" Width="386" Height="280" VerticalAlignment="Top">
+            <Border  CornerRadius="20" Margin="20,20,40,30">
+                <StackPanel >
                     <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center" />
                     <Separator></Separator>
                     <Label Content="Username:" Foreground="White" />
-                    <TextBox x:Name="txtUserLog" Text="{Binding TxtUserLog, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18"/>
+                    <TextBox x:Name="txtUserLog" Text="{Binding TxtUserLog, Mode=TwoWay}" Tag="Username" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18"/>
                     <Label Content="Password:" Foreground="White"/>
-                    <TextBox x:Name="txtPassLog" Text="{Binding TxtPassLog, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}" FontFamily="/Fonts/password.ttf #Password" FontSize="18"/>
+                    <TextBox x:Name="txtPassLog" Text="{Binding TxtPassLog, Mode=TwoWay}" Tag="Password" Style="{StaticResource TextBox_DataInput_Rounded}" FontFamily="/Fonts/password.ttf #Password" FontSize="18"/>
 
-                    <Grid Height="40" Margin="0,0,-0.2,0">
-                        <Button x:Name="btnForgotPass" Content="Forgot Password" Margin="143,6,6,4" Background="Gray" Foreground="White" >
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="10"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                        <Button Content="Login" x:Name="btnLogin" Background="Gray" Foreground="White" Margin="6,6,138,4" Command="{Binding BtnLogin}">
+                    <Grid Height="47"  >
+                        <Button Content="Login" x:Name="btnLogin" Background="Gray" Foreground="White" Margin="54,7,51.6,10" Command="{Binding BtnLogin}" HorizontalAlignment="Center" Width="220" FontFamily="Arial" FontSize="14">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="10"/>
@@ -37,28 +62,21 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <Grid Margin="386,12,3,-12.4" >
-            <Border  CornerRadius="20" Margin="20,20,29,20">
-                <StackPanel Margin="43,21,0,18.4" HorizontalAlignment="Left" Width="269">
-                    <Label Content="Register User" Foreground="White" FontSize="25" HorizontalAlignment="Center" Margin="46,0,66.8,0" Width="156" RenderTransformOrigin="0.5,0.5" >
-                        <Label.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform AngleY="-0.276"/>
-                                <RotateTransform/>
-                                <TranslateTransform Y="-0.395"/>
-                            </TransformGroup>
-                        </Label.RenderTransform>
+        <Grid Margin="645,275,100,109.8">
+            <Border  CornerRadius="20" HorizontalAlignment="Left"  Width="440" Height="327" VerticalAlignment="Top" Margin="0,0,0,-27">
+                <StackPanel Margin="0,0,99.8,0.2" >
+                    <Label Content="Register User" Foreground="White" FontSize="25" HorizontalAlignment="Center" Margin="46,0,66.8,0" Width="156" >
+
                     </Label>
                     <Separator/>
                     <Label Content="Username:" Foreground="White" />
-                    <TextBox x:Name="txtUserReg" Text="{Binding TxtUserReg, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18" Margin="0,0,9.8,0"/>
+                    <TextBox x:Name="txtUserReg" Text="{Binding TxtUserReg, Mode=TwoWay}" Tag="Username" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18" Margin="0,0,9.8,0"/>
                     <Label Content="Password:" Foreground="White"/>
-                    <TextBox x:Name="txtPass" Text="{Binding TxtPassReg, Mode=TwoWay}" FontFamily="/Fonts/password.ttf #Password" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18" Margin="0,0,14.8,0"/>
+                    <TextBox x:Name="txtPassReg" Text="{Binding TxtPassReg, Mode=TwoWay}" Tag="Password" FontFamily="/Fonts/password.ttf #Password" Style="{StaticResource TextBox_DataInput_Rounded}"  FontSize="18" Margin="0,0,14.8,0" TextChanged="txtPassReg_TextChanged"/>
                     <Label Content="Email:" Foreground="White"/>
-                    <TextBox x:Name="txtEmail" Text="{Binding TxtEmailReg, Mode=TwoWay}" Style="{StaticResource TextBox_DataInput_Rounded}" FontSize="18" Margin="0,0,14.8,0"/>
-                    <Grid Height="40" Margin="0,0,-0.2,0">
-                        <Button Content="Register" x:Name="btnRegUser" Background="Gray" Foreground="White" Margin="6,6,16,4" Command="{Binding BtnReg}">
+                    <TextBox x:Name="txtEmail" Text="{Binding TxtEmailReg, Mode=TwoWay}" Tag="Email" Style="{StaticResource TextBox_DataInput_Rounded}" FontSize="18" Margin="0,0,14.8,0"/>
+                    <Grid Height="47" >
+                        <Button Content="Register" x:Name="btnRegUser" Background="Gray" Foreground="White" Margin="46,9,71,8" Command="{Binding BtnReg}" HorizontalAlignment="Center" Width="223" FontFamily="Arial">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="10"/>
@@ -66,10 +84,24 @@
                             </Button.Resources>
                         </Button>
                     </Grid>
-
                 </StackPanel>
             </Border>
+            <Grid Margin="355,90,25,95"  >
+                <Border >
+                    <StackPanel>
+                        <TextBlock Text="Password MUST include!" FontSize="14" TextWrapping="Wrap" TextAlignment="Center" Foreground="White"/>
+                        <Separator Margin="5"/>
+                        <CheckBox Content="Longer Than 7" x:Name="ckLength" Style="{StaticResource CheckBox_Style}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2"
+                                   IsHitTestVisible="false"  VerticalContentAlignment="Center" />
+                        <CheckBox Content="Special Charater" x:Name="ckSpecial" Style="{StaticResource CheckBox_Style}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  Margin="2" IsHitTestVisible="false" VerticalContentAlignment="Center"/>
+                        <CheckBox Content="Any Number" x:Name="ckNumber" Style="{StaticResource CheckBox_Style}" 
+                                  Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="false" VerticalContentAlignment="Center"/>
+                        <CheckBox Content="Captial Letter" x:Name="ckCaptial" Style="{StaticResource CheckBox_Style}"
+                                  Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center" IsHitTestVisible="false" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Grid>
-
     </Grid>
 </UserControl>

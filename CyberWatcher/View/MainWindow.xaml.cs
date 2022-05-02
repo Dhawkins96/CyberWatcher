@@ -18,6 +18,7 @@ namespace CyberWatcher.View
         {
             InitializeComponent();
 
+            //Starts running the monitors in the background 
             Monitors = new List<IMonitor> {
                 new DownloadMonitor(),
                 new UploadMonitor()
@@ -45,5 +46,7 @@ namespace CyberWatcher.View
         {
             await StartMonitoring();
         }
+
+
     }
 }

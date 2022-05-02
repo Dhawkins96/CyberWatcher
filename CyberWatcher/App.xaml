@@ -11,11 +11,7 @@
 
                 <ResourceDictionary Source="/Resources/Styles.xaml"/>
                 <ResourceDictionary Source="/Resources/DataTemplates.xaml"/>
-                <ResourceDictionary Source="/Resources/Buttons.xaml" />
-                <ResourceDictionary Source="/Resources/CheckBoxs.xaml" />
-                <ResourceDictionary Source="/Resources/Slider.xaml" />
-                <ResourceDictionary Source="/Resources/TextBox.xaml" />
-                
+               
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

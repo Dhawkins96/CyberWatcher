@@ -22,11 +22,11 @@
                    FontWeight="DemiBold"
                    TextAlignment="Center" />
 
-        <Viewbox Grid.Column="1"
-                 StretchDirection="DownOnly"
+        <StackPanel Grid.Column="1"
+                
                  Margin="1,0,1,0">
             <TextBlock Text="{Binding DisplayValue}"
                        TextAlignment="Center" Foreground="White"  />
-        </Viewbox>
+        </StackPanel>
     </Grid>
 </UserControl>

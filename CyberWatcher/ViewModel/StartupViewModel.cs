@@ -29,7 +29,7 @@ namespace CyberWatcher.ViewModel
 
         public void Login(string username, string password)
         {
-            if (TxtUserLog == null || TxtPassLog == null )
+            if (username == null || password == null )
             {
                 string message = "Username or Password was NOT provided \n User account cannot be logged in";
                 string title = "INPUT NEEDED";

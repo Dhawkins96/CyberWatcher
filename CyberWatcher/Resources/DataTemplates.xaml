@@ -34,5 +34,11 @@
     <DataTemplate DataType="{x:Type viewmodel:HelpViewModel}">
         <view:HelpView/>
     </DataTemplate>
+    
+    <!--HelpDetails Page-->
+
+    <DataTemplate DataType="{x:Type viewmodel:HelpDetailsViewModel}">
+        <view:HelpDetailsView/>
+    </DataTemplate>
 
 </ResourceDictionary>

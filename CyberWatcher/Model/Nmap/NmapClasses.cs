@@ -12,11 +12,15 @@ namespace CyberWatcher.Model.Nmap
         public string HostState { get; set; }
         public string HostMac { get; set; }
         public string HostVendor { get; set; }
+        
+    }
+
+    public class ListOsMatches
+    {
         public string HostOsName { get; set; }
         public string HostOsAccuracy { get; set; }
         public string HostOsVendor { get; set; }
         public string HostOsFamily { get; set; }
-        public string HostOsType { get; set; }
         public string HostOsGen { get; set; }
     }
     
