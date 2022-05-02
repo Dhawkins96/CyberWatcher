@@ -1,23 +1,9 @@
 ﻿using CyberWatcher.Helper;
-using CyberWatcher.Model.Bandwidth_Speed;
-using CyberWatcher.Model.Nmap;
-using CyberWatcher.Properties;
 using CyberWatcher.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Forms.DataVisualization.Charting;
-using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace CyberWatcher.View
 {
@@ -28,21 +14,19 @@ namespace CyberWatcher.View
     {
         HomeViewModel MPVM = new HomeViewModel();
 
-        //local scan defined in the nM
+        
         public static bool LocalNetworkCheck = false;
+        public static bool PortScanCheck = false;
         public static bool ScanRunning = false;
 
         public HomeView()
         {
             InitializeComponent();
             
-            
-            
-
             if (ScanRunning == true)
             {
                 lblScanOutput.Content = "SCAN STILL RUNNING";
-                Scan.IsEnabled = false;
+                btnScan.IsEnabled = false;
                 pbStatus.Visibility = Visibility.Visible;
                 pbStatus.IsIndeterminate = true;
             }
@@ -64,7 +48,7 @@ namespace CyberWatcher.View
             if (PingState.SuccessfulPing)
             { 
                 lblScanOutput.Content += "FULL SCAN IN PROGRESS";
-                Scan.IsEnabled = false;
+                btnScan.IsEnabled = false;
                 ScanRunning = true;
                 // show status bar when scan is running 
                 pbStatus.Visibility = Visibility.Visible;
@@ -77,9 +61,17 @@ namespace CyberWatcher.View
         }
 
         //This is the click button to run the scan 
-        private void Scan_Click(object sender, RoutedEventArgs e)
+        private void BtnScan_Click(object sender, RoutedEventArgs e)
         {
-            ScanprocessReturn();
+            if(LocalNetwork.IsChecked == true || PortScan.IsChecked == true)
+            {
+                ScanprocessReturn();
+            }
+            else
+            {
+                MessageBox.Show("Please select the scan type!");
+            }
+            
         }
 
         //Automate the nmap scan to run in the background whilst the progress bar is working 
@@ -93,7 +85,7 @@ namespace CyberWatcher.View
         {
             this.Dispatcher.Invoke(() => {
                 pbStatus.Visibility = Visibility.Hidden;
-                Scan.IsEnabled = true;
+                btnScan.IsEnabled = true;
                 ScanRunning = false;
                
                 lblScanOutput.Content = MPVM.FinishedScan();
@@ -102,7 +94,7 @@ namespace CyberWatcher.View
         }
 
         //this is the checkbox for conducting a local scan that will blank out the IP Address textbox
-        private void LocalNetwork_Checked_1(object sender, RoutedEventArgs e)
+        private void LocalNetwork_Checked(object sender, RoutedEventArgs e)
         {
 
             if (LocalNetwork.IsChecked == true)
@@ -110,12 +102,18 @@ namespace CyberWatcher.View
                 
                 LocalNetworkCheck = true;
             }
-            else
+            
+        }
+
+        private void PortScan_Checked(object sender, RoutedEventArgs e)
+        {
+            if (PortScan.IsChecked == true)
             {
-                //Make the field visable for use.
-                //IpAddress.Visibility = System.Windows.Visibility.Visible;
+
+                PortScanCheck = true;
             }
         }
 
+        
     }
 }

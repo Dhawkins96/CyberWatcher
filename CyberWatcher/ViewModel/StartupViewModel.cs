@@ -29,70 +29,92 @@ namespace CyberWatcher.ViewModel
 
         public void Login(string username, string password)
         {
-            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            if (username == null || password == null )
             {
-                try
+                string message = "Username or Password was NOT provided \n User account cannot be logged in";
+                string title = "INPUT NEEDED";
+                MessageBox.Show(message, title);
+
+            }
+            else 
+            {
+
+                using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
                 {
-                    SqlCommand cmd = new SqlCommand("Select PK_UserID from [dbo].[UserDB] WHERE Username=@Username AND UserPassword=@Password", cn);
-                    cmd.Parameters.AddWithValue("@Username", username);
-                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(password));
-
-                    cn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
+                    try
                     {
-                        StaticUtilities.UserID = Convert.ToInt32(reader[0]);
-                        
-                        MainWindow main = new MainWindow();
-                        main.Show();
-                        Application.Current.MainWindow.Close();
+                        SqlCommand cmd = new SqlCommand("Select PK_UserID from [dbo].[UserDB] WHERE Username=@Username AND UserPassword=@Password", cn);
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(password));
+
+                        cn.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            StaticUtilities.UserID = Convert.ToInt32(reader[0]);
+
+                            MainWindow main = new MainWindow();
+                            main.Show();
+                            Application.Current.MainWindow.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error", "Information");
+                        }
+
+
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Error", "Information");
+                        MessageBox.Show(ex.Message, "Information");
+
                     }
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Information");
-
-                }
-                finally
-                {
-                    cn.Close();
+                    finally
+                    {
+                        cn.Close();
+                    }
                 }
             }
         }
         public void RegUser()
         {
-            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            if (TxtUserReg == null || TxtPassReg == null || TxtEmailReg == null)
             {
-                try
+                string message = "All textboxes need to be filled! \n User account cannot be created";
+                string title = "INPUT NEEDED";
+                MessageBox.Show(message, title);
+
+            }
+            else
+            {
+
+                using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
                 {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[UserDB](Username, UserPassword, UserEmail) values (@Username, @Password, @Email)", cn);
-                    cmd.Parameters.AddWithValue("@Username", TxtUserReg);
-                    cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(TxtPassReg));
+                    try
+                    {
+                        SqlCommand cmd = new SqlCommand("INSERT INTO [dbo].[UserDB](Username, UserPassword, UserEmail) values (@Username, @Password, @Email)", cn);
+                        cmd.Parameters.AddWithValue("@Username", TxtUserReg);
+                        cmd.Parameters.AddWithValue("@Password", Encrypt.HashString(TxtPassReg));
 
-                    SqlParameter email = new SqlParameter("@Email", SqlDbType.VarChar);
-                    cmd.Parameters.Add(email).Value = TxtEmailReg;
-                    cn.Open();
+                        SqlParameter email = new SqlParameter("@Email", SqlDbType.VarChar);
+                        cmd.Parameters.Add(email).Value = TxtEmailReg;
+                        cn.Open();
 
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Account created", "Information");
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Account created", "Information");
 
-                    Login(TxtUserReg, TxtPassReg);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Information");
+                        Login(TxtUserReg, TxtPassReg);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Information");
 
-                }
-                finally
-                {
-                    cn.Close();
+                    }
+                    finally
+                    {
+                        cn.Close();
+                    }
                 }
             }
         }
@@ -103,6 +125,7 @@ namespace CyberWatcher.ViewModel
                 return _btnReg ?? (_btnReg = new RelayCommand(p => RegUser()));
             }
         }
+
         public ICommand BtnLogin
         {
             get

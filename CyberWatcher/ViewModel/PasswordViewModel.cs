@@ -35,14 +35,11 @@ namespace CyberWatcher.ViewModel
 
         public PasswordViewModel()
         {
-            
-            //Insert();
             Display();
         }
-        
+
         private void Display()
         {
-            
             using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
             {
                 SqlCommand cmd = new SqlCommand("SELECT PassUsername, PassPassword, PassSite, PassEmail FROM [dbo].[PassManDB]" +
@@ -58,11 +55,11 @@ namespace CyberWatcher.ViewModel
                 {
                     SQLPass = new ObservableCollection<SQLPass>();
                 }
-                
+
                 SQLPass.Clear();
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                     
+
                     SQLPass.Add(new SQLPass
                     {
                         PassUsername = dr[0].ToString(),
@@ -72,90 +69,120 @@ namespace CyberWatcher.ViewModel
                     });
                 }
 
+
             }
         }
 
 
         private void Insert()
         {
-            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            if (TxtPassUser == null || TxtPassPassword == null || TxtPassEmail == null || TxtPassSite == null)
             {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("insert into [dbo].[PassManDB] (FK_UserID, PassUsername, PassPassword, PassSite, PassEmail) values (@UserID, @PassUsername, @PassPassword, @PassSite, @PassEmail)", cn);
-                    SqlParameter pass = new SqlParameter("@PassPassword", SqlDbType.VarChar);
-                    cmd.Parameters.Add(pass).Value = TxtPassPassword;
+                string message = "All textboxes need to be filled! \n User account cannot be created";
+                string title = "INPUT NEEDED";
+                MessageBox.Show(message, title);
 
-                    SqlParameter username = new SqlParameter("@PassUsername", SqlDbType.VarChar);
-                    cmd.Parameters.Add(username).Value = TxtPassUser;
-
-                    SqlParameter email = new SqlParameter("@PassEmail", SqlDbType.VarChar);
-                    cmd.Parameters.Add(email).Value = TxtPassEmail;
-
-                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
-                    cmd.Parameters.AddWithValue("@PassSite", DbType.String).Value = TxtPassSite;
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-
-                    TxtPassEmail = "";
-                    TxtPassPassword = "";
-                    TxtPassSite = "";
-                    TxtPassUser = "";
-                    Display();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Information");
-
-                }
-                finally
-                {
-                    cn.Close();
-                }
             }
-            Debug.WriteLine("inserted");
-        }
-
-        //ADD ARE YOU SURE BOX!!!!!
-        private void Delete()
-        {
-            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            else
             {
-                try
+                using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
                 {
-                    SqlCommand cmd = new SqlCommand("DELETE FROM [dbo].[PassManDB] WHERE FK_UserID=@UserID AND PassUsername=@PassUsername AND PassPassword=@PassPassword" +
-                        " AND PassSite=@PassSite AND PassEmail=@PassEmail", cn);
-                    SqlParameter pass = new SqlParameter("@PassPassword", SqlDbType.VarChar);
-                    cmd.Parameters.Add(pass).Value = TxtPassPassword;
+                    try
+                    {
+                        SqlCommand cmd = new SqlCommand("insert into [dbo].[PassManDB] (FK_UserID, PassUsername, PassPassword, PassSite, PassEmail) values (@UserID, @PassUsername, @PassPassword, @PassSite, @PassEmail)", cn);
+                        SqlParameter pass = new SqlParameter("@PassPassword", SqlDbType.VarChar);
+                        cmd.Parameters.Add(pass).Value = TxtPassPassword;
 
-                    SqlParameter username = new SqlParameter("@PassUsername", SqlDbType.VarChar);
-                    cmd.Parameters.Add(username).Value = TxtPassUser;
+                        SqlParameter username = new SqlParameter("@PassUsername", SqlDbType.VarChar);
+                        cmd.Parameters.Add(username).Value = TxtPassUser;
 
-                    SqlParameter email = new SqlParameter("@PassEmail", SqlDbType.VarChar);
-                    cmd.Parameters.Add(email).Value = TxtPassEmail;
+                        SqlParameter email = new SqlParameter("@PassEmail", SqlDbType.VarChar);
+                        cmd.Parameters.Add(email).Value = TxtPassEmail;
 
-                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
-                    cmd.Parameters.AddWithValue("@PassSite", DbType.String).Value = TxtPassSite;
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    
-                    Clear();
-                    Display();
+                        cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
+                        cmd.Parameters.AddWithValue("@PassSite", DbType.String).Value = TxtPassSite;
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+
+                        Clear();
+                        Display();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Information");
+
+                    }
+                    finally
+                    {
+                        cn.Close();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Information");
-
-                }
-                finally
-                {
-                    cn.Close();
-                }
+              
             }
-            Debug.WriteLine("Deleted");
         }
 
         
+        private void Delete()
+        {
+            if (TxtPassUser == null || TxtPassPassword == null || TxtPassEmail == null || TxtPassSite == null)
+            {
+                string message = "All textboxes need to be filled! \n User account cannot be created";
+                string title = "INPUT NEEDED";
+                MessageBox.Show(message, title);
+
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure you want to delete this password? \n This action CANNOT be undone",
+                    "DELETE",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+                    {
+                        try
+                        {
+                            SqlCommand cmd = new SqlCommand("DELETE FROM [dbo].[PassManDB] WHERE FK_UserID=@UserID AND PassUsername=@PassUsername AND PassPassword=@PassPassword" +
+                                " AND PassSite=@PassSite AND PassEmail=@PassEmail", cn);
+                            SqlParameter pass = new SqlParameter("@PassPassword", SqlDbType.VarChar);
+                            cmd.Parameters.Add(pass).Value = TxtPassPassword;
+
+                            SqlParameter username = new SqlParameter("@PassUsername", SqlDbType.VarChar);
+                            cmd.Parameters.Add(username).Value = TxtPassUser;
+
+                            SqlParameter email = new SqlParameter("@PassEmail", SqlDbType.VarChar);
+                            cmd.Parameters.Add(email).Value = TxtPassEmail;
+
+                            cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
+                            cmd.Parameters.AddWithValue("@PassSite", DbType.String).Value = TxtPassSite;
+                            cn.Open();
+                            cmd.ExecuteNonQuery();
+
+                            Clear();
+                            Display();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Information");
+
+                        }
+                        finally
+                        {
+                            cn.Close();
+                        }
+                    }
+                }
+                else
+                {
+                    Clear();
+                }
+
+
+
+            }
+        }
+
+
 
         public void Clear()
         {
@@ -168,15 +195,11 @@ namespace CyberWatcher.ViewModel
 
         public void GetRowInfo()
         {
-            //SQLPass rows = (SQLPass)SelectedRow;
-            //TxtPassUser = rows.PassUsername;
-            //TxtPassPassword = rows.PassPassword;
-            //TxtPassSite = rows.PassSite;
-            //TxtPassEmail = rows.PassEmail;
-            //OnPropertyChanged(TxtPassUser);
-            //OnPropertyChanged(TxtPassPassword);
-            //OnPropertyChanged(TxtPassEmail);
-            //OnPropertyChanged(TxtPassSite);
+            TxtPassUser = SelectedRow.PassUsername;
+            TxtPassPassword = SelectedRow.PassPassword;
+            TxtPassSite = SelectedRow.PassSite;
+            TxtPassEmail = SelectedRow.PassEmail;
+            
         }
 
         public SQLPass SelectedRow
@@ -187,7 +210,11 @@ namespace CyberWatcher.ViewModel
                 if (_selectedRow != value)
                 {
                     _selectedRow = value;
-                    GetRowInfo();
+                    if(SelectedRow != null)
+                    {
+                        GetRowInfo();
+                    }
+                    
                 }
             }
         }
@@ -225,7 +252,7 @@ namespace CyberWatcher.ViewModel
             set
             {
                 _txtPassUser = value;
-                OnPropertyChanged(TxtPassUser);
+                OnPropertyChanged("TxtPassUser");
             }
         }
         public string TxtPassPassword
@@ -234,7 +261,7 @@ namespace CyberWatcher.ViewModel
             set
             {
                 _txtPassPassword = value;
-                OnPropertyChanged(TxtPassPassword);
+                OnPropertyChanged("TxtPassPassword");
             }
         }
         public string TxtPassSite
@@ -243,7 +270,7 @@ namespace CyberWatcher.ViewModel
             set
             {
                 _txtPassSite = value;
-                OnPropertyChanged(TxtPassSite);
+                OnPropertyChanged("TxtPassSite");
             }
         }
         public string TxtPassEmail
@@ -252,7 +279,7 @@ namespace CyberWatcher.ViewModel
             set
             {
                 _txtPassEmail = value;
-                OnPropertyChanged(TxtPassEmail);
+                OnPropertyChanged("TxtPassEmail");
             }
         }
     }

@@ -5,7 +5,7 @@
            TargetType="TextBlock">
 
         <Setter Property="FontFamily"
-                Value="Fonts/Cairo-SemiBold.ttf #Cairo SemiBold"/>
+                Value="Arial"/>
         <Setter Property="FontSize"
                 Value="24" />
         <Setter Property="Foreground"
@@ -22,7 +22,7 @@
     <Style x:Key="FooterStyle"
            TargetType="TextBlock">
         <Setter Property="FontFamily"
-                Value="Fonts/Cairo-SemiBold.ttf #Cairo SemiBold" />
+                Value="Arial" />
         <Setter Property="FontSize"
                 Value="14" />
         <Setter Property="Foreground"
@@ -33,46 +33,6 @@
                 Value="Center" />
         <Setter Property="Margin"
                 Value="0,35,30,0" />
-    </Style>
-
-    <Style x:Key="SearchBoxStyle"
-           TargetType="{x:Type TextBox}">
-        <Setter Property="Height"
-                Value="35" />
-        <Setter Property="Width"
-                Value="180" />
-        <Setter Property="FontFamily"
-                Value="Fonts/Roboto-Regular.ttf #Roboto Regular" />
-        <Setter Property="FontSize"
-                Value="17" />
-        <Setter Property="VerticalAlignment"
-                Value="Center" />
-        <Setter Property="Background"
-                Value="#414141" />
-        <Setter Property="Foreground"
-                Value="#E8EAEC" />
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="Padding"
-                Value="8,7,0,0" />
-        <Setter Property="CaretBrush"
-                Value="#FFFFFF" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="border"
-                            CornerRadius="6"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost"
-                                      Focusable="false"
-                                      HorizontalScrollBarVisibility="Hidden"
-                                      VerticalScrollBarVisibility="Hidden" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style  x:Key="ListViewNoSelection"
@@ -88,94 +48,12 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SearchTextStyle"
-           TargetType="{x:Type TextBlock}">
-        <Setter Property="IsHitTestVisible"
-                Value="False" />
-        <Setter Property="Visibility"
-                Value="Collapsed" />
-        <Setter Property="FontFamily"
-                Value="Fonts/Roboto-Regular.ttf #Roboto Regular" />
-        <Setter Property="FontSize"
-                Value="16" />
-        <Setter Property="Foreground"
-                Value="#A2AAB3" />
-        <Setter Property="HorizontalAlignment"
-                Value="Left" />
-        <Setter Property="VerticalAlignment"
-                Value="Center" />
-        <Setter Property="Margin"
-                Value="10,0,0,0" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Text, ElementName=SearchBox}"
-                         Value="">
-                <Setter Property="Visibility"
-                        Value="Visible" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+    <ImageBrush x:Key="closeBlue" ImageSource="/Assets/IconCloseBlue.png" Stretch="None"/>
+    <ImageBrush x:Key="closeRed" ImageSource="/Assets/IconCloseRed.png" Stretch="None" />
+    <ImageBrush x:Key="minimize" ImageSource="/Assets/IconMin.png" Stretch="None"/>
+    <ImageBrush x:Key="maximize" ImageSource="/Assets/IconMax.png" Stretch="None"/>
 
-    <Style x:Key="PCStyle"
-           TargetType="RadioButton">
-
-        <Setter Property="TextBlock.Text"
-                Value="My PC" />
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
-
-
-                    <Border x:Name="border"
-                            Margin="7"
-                            CornerRadius="4">
-
-                        <ContentPresenter/>
-
-
-                    </Border>
-
-
-                    <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#202020" />
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-                        </Trigger>
-
-                        <Trigger Property="IsChecked"
-                                 Value="true">
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#202020" />
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-                        </Trigger>
-
-                    </ControlTemplate.Triggers>
-
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <ImageBrush x:Key="def_img" ImageSource="/Assets/close_icon.png" Stretch="None"/>
-    <ImageBrush x:Key="mo_img" ImageSource="/Assets/close_mo_icon.png" Stretch="None" />
-
-
-    <Style x:Key="CloseBtn_Style"
+    <Style x:Key="BtnMaxStyle"
            TargetType="Button">
 
         <Setter Property="Template">
@@ -183,7 +61,41 @@
                 <ControlTemplate TargetType="Button">
 
                     <Border x:Name="border"
-                            Background="{StaticResource def_img}">
+                            Background="{StaticResource maximize}">
+                        <ContentPresenter />
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BtnMinStyle"
+           TargetType="Button">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="border"
+                            Background="{StaticResource minimize}">
+                        <ContentPresenter />
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="BtnCloseStyle"
+           TargetType="Button">
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Border x:Name="border"
+                            Background="{StaticResource closeBlue}">
                         <ContentPresenter />
                     </Border>
 
@@ -194,7 +106,7 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="{StaticResource mo_img}" />
+                                    Value="{StaticResource closeRed}" />
 
                         </Trigger>
 
@@ -203,7 +115,7 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="{StaticResource def_img}" />
+                                    Value="{StaticResource closeBlue}" />
 
                         </Trigger>
 
@@ -216,12 +128,10 @@
     <Style x:Key="MenuButtonStyle"
            TargetType="RadioButton">
 
-        <Setter Property="Width"
-                Value="180" />
-        <Setter Property="Height"
-                Value="40" />
-        <Setter Property="Margin"
-                Value="0,3,0,0" />
+        <Setter Property="Width" Value="180" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="0,3,0,0" />
+        
 
         <Setter Property="Template">
             <Setter.Value>
@@ -236,7 +146,7 @@
 
                         <Border x:Name="border"
                                 Background="Transparent"
-                                CornerRadius="5"
+                                CornerRadius="10"
                                 BorderThickness="0" />
 
                         <Image x:Name="SidebarRadioButtonMenuIcon"
@@ -248,20 +158,20 @@
                                Margin="15,0,0,0" />
 
                         <TextBlock x:Name="SidebarRadioButtonMenuText"
-                                   Grid.Row="1"
+                                   Grid.Row="1" TextWrapping="Wrap"
                                    Width="120"
                                    Text="{TemplateBinding Property=Content}"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
-                                   Foreground="#F8F9FA"
+                                   Foreground="White"
                                    FontSize="18"
-                                   FontFamily="Fonts/Roboto-Regular.ttf #Roboto Regular"
+                                   FontFamily="Arial"
                                    Margin="60,0,0,0" />
 
                         <Border x:Name="Highlighter"
                                 Height="20"
                                 Width="4"
-                                Background="#00AADA"
+                                Background="#FF910000"
                                 CornerRadius="2"
                                 HorizontalAlignment="Left"
                                 Margin="0,0,5,0"
@@ -276,8 +186,7 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="#414141" />
-
+                                    Value="#FF7C3D3D" />
                         </Trigger>
 
                         <Trigger Property="IsChecked"
@@ -285,8 +194,7 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="#414141" />
-
+                                    Value="#FF7C3D3D" />
 
                             <Setter Property="Visibility"
                                     TargetName="Highlighter"
@@ -308,38 +216,34 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
 
-                    <Grid Margin="0,0,0,0">
+                    <Grid>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="100" />
-                            <RowDefinition Height="40" />
+                            <RowDefinition Height="160" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
                         <Border x:Name="border"
                                 Background="Transparent"
-                                CornerRadius="6" />
+                                CornerRadius="6" Margin="10"/>
 
                         <Image x:Name="SidebarRadioButtonMenuIcon"
                                Grid.Row="0"
                                Stretch="None"
-                               Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                               Source="/Assets/IconHelpBig.png"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Margin="0,0,0,20" />
+                               Margin="20" />
 
-                        <TextBlock x:Name="SidebarRadioButtonMenuText"
-                                   Grid.Row="0"
+                        <TextBlock x:Name="SidebarRadioButtonMenuText" Grid.Row="0"
                                    Text="{TemplateBinding Property=Content}"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Foreground="#E8EAEC"
-                                   FontSize="14"
-                                   FontFamily="Fonts/Roboto-Regular.ttf #Roboto Regular"
-                                   Margin="0,0,0,10" />
+                                   VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                   Foreground="White" FontSize="20"
+                                   FontFamily="Arial" Margin="10" />
 
                     </Grid>
 
@@ -351,11 +255,11 @@
 
                             <Setter Property="Background"
                                     TargetName="border"
-                                    Value="#272727" />
+                                    Value="#FF7C3D3D" />
 
                             <Setter Property="BorderBrush"
                                     TargetName="border"
-                                    Value="#8C8C8C" />
+                                    Value="Black" />
 
                             <Setter Property="BorderThickness"
                                     TargetName="border"
@@ -371,7 +275,7 @@
 
                             <Setter Property="BorderBrush"
                                     TargetName="border"
-                                    Value="#8C8C8C" />
+                                    Value="#FF910000" />
 
                             <Setter Property="BorderThickness"
                                     TargetName="border"
@@ -385,7 +289,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="HomeButtonStyle"
+    <Style x:Key="BackButtonStyle"
            TargetType="RadioButton">
 
         <Setter Property="Template">
@@ -402,7 +306,7 @@
                         <Image x:Name="SidebarRadioButtonMenuIcon"
                                Grid.Row="0"
                                Stretch="None"
-                               Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                               Source="/Assets/IconBack.png"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Margin="0,0,0,0" />
@@ -426,266 +330,168 @@
         </Setter>
     </Style>
 
-
-
-    <Style x:Key="SettingsButtonStyle"
-           TargetType="RadioButton">
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
-
-                    <Grid Margin="0,0,0,0">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="90" />
-                            <RowDefinition Height="40" />
-                        </Grid.RowDefinitions>
-
-                        <Border x:Name="border"
-                                Background="Transparent"
-                                CornerRadius="6"
-                                BorderThickness="0" />
-
-                        <Image x:Name="SidebarRadioButtonMenuIcon"
-                               Grid.Row="0"
-                               Stretch="None"
-                               Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Margin="0,0,0,20" />
-
-                        <TextBlock x:Name="SidebarRadioButtonMenuText"
-                                   Grid.Row="0"
-                                   Text="{TemplateBinding Property=Content}"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Foreground="#E8EAEC"
-                                   FontSize="14"
-                                   FontFamily="Fonts/Roboto-Regular.ttf #Roboto Regular"
-                                   Margin="0,0,0,10" />
-
-                    </Grid>
-
-
-                    <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#272727" />
-
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-
-                        </Trigger>
-
-                        <Trigger Property="IsChecked"
-                                 Value="True">
-
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#272727" />
-
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-
-                        </Trigger>
-
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style x:Key="TextBox_DataInput"   TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter  Property="Background" Value="#40444B"/>
+        <Setter  Property="Margin" Value="5,0,0,0"/>
+        <Setter  Property="Foreground" Value="White"/>
+        <Setter  Property="Height" Value="32"/>
+        <Setter  Property="FontSize" Value="16"/>
+        <Setter  Property="Padding" Value="3"/>
+        <Setter  Property="BorderThickness" Value="0"/>
+        <Setter  Property="Width" Value="auto"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="Arial"/>
     </Style>
 
 
-
-    <Style x:Key="UserAccountButtonStyle"
-           TargetType="RadioButton">
-
-        <Setter Property="Template">
+    <Style x:Key="TextBox_DataInput_Rounded"   TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBox_DataInput}">
+        <Setter  Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
-
+                <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="270" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="60" />
-                        </Grid.RowDefinitions>
-
-                        <Border x:Name="border"
-                                Background="Transparent"
-                                CornerRadius="7"
-                                BorderThickness="0" />
-
-                        <Image x:Name="SidebarRadioButtonMenuIcon"
-                               Grid.Row="0"
-                               Stretch="None"
-                               Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               Margin="20,0,0,0" />
-
-                        <TextBlock x:Name="SidebarRadioButtonMenuText"
-                                   Grid.Row="0"
-                                   Text="{TemplateBinding Property=Content}"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Left"
-                                   Foreground="#E8EAEC"
-                                   FontSize="14"
-                                   FontFamily="Fonts/Roboto-Regular.ttf #Roboto Regular"
-                                   Margin="90,0,0,0" />
-
-
+                        <Border Background="#40444B" BorderBrush="#FF7D8683" BorderThickness="0"  CornerRadius="10" Width="auto" />
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                        <Label Margin="5,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" Visibility="Collapsed" Foreground="#4A4E54" FontFamily="Arial" FontSize="14"/>
                     </Grid>
-
-
                     <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#272727" />
-
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-
-                        </Trigger>
-
-                        <Trigger Property="IsChecked"
-                                 Value="True">
-
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#272727" />
-
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-
-                        </Trigger>
-
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        
     </Style>
 
+    <Style TargetType="{x:Type CheckBox}" x:Key="CheckBox_Style">
 
-    <Style x:Key="HelpButtonStyle"
-           TargetType="RadioButton">
+        <Setter Property="Background" Value="#40444B"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
 
+    <Style x:Key="SliderThumbStyle" TargetType="Thumb">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="false"/>
+        <Setter Property="Height" Value="10"/>
+        <Setter Property="Width" Value="10"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
-
-                    <Grid Margin="0,0,0,0">
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="100" />
-                            <RowDefinition Height="40" />
-                        </Grid.RowDefinitions>
-
-                        <Border x:Name="border"
-                                Background="Transparent"
-                                CornerRadius="6" />
-
-                        <Image x:Name="SidebarRadioButtonMenuIcon"
-                               Grid.Row="0"
-                               Stretch="None"
-                               Source="{Binding Path=Tag, RelativeSource={RelativeSource TemplatedParent}}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Margin="0,0,0,20" />
-
-                        <TextBlock x:Name="SidebarRadioButtonMenuText"
-                                   Grid.Row="0"
-                                   Text="{TemplateBinding Property=Content}"
-                                   VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Center"
-                                   Foreground="#E8EAEC"
-                                   FontSize="14"
-                                   FontFamily="Fonts/Roboto-Regular.ttf #Roboto Regular"
-                                   Margin="0,0,0,10" />
-
-                    </Grid>
-
-
+                <ControlTemplate TargetType="Thumb">
+                    <Ellipse  Stroke="Black" StrokeThickness="1" Name="Ellipse" Fill="White" />
                     <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#272727" />
-
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="White"/>
                         </Trigger>
-
-                        <Trigger Property="IsChecked"
-                                 Value="True">
-
-                            <Setter Property="Background"
-                                    TargetName="border"
-                                    Value="#272727" />
-
-                            <Setter Property="BorderBrush"
-                                    TargetName="border"
-                                    Value="#8C8C8C" />
-
-                            <Setter Property="BorderThickness"
-                                    TargetName="border"
-                                    Value="3" />
-
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="Gray"/>
                         </Trigger>
-
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="Slider" x:Key="AppSliderStyle">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" Name="row" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" Name="column" />
+                        </Grid.ColumnDefinitions>
+                        <Border Name="PART_Border" BorderThickness="0" Padding="0.2" Grid.Row="0" Grid.Column="1" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                        <Track Name="PART_Track" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource SliderThumbStyle}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type Button}"
+           x:Key="Button_Exit">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="0" Padding="7">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#F04747" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="Button_MaxAndMin">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="#72767D" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="0" Padding="7">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#282B2E" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="Button_Choice">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="0" Padding="7">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#FF453131" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="Button_PlusAndMinus">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#282B2E" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 
 </ResourceDictionary>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CyberWatcher.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="685" d:DesignWidth="1280">
     <UserControl.Style>
         <Style>
             <Style.Triggers>
@@ -29,25 +29,20 @@
             <RowDefinition Height="73*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="User Account Details"
-                   FontSize="24"
-                   FontFamily="/Fonts/OpenSans-Regular.ttf #Open Sans Regular"
-                   Foreground="#DDDDDD"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
+        <TextBlock Text="User Account Details" FontSize="24" FontFamily="Arial" Foreground="White"
+                   HorizontalAlignment="Left" VerticalAlignment="Top"
                    Margin="5,12,0,0" Height="33" Width="232" />
-
 
         <Border  CornerRadius="20" Margin="20,20,29,18.8">
             <StackPanel Margin="43,42,0,18.4" HorizontalAlignment="Left" Width="320">
+                <TextBlock Text="Your Saved information:" Foreground="White" FontSize="18" FontFamily="Arial" Margin="10" />
+                <Label Content="Username:" Foreground="White" FontFamily="Arial" FontSize="16" />
+                <Label x:Name="lblUsername" Content="{Binding LblUsername, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="16" FontFamily="Arial" FontWeight="Bold" />
 
-                <Label Content="Username:" Foreground="White" />
-                <Label x:Name="lblUsername" Content="{Binding LblUsername, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="295" Foreground="White" FontSize="16" />
-
-                <Label Content="Email:" Foreground="White"/>
-                <Label x:Name="lblEmail" Content="{Binding LblUserEmail, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="298" Foreground="White" FontSize="16"/>
+                <Label Content="Email:" Foreground="White" FontFamily="Arial" FontSize="16"/>
+                <Label x:Name="lblEmail" Content="{Binding LblUserEmail, Mode=TwoWay}" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Top" Width="298" Foreground="White" FontSize="16" FontFamily="Arial" FontWeight="Bold"/>
                 <Grid Height="40">
-                    <Button Content="Logout" x:Name="btnLogout" Background="Gray" Foreground="White"  Command="{Binding BtnLogout}" Height="40" VerticalAlignment="Top" Margin="59,0,53,0" >
+                    <Button Content="Logout" x:Name="btnLogout" Background="Gray" Foreground="White"  Command="{Binding BtnLogout}" Height="40" VerticalAlignment="Top" Margin="59,0,53,0" FontFamily="Arial" FontSize="16" >
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -58,7 +53,7 @@
 
             </StackPanel>
         </Border>
-        <Button Content="Delete User" x:Name="btnDelete" Background="Red" Foreground="White" Margin="59,2.2,563,37.6" Command="{Binding BtnDeleteUser}" Grid.Row="1">
+        <Button Content="Delete User" x:Name="btnDelete" Background="Red" Foreground="White" Margin="37,41.4,870,9.8" Command="{Binding BtnDeleteUser}" Grid.Row="1" FontFamily="Arial" FontWeight="Bold" FontSize="18">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10"/>

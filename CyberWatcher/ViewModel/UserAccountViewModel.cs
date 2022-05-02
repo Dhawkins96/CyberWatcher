@@ -66,30 +66,36 @@ namespace CyberWatcher.ViewModel
 
         private void DeleteUser()
         {
-            using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
+            if (MessageBox.Show("Are you sure you want to delete your account? \n This action CANNOT be undone",
+                    "DELETE",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                try
+                using (SqlConnection cn = new SqlConnection(DbConnection.GetConnection()))
                 {
-                    SqlCommand cmd = new SqlCommand("DELETE FROM [dbo].[UserDB] WHERE PK_UserID=@UserID", cn);
-                    cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
-                    
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
+                    try
+                    {
+                        SqlCommand cmd = new SqlCommand("DELETE FROM [dbo].[UserDB] WHERE PK_UserID=@UserID", cn);
+                        cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
 
-                    Logout();
-                    
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Information");
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
 
+                        Logout();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Information");
+
+                    }
+                    finally
+                    {
+                        cn.Close();
+                    }
                 }
-                finally
-                {
-                    cn.Close();
-                }
+               
             }
-            Debug.WriteLine("Deleted");
         }
 
         public void Logout()

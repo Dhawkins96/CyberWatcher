@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
 using Windows.Devices.Enumeration;
 using static CyberWatcher.Model.DeviceInformationDisplay;
 using CyberWatcher.Model.Nmap;
@@ -35,6 +34,8 @@ namespace CyberWatcher.ViewModel
         private ObservableCollection<PortService> _ListhostPortDetails = new ObservableCollection<PortService>();
         private ObservableCollection<ScanInfo> _ListScanDetails = new ObservableCollection<ScanInfo>();
 
+        private ObservableCollection<ListOsMatches> _ListOsMatches = new ObservableCollection<ListOsMatches>();
+
         public string xmlFile;
         public event EventHandler ScanComplete;
         public  XmlDocument doc = new XmlDocument();
@@ -49,7 +50,27 @@ namespace CyberWatcher.ViewModel
                 
             }
         }
+        public ObservableCollection<ListOsMatches> ListOsMatches
+        {
+            get { return _ListOsMatches; }
+            set
+            {
+                _ListOsMatches = value;
 
+            }
+        }
+
+        private bool _IsSavedScan;
+
+        public bool IsSavedScan
+        {
+            get { return _IsSavedScan; }
+            set
+            {
+                _IsSavedScan = value;
+                OnPropertyChanged("IsSavedValue");
+            }
+        }
         public static string NmapScanResults;
 
         public HomeViewModel()
@@ -57,10 +78,13 @@ namespace CyberWatcher.ViewModel
             GetScanInfo();
             GetUserNmap();
 
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Items);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("states");
-            view.GroupDescriptions.Add(groupDescription);
+            CollectionView portView = (CollectionView)CollectionViewSource.GetDefaultView(Items);
+            PropertyGroupDescription portGroupDescription = new PropertyGroupDescription("states");
+            portView.GroupDescriptions.Add(portGroupDescription);
 
+            CollectionView osView = (CollectionView)CollectionViewSource.GetDefaultView(ListOsMatches);
+            PropertyGroupDescription osGroupDescription = new PropertyGroupDescription("HostOsName");
+            osView.GroupDescriptions.Add(osGroupDescription);
 
 
             devices = DeviceSelectorChoices.DevicePickerSelectors;
@@ -95,15 +119,15 @@ namespace CyberWatcher.ViewModel
                         }
                     if(xmlFile == null)
                     {
-                        Debug.WriteLine("No Scans found");
+                        IsSavedScan = false;
                     }
                     else
                     {
-                        
+                        IsSavedScan = true;
                         doc.Load(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput\" + xmlFile);
                         xmlNmap();
                         GetScanInfo();
-                        Debug.WriteLine(xmlFile);
+                       
                     }
 
                 }
@@ -145,7 +169,7 @@ namespace CyberWatcher.ViewModel
         public string FinishedScan()
         {
             StaticUtilities.LastScan = new DirectoryInfo(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput").GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
-
+            xmlNmap();
             return NmapScanResults;
 
         }
@@ -201,38 +225,32 @@ namespace CyberWatcher.ViewModel
                         hd.HostVendor = addVendor;
                                                 
                     }
-
-                }
-
+                   
+                } 
+                
+                ListHostDetails.Add(hd);
+                ListOsMatches.Clear();
                 XmlNodeList osMatch = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/os/osmatch", nsmgr);
+                XmlNodeList osClass = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/os/osmatch/osclass", nsmgr);
                 for (int i = 0; i < osMatch.Count; i++)
                 {
-                    string osName = osMatch[i].Attributes["name"].Value;
-                    string osAccuracy = osMatch[i].Attributes["accuracy"].Value;
-                    hd.HostOsName = osName;
-                    hd.HostOsAccuracy = osAccuracy;
-                   
+                    for (int l = 0; l < osClass.Count; l++)
+                    {
+                        ListOsMatches.Add(new ListOsMatches()
+                        {
+                            HostOsName = osMatch[i].Attributes["name"].Value,
+                            HostOsAccuracy = osMatch[i].Attributes["accuracy"].Value,
+                            HostOsVendor = osClass[l].Attributes["vendor"]?.Value,
+                            HostOsFamily = osClass[l].Attributes["osfamily"]?.Value,
+                            HostOsGen = osClass[l].Attributes["osgen"]?.Value
+                        });
+                    }
                 }
-                XmlNodeList osClass = host.SelectNodes("/nmaprun/host[address/@addr='" + SelectedHost + "']/os/osmatch/osclass", nsmgr);
-                for (int i = 0; i < osClass.Count; i++)
-                {
-                    string osVendor = osClass[i].Attributes["vendor"]?.Value;
-                    string osFamily = osClass[i].Attributes["osfamily"]?.Value;
-                    string osType = osClass[i].Attributes["ostype"]?.Value;
-                    string osGen = osClass[i].Attributes["osgen"]?.Value;
-                    hd.HostOsVendor = osVendor;
-                    hd.HostOsFamily = osFamily;
-                    hd.HostOsType = osType;
-                    hd.HostOsGen = osGen;
-                    
-                }
-                ListHostDetails.Add(hd);
-                
-                
+
             }
 
         }
-       
+
         public void GetPortInfo()
         {
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
@@ -280,6 +298,7 @@ namespace CyberWatcher.ViewModel
 
                 }
             }
+
             ListHostPortDetails.Clear();
         }
 

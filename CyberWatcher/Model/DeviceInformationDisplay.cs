@@ -29,12 +29,7 @@ namespace CyberWatcher.Model
             };
             public static DeviceInfo BluetoothPairedOnly =>
                       new DeviceInfo() { DisplayName = "Bluetooth (paired)", Selector = BluetoothDevice.GetDeviceSelectorFromPairingState(true) };
-            public static DeviceInfo BluetoothUnpairedOnly =>
-                      new DeviceInfo() { DisplayName = "Bluetooth (unpaired)", Selector = BluetoothDevice.GetDeviceSelectorFromPairingState(false) };
-            //public static DeviceInfo DialAllApps =>
-            //         new DeviceInfo() { DisplayName = "DIAL (All apps)", Selector = DialDevice.GetDeviceSelector("") };
-            //public static DeviceInfo WiFiDirect =>
-            //        new DeviceInfo() { DisplayName = "Wi-Fi Direct", Selector = WiFiDirectDevice.GetDeviceSelector(WiFiDirectDeviceSelectorType.AssociationEndpoint) };
+            
 
             public static List<DeviceInfo> DevicePickerSelectors
             {
@@ -43,9 +38,7 @@ namespace CyberWatcher.Model
                     // Add all selectors that can be used with the DevicePicker
                     List<DeviceInfo> selectors = new List<DeviceInfo>(CommonDeviceSelectors);
                     selectors.Add(BluetoothPairedOnly);
-                    selectors.Add(BluetoothUnpairedOnly);
-                    //selectors.Add(WiFiDirect);
-                    //selectors.Add(DialAllApps);
+                    
 
                     return selectors;
                 }
@@ -65,8 +58,7 @@ namespace CyberWatcher.Model
         public DeviceInformationKind Kind => DeviceInformation.Kind;
         public string Id => DeviceInformation.Id;
         public string Name => DeviceInformation.Name;
-        //public bool CanPair => DeviceInformation.Pairing.CanPair;
-        //public bool IsPaired => DeviceInformation.Pairing.IsPaired;
+       
 
         public DeviceInformation DeviceInformation { get; private set; }
 
@@ -78,8 +70,7 @@ namespace CyberWatcher.Model
             OnPropertyChanged("Id");
             OnPropertyChanged("Name");
             OnPropertyChanged("DeviceInformation");
-            //OnPropertyChanged("CanPair");
-            //OnPropertyChanged("IsPaired");
+            
 
         }
 

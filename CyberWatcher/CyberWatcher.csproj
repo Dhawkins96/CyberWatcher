@@ -57,6 +57,13 @@
   <PropertyGroup>
     <StartupObject>CyberWatcher.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\CyberWatcherLogo-Copy.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Activities.Build" />
     <Reference Include="Microsoft.Build" />
@@ -85,28 +92,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helper\Encrypt.cs" />
     <Compile Include="Helper\StaticUtilities.cs" />
-    <Compile Include="Helper\ToggleButtonProperties.cs" />
     <Compile Include="Model\Bandwidth Speed\BandwidthMonitorBase.cs" />
     <Compile Include="Model\Bandwidth Speed\DownloadMonitor.cs" />
     <Compile Include="Model\Bandwidth Speed\IMonitor.cs" />
-    <Compile Include="Model\Bandwidth Speed\LatencyMonitor.cs" />
     <Compile Include="Model\Bandwidth Speed\MonitorIcon.cs" />
     <Compile Include="Helper\ObservableObject.cs" />
     <Compile Include="Model\Bandwidth Speed\UploadMonitor.cs" />
     <Compile Include="Model\DeviceInformationDisplay.cs" />
     <Compile Include="Model\Nmap\NmapClasses.cs" />
     <Compile Include="Model\Nmap\NmapScan.cs" />
-    <Compile Include="Model\Nmap\NmapXMLModels.cs" />
     <Compile Include="Model\Password Manager\DbConnection.cs" />
     <Compile Include="Model\Password Manager\PasswordGenerate.cs" />
+    <Compile Include="Model\User\HelpModel.cs" />
+    <Compile Include="ViewModel\HelpDetailsViewModel.cs" />
     <Compile Include="ViewModel\PasswordViewModel.cs" />
     <Compile Include="ViewModel\UserAccountViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\HelpViewModel.cs" />
     <Compile Include="ViewModel\NavigationViewModel.cs" />
     <Compile Include="ViewModel\StartupViewModel.cs" />
+    <Compile Include="View\HelpDetailsView.xaml.cs">
+      <DependentUpon>HelpDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MonitorView.xaml.cs">
       <DependentUpon>MonitorView.xaml</DependentUpon>
     </Compile>
@@ -125,25 +135,13 @@
     <Compile Include="View\StartupView.xaml.cs">
       <DependentUpon>StartupView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Resources\Buttons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\CheckBoxs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Slider.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="View\HelpDetailsView.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\TextBox.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -207,9 +205,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Resource Include="Fonts\Cairo-SemiBold.ttf" />
-    <Resource Include="Fonts\OpenSans-Regular.ttf" />
-    <Resource Include="Fonts\Roboto-Regular.ttf" />
     <Resource Include="Assets\IconEmail.png" />
     <Resource Include="Assets\IconGlyphDesktop.png" />
     <Resource Include="Assets\IconGlyphExit.png" />
@@ -219,8 +214,19 @@
     <Resource Include="Assets\IconGlyphPlus.png" />
     <Resource Include="Assets\IconGlyphWeb.png" />
     <Resource Include="Assets\IconLogin.png" />
-    <Resource Include="Assets\IconPassword.png" />
     <Resource Include="Assets\IconWeb.png" />
+    <Resource Include="Assets\IconLock.png" />
+    <Resource Include="Assets\IconHome.png" />
+    <Resource Include="Assets\IconHelp.png" />
+    <Resource Include="Assets\IconUser.png" />
+    <Resource Include="Assets\IconPassword.png" />
+    <Resource Include="Assets\IconBack.png" />
+    <Resource Include="Assets\IconCloseBlue.png" />
+    <Resource Include="Assets\IconCloseRed.png" />
+    <Resource Include="Assets\IconMax.png" />
+    <Resource Include="Assets\IconMin.png" />
+    <Resource Include="Assets\CyberWatcherLogo-Copy.ico" />
+    <Resource Include="Assets\IconHelpBig.png" />
     <Content Include="ExternalTools\nmap-mac-prefixes" />
     <Content Include="ExternalTools\nmap-os-db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1012,59 +1018,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\CyberWatcherLogo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\alarm_icon.png" />
-    <Resource Include="Assets\analytics_icon.png" />
-    <Resource Include="Assets\android_icon.png" />
-    <Resource Include="Assets\angular_icon.png" />
-    <Resource Include="Assets\audio_icon.png" />
-    <Resource Include="Assets\back_icon.png" />
-    <Resource Include="Assets\book_icon.png" />
-    <Resource Include="Assets\calendar_icon.png" />
-    <Resource Include="Assets\chart_icon.png" />
-    <Resource Include="Assets\clap_icon.png" />
-    <Resource Include="Assets\close_icon.png" />
-    <Resource Include="Assets\close_mo_icon.png" />
-    <Resource Include="Assets\Desktop_Icon.png" />
-    <Resource Include="Assets\Document_Icon.png" />
-    <Resource Include="Assets\Download_Icon.png" />
-    <Resource Include="Assets\drive_icon.png" />
-    <Resource Include="Assets\export_icon.png" />
-    <Resource Include="Assets\file_icon.png" />
-    <Resource Include="Assets\film_icon.png" />
-    <Resource Include="Assets\flutter_icon.png" />
-    <Resource Include="Assets\folder_icon.png" />
-    <Resource Include="Assets\headphone_icon.png" />
-    <Resource Include="Assets\Home_Icon.png" />
-    <Resource Include="Assets\html_icon.png" />
-    <Resource Include="Assets\Images_Icon.png" />
-    <Resource Include="Assets\invoice_icon.png" />
-    <Resource Include="Assets\javascript_icon.png" />
-    <Resource Include="Assets\Movies_Icon.png" />
-    <Resource Include="Assets\movie_icon.png" />
-    <Resource Include="Assets\musical_icon.png" />
-    <Resource Include="Assets\Music_Icon.png" />
-    <Resource Include="Assets\network_icon.png" />
-    <Resource Include="Assets\notepad_icon.png" />
-    <Resource Include="Assets\note_icon.png" />
-    <Resource Include="Assets\order_icon.png" />
-    <Resource Include="Assets\password_icon.png" />
-    <Resource Include="Assets\pctrash_icon.png" />
-    <Resource Include="Assets\pc_icon.png" />
-    <Resource Include="Assets\picture_icon.png" />
-    <Resource Include="Assets\printer_icon.png" />
-    <Resource Include="Assets\print_icon.png" />
-    <Resource Include="Assets\python_icon.png" />
-    <Resource Include="Assets\services_icon.png" />
-    <Resource Include="Assets\stock_icon.png" />
-    <Resource Include="Assets\studio_icon.png" />
-    <Resource Include="Assets\swift_icon.png" />
-    <Resource Include="Assets\usb_icon.png" />
-    <Resource Include="Assets\vsc_icon.png" />
-    <Resource Include="Assets\vs_icon.png" />
-    <Resource Include="Assets\webcam_icon.png" />
-    <Resource Include="Assets\wifi_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.Contracts">

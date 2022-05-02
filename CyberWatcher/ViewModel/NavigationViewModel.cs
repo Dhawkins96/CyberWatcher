@@ -24,9 +24,6 @@ namespace CyberWatcher.ViewModel
             {
                 ObservableCollection<MenuItems> menuItems = new ObservableCollection<MenuItems>
                 {
-
-                   
-                    
                 };
                 MenuItemsCollection = new CollectionViewSource { Source = menuItems };
                 SelectedViewModel = new StartupViewModel();
@@ -35,10 +32,10 @@ namespace CyberWatcher.ViewModel
             {
                 ObservableCollection<MenuItems> menuItems = new ObservableCollection<MenuItems>
                 {
-                    new MenuItems { MenuName = "Home", MenuImage = "/Assets/Home_Icon.png" },
-                    new MenuItems { MenuName = "Password", MenuImage = "/Assets/Desktop_Icon.png" },
-                    new MenuItems { MenuName = "Help", MenuImage = "/Assets/Music_Icon.png" },
-                    new MenuItems { MenuName = "User Account", MenuImage = "/Assets/Download_Icon.png" }
+                    new MenuItems { MenuName = "Home", MenuImage = "/Assets/IconHome.png" },
+                    new MenuItems { MenuName = "Password", MenuImage = "/Assets/IconLock.png" },
+                    new MenuItems { MenuName = "Help", MenuImage = "/Assets/IconHelp.png" }, 
+                    new MenuItems { MenuName = "User Account", MenuImage = "/Assets/IconUser.png" }
                 };
                 MenuItemsCollection = new CollectionViewSource { Source = menuItems };
                 SelectedViewModel = new HomeViewModel();
@@ -47,15 +44,8 @@ namespace CyberWatcher.ViewModel
 
         public NavigationViewModel()
         {
-            // ObservableCollection represents a dynamic data collection that provides notifications when items
-            // get added, removed, or when the whole list is refreshed.
-
-
-            LoadWindow();
             
-            MenuItemsCollection.Filter += MenuItems_Filter;
-
-            // Set Startup Page
+            LoadWindow();
             
         }
 
@@ -66,37 +56,7 @@ namespace CyberWatcher.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        // Text Search Filter.
-        private string filterText;
-        public string FilterText
-        {
-            get => filterText;
-            set
-            {
-                filterText = value;
-                MenuItemsCollection.View.Refresh();
-                OnPropertyChanged("FilterText");
-            }
-        }
-
-        private void MenuItems_Filter(object sender, FilterEventArgs e)
-        {
-            if (string.IsNullOrEmpty(FilterText))
-            {
-                e.Accepted = true;
-                return;
-            }
-
-            MenuItems _item = e.Item as MenuItems;
-            if (_item.MenuName.ToUpper().Contains(FilterText.ToUpper()))
-            {
-                e.Accepted = true;
-            }
-            else
-            {
-                e.Accepted = false;
-            }
-        }
+       
 
         // Select ViewModel
         private object _selectedViewModel;
@@ -143,12 +103,42 @@ namespace CyberWatcher.ViewModel
             }
         }
 
-        
+        private ICommand _helpCommand;
+        public ICommand HelpCommand
+        {
+            get
+            {
+                if (_helpCommand == null)
+                {
+                    _helpCommand = new RelayCommand(param => GetHelpDetails((string)param));
+                }
+                return _helpCommand;
+            }
+        }
+
+       
+
+        public void GetHelpDetails(string para)
+        {
+            SelectedViewModel = new HelpDetailsViewModel(para);
+        }
 
         // Show Home View
         private void ShowHome()
         {
-            SelectedViewModel = new HomeViewModel();
+            if(StaticUtilities.UserID != 0)
+            {
+                SelectedViewModel = new HomeViewModel();
+            }
+        }
+
+        // Show Help View
+        private void BackHelp()
+        {
+            if (StaticUtilities.UserID != 0)
+            {
+                SelectedViewModel = new HelpViewModel();
+            }
         }
 
         // Back button Command
@@ -164,12 +154,45 @@ namespace CyberWatcher.ViewModel
                 return _backHomeCommand;
             }
         }
+        private ICommand _backHelpCommand;
+        public ICommand BackHelpCommand
+        {
+            get
+            {
+                if (_backHelpCommand == null)
+                {
+                    _backHelpCommand = new RelayCommand(p => BackHelp());
+                }
+                return _backHelpCommand;
+            }
+        }
 
         // Close App
         public void CloseApp(object obj)
         {
             MainWindow win = obj as MainWindow;
             win.Close();
+        }
+
+        public void MaxApp(object obj)
+        {
+            MainWindow win = obj as MainWindow;
+            if (win.WindowState != System.Windows.WindowState.Maximized)
+            {
+                win.WindowState = System.Windows.WindowState.Maximized;
+            }
+            else
+            {
+                win.WindowState = System.Windows.WindowState.Normal;
+            }
+               
+                
+        }
+
+        public void MinApp(object obj)
+        {
+            MainWindow win = obj as MainWindow;
+            win.WindowState = System.Windows.WindowState.Minimized;
         }
 
         // Close App Command
@@ -186,5 +209,29 @@ namespace CyberWatcher.ViewModel
             }
         }
 
+        private ICommand _maxCommand;
+        public ICommand MaxAppCommand
+        {
+            get
+            {
+                if (_maxCommand == null)
+                {
+                    _maxCommand = new RelayCommand(p => MaxApp(p));
+                }
+                return _maxCommand;
+            }
+        }
+        private ICommand _minCommand;
+        public ICommand MinAppCommand
+        {
+            get
+            {
+                if (_minCommand == null)
+                {
+                    _minCommand = new RelayCommand(p => MinApp(p));
+                }
+                return _minCommand;
+            }
+        }
     }
 }

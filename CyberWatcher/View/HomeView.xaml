@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CyberWatcher.View"
              xmlns:p="clr-namespace:CyberWatcher.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="575" d:DesignWidth="915">
+             d:DesignHeight="685" d:DesignWidth="1280">
     <UserControl.Style>
         <Style>
             <Style.Triggers>
@@ -23,29 +23,112 @@
             </Style.Triggers>
         </Style>
     </UserControl.Style>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
 
     <Grid Background="#303030">
         <TextBlock Text="Home"
-                   FontSize="24"
-                   FontFamily="/Fonts/OpenSans-Regular.ttf #Open Sans Regular"
-                   Foreground="#DDDDDD"
+                   FontSize="32"
+                   FontFamily="Arial"
+                   Foreground="White"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Margin="5,2,0,0" />
+                   Margin="20,0,0,0" />
+
+        <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                    Margin="1035,10,70,484.8" Background="Transparent">
+            <Grid.Resources>
+                <Style TargetType="{x:Type local:MonitorView}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type local:MonitorView}">
+                                <Viewbox>
+                                    <ContentPresenter />
+                                </Viewbox>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
 
 
-        <Grid Margin="5">
-            <StackPanel Margin="1,27,625.2,349.2">
-                <Grid Height="183" Margin="0,0,18.2,0" >
+
+            <ItemsControl ItemsSource="{Binding Monitors}" Background="Transparent" Margin="10,0,0.4,9.4"  >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel >
+                            <StackPanel.Style>
+                                <Style TargetType="{x:Type StackPanel}">
+                                    <Setter Property="Orientation"
+                                        Value="Vertical" />
+
+                                </Style>
+                            </StackPanel.Style>
+                        </StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:MonitorView />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="1055,5,0,0" TextWrapping="Wrap" Text="Bandwidth Speed Monitor:" VerticalAlignment="Top" Width="195" Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="15"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1210,55,0,0" TextWrapping="Wrap" Text="Download Speed" VerticalAlignment="Top" Foreground="White" Width="65" TextAlignment="Center" FontFamily="Arial" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1215,125,0,0" TextWrapping="Wrap" Text="Upload Speed" VerticalAlignment="Top" Foreground="White" Width="60" TextAlignment="Center" FontFamily="Arial" FontSize="14"/>
+
+        <Grid HorizontalAlignment="Left" Height="70" Margin="980,190,0,0" VerticalAlignment="Top" Width="300">
+            <StackPanel HorizontalAlignment="Center" Width="280" Margin="5,-2,15,0" >
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Speed Key:" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="15"/>
+                <Separator Background="White" FontWeight="Medium"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-
+                        <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock HorizontalAlignment="Left" Text="Connected Devices:"  TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="18" Width="106" Margin="3,2,0,0" />
-                    <ComboBox HorizontalAlignment="Left"  VerticalAlignment="Top" Width="127" 
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="b = Bits per second" Foreground="White" FontFamily="Arial" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="B = Byte per second" Foreground="White" FontFamily="Arial" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="K = Kilobyte per second" Foreground="White" FontFamily="Arial" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="M = Megabyte per second" Foreground="White" FontFamily="Arial" HorizontalAlignment="Left"/>
+                    <TextBlock Grid.Row="2" Grid.ColumnSpan="20" HorizontalAlignment="Center" Text="G = Gigabyte per second" Foreground="White" FontFamily="Arial" />
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+        <Grid Margin="5">
+
+
+            <Border BorderBrush="White" BorderThickness="5" HorizontalAlignment="Left" Height="70" CornerRadius="25" Margin="0,95,0,0" VerticalAlignment="Top" Width="380"/>
+
+
+
+
+            <Border BorderBrush="White" BorderThickness="5" HorizontalAlignment="Left" Height="90" CornerRadius="35" Margin="-5,325,0,0" VerticalAlignment="Top" Width="195"/>
+
+
+            <StackPanel Margin="406,1,320,499.8">
+                <Grid Height="183" Margin="0,0,5.6,0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="29*"/>
+                        <RowDefinition Height="154*"/>
+
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" HorizontalAlignment="Left" TextWrapping="Wrap" Text="To see which devices you have connected select from the drop down box" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="15" Grid.RowSpan="2" Width="534" FontWeight="Bold" TextAlignment="Center"/>
+                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="Connected Devices:"  TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="15" Width="126" Margin="94,0.2,244,0" FontFamily="Arial" FontSize="13" />
+                    <ComboBox HorizontalAlignment="Center"  VerticalAlignment="Top" Width="127" 
                       ItemsSource="{Binding Collection}"  IsSynchronizedWithCurrentItem="True"
-                      SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" BorderBrush="#FFFCF7F7" Height="20" Margin="121,-1,-115.6,0">
+                      SelectedItem="{Binding SelectedDevice, Mode=TwoWay}" Height="24" Margin="222,25,115,0" Grid.RowSpan="2" >
+
+
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding DisplayName}"/>
@@ -53,9 +136,9 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <ListView x:Name="resultsListView" Background="Transparent" Foreground="White"  BorderBrush="Transparent"
+                    <ListView Grid.Row="1" x:Name="resultsListView" Background="Transparent" Foreground="White"  BorderBrush="Transparent"
                         ItemsSource="{Binding ResultCollection}" ItemContainerStyle="{StaticResource ListViewNoSelection}"
-                         ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,23,8,-0.2">
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,23.2,8.6,14.2">
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -65,14 +148,14 @@
                                         <ColumnDefinition Width="*" MinWidth="100"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Border Grid.Column="1" Margin="5">
+                                    <Border Grid.Column="1">
                                         <StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Name:" Margin="0,0,5,0"/>
+                                                <TextBlock Text="Name of Device:" Margin="0,0,5,0"/>
                                                 <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold" TextWrapping="Wrap"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Kind:" Margin="0,0,5,0"/>
+                                                <TextBlock Text="Type of Device:" Margin="0,0,5,0"/>
                                                 <TextBlock Text="{Binding Kind, Mode=OneWay}" TextWrapping="Wrap"/>
                                             </StackPanel>
                                         </StackPanel>
@@ -82,34 +165,53 @@
                         </ListView.ItemTemplate>
 
                     </ListView>
+
                 </Grid>
 
             </StackPanel>
 
-            <Grid Margin="263,4,205.2,307.2">
+            <Grid Margin="0,40,900,-0.2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60*" />
+                    <RowDefinition Height="63*"/>
+                    <RowDefinition Height="44*"/>
+                    <RowDefinition Height="114*"/>
+                    <RowDefinition Height="354*"/>
+                </Grid.RowDefinitions>
 
-                <CheckBox x:Name="LocalNetwork"  Content="Scan Local Network?" x:FieldModifier="public" Foreground="White" 
+
+                <TextBlock Grid.Row="0" Text="Select the type of network scan you would like to run - If you're unsure about where to start or which scan to chose please look in the help selection!" TextWrapping="Wrap" Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Height="55" Margin="-5,-5,-10.6,0" Width="386" />
+                <CheckBox x:Name="LocalNetwork" Grid.Row="1" Content="Scan Local Network?(Fast Scan)" x:FieldModifier="public" Foreground="White" 
                       FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                      Checked="LocalNetwork_Checked_1" Unchecked="LocalNetwork_Checked_1" Height="14" Width="106" Style="{DynamicResource CheckBox_Style}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="43,3,0,0">
+                      Checked="LocalNetwork_Checked" Unchecked="LocalNetwork_Checked" Height="14" Width="151" Style="{DynamicResource CheckBox_Style}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Arial" Margin="15,5,0,0">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="2" ScaleY="2" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                <CheckBox x:Name="PortScan"  Grid.Row="1"  Content="Scan All Ports? (Slow Scan)" x:FieldModifier="public" Foreground="White" 
+                    FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    Checked="PortScan_Checked" Unchecked="PortScan_Checked" Height="14" Width="140" Style="{DynamicResource CheckBox_Style}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontFamily="Arial" Margin="15,30,0,0">
                     <CheckBox.LayoutTransform>
                         <ScaleTransform ScaleX="2" ScaleY="2" />
                     </CheckBox.LayoutTransform>
                 </CheckBox>
 
-
-                <Button x:Name="Scan" HorizontalAlignment="Left" Height="54" VerticalAlignment="Top" Width="58"  
-                    BorderThickness="2"   Click="Scan_Click"   Content="Scan" BorderBrush="Black" Margin="310,3,0,0">
+                <Button x:Name="btnScan"  Grid.Row="1" HorizontalAlignment="Left" Width="50"  
+                    BorderThickness="2"   Click="BtnScan_Click"   Content="Scan" Background="Gray" Foreground="White"  BorderBrush="#FF090101" FontFamily="Arial" FontWeight="Bold" FontSize="15" Margin="320,10,0,10.2" >
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
                         </Style>
                     </Button.Resources>
                 </Button>
-                <Label x:Name="lblScanOutput" Content="" HorizontalAlignment="Left" Margin="113,63,0,0" VerticalAlignment="Top" Width="212" Foreground="White" FontSize="16" FontWeight="Bold"/>
 
-                <ListView x:Name="lstScanDetails" Grid.Row="0"  BorderBrush="Transparent"
+                <Label x:Name="lblScanOutput" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="295" Foreground="White" FontSize="16" FontWeight="Bold" FontFamily="Arial" Grid.Row="2" Margin="50,4.8,0,0" Height="40" Grid.RowSpan="2"/>
+                <ProgressBar   VerticalAlignment="Top" BorderBrush="Black"  
+                         x:Name="pbStatus" IsIndeterminate="False" Visibility="Hidden"   Foreground="#FF910000" Background="Transparent"  Grid.Row="2" Height="40" Margin="0,1.8,0.4,0" />
+
+                <ListView x:Name="lstScanDetails" Grid.Row="3"  BorderBrush="Transparent"
                           ItemContainerStyle="{StaticResource ListViewNoSelection}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ItemsSource="{Binding ListScanDetails}" Foreground="White" Background="Transparent" Margin="2,101,2.4,22.4" >
+                          ItemsSource="{Binding ListScanDetails}" Foreground="White" Background="Transparent" Margin="0,0.8,0.4,1.8"  >
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
@@ -127,220 +229,235 @@
                                 <TextBlock Grid.Row="0" Text="Last Scan Ran:" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"/>
                                 <TextBlock Grid.Row="1" Text="{Binding ScanTime, TargetNullValue=No Pervious Scans Found}" FontSize="15"/>
                                 <TextBlock Grid.Row="2" Text="Summary from Scan:" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="3" Text="{Binding Summary, TargetNullValue=No Pervious Scans Found}" FontSize="15" TextWrapping="WrapWithOverflow"/>
+                                <TextBlock Grid.Row="3" Text="{Binding Summary, TargetNullValue=If you are unsure how to start a scan please go to the help section for more information}" FontSize="15" TextWrapping="WrapWithOverflow"/>
 
                             </Grid>
 
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <ProgressBar Height="29" Margin="24,92,19.4,0" VerticalAlignment="Top" BorderBrush="#66FFFFFF"  
-                         Name="pbStatus" IsIndeterminate="False" Visibility="Hidden"  Foreground="#FF910000" RenderTransformOrigin="0.5,0.5"/>
-                <CheckBox x:Name="ScanPorts"  Content="Scan All Ports?" x:FieldModifier="public" Foreground="White" 
-                    FontSize="9" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                    Checked="LocalNetwork_Checked_1" Unchecked="LocalNetwork_Checked_1" Height="14" Width="100" Style="{DynamicResource CheckBox_Style}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="43,28,0,0">
-                    <CheckBox.LayoutTransform>
-                        <ScaleTransform ScaleX="2" ScaleY="2" />
-                    </CheckBox.LayoutTransform>
-                </CheckBox>
 
+                <Grid Grid.Row="4" Visibility="{Binding IsSavedScan, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0.2,-0.6,0.2" >
+
+
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" 
+                           Text="A host (also known as 'network host') is a computer or other device that communicates with other hosts on a network"                           
+                           VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="14" TextAlignment="Center" Margin="5,124,197,0" Height="85" Width="169"/>
+
+
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" 
+                           Text="Select one of the hosts by clicking on them to see more information."                           
+                           VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="16" TextAlignment="Center" Margin="5,20,190,0" Height="79" Width="176" FontWeight="Bold"/>
+
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" 
+                           Text="Live Hosts Found:"                           
+                           VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="15" TextAlignment="Center" Margin="205,20,22,0" Height="15" Width="144" FontWeight="Bold"/>
+
+                    <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" 
+                           Text="This page will give a brief description on what the data that was received on the scan is but if you would like more information please look in the help tab for a more in depth description."                           
+                           VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="14" TextAlignment="Center" Margin="-5,243,199,-10" Height="121" Width="177"/>
+
+                    <ListView x:Name="lstHosts" BorderBrush="Transparent" SelectedItem="{Binding SelectedHost, Mode=TwoWay}"  
+                      Background="Transparent" ItemsSource="{Binding Host}" Foreground="White" Margin="200,39,1,0" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Host IP:" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding ''}" FontWeight="Bold" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
             </Grid>
 
-            <Grid Margin="0,265,-0.8,-0.8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="174*" />
 
-                    <ColumnDefinition Width="330*"/>
+            <Grid Margin="380,190,410,4.8"  Visibility="{Binding IsSavedScan, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="17*"/>
+                    <RowDefinition Height="31*"/>
+                </Grid.RowDefinitions>
 
-                    <ColumnDefinition Width="189*"/>
-                    <ColumnDefinition Width="97*"/>
 
-                </Grid.ColumnDefinitions>
-
-                <ListView x:Name="lstHosts" Grid.Column="0"  BorderBrush="Transparent"
-                      ItemsSource="{Binding Host}" SelectedItem="{Binding SelectedHost, Mode=TwoWay}"  
-                      Background="Transparent" Foreground="White">
+                <TextBlock HorizontalAlignment="Left" Grid.Row="0"  TextWrapping="Wrap" 
+                           Text="Host's Information:" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="15" Height="20" Width="145" Margin="20,0,0,0"/>
+                <ListView x:Name="lstHostDetails" Grid.Row="0"  BorderBrush="Transparent"
+                          ItemContainerStyle="{StaticResource ListViewNoSelection}"
+                          ItemsSource="{Binding ListHostDetails}" Foreground="White" Background="Transparent" Margin="35,19,320.4,5.6">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Host IP:" Margin="0,0,5,0"/>
-                                <TextBlock Text="{Binding }" FontWeight="Bold" TextWrapping="Wrap"/>
+                            <StackPanel >
+                                <TextBlock Text="Host State:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostState, TargetNullValue=No Information}"/>
+                                <TextBlock Text="Host Mac:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostMac, TargetNullValue=No Information}"/>
+                                <TextBlock Text="Host Vendor:" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding HostVendor, TargetNullValue=No Information}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="47*"/>
-                        <RowDefinition Height="95*"/>
-                    </Grid.RowDefinitions>
 
-                    <ListView x:Name="lstHostDetails" Grid.Row="0"  BorderBrush="Transparent"
+                <TextBlock HorizontalAlignment="Left" Grid.Row="0"  TextWrapping="Wrap" 
+                           VerticalAlignment="Top" Foreground="White" FontFamily="Arial" Margin="226,0,0,0" FontSize="14" Width="185" TextAlignment="Center" Height="33"><Run Text="The Host State "/><Run Text="reflects if the host is live on the network."/></TextBlock>
+
+                <TextBlock HorizontalAlignment="Left" Grid.Row="0"  TextWrapping="Wrap" 
+                           Text="The Host MAC, is the MAC address assigned to the host." VerticalAlignment="Top" Foreground="White" FontFamily="Arial" Margin="220,50,0,0" FontSize="14" Width="200" TextAlignment="Center" Height="32"/>
+
+                <TextBlock HorizontalAlignment="Left" Grid.Row="0"  TextWrapping="Wrap" 
+                           Text="The Host Vendor is a commercial organisation that makes the host software. " VerticalAlignment="Top" Foreground="White" FontFamily="Arial" Margin="180,105,0,0" FontSize="14" Width="280" TextAlignment="Center" Height="39"/>
+
+
+
+                <TextBlock HorizontalAlignment="Left" Grid.Row="1"  TextWrapping="Wrap" 
+                           VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="16" Width="460" TextAlignment="Center" Height="20" FontWeight="Bold" Margin="0,9.4,0,0"><Run Text="A Table "/><Run Text="for "/><Run Text="the possible Operating System (OS) matches."/></TextBlock>
+
+                <TextBlock HorizontalAlignment="Left" Grid.Row="1"  TextWrapping="Wrap" 
+                           VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="14" Width="405" TextAlignment="Center" Height="50" Margin="35,215.4,0,0" Text="The NMAP scan is able guess the OS system that the host might be using. As you can see in the table their is the name of the OS match, followed by the accuracy, vendor, Family, Generation."/>
+
+                <ListView x:Name="lstHostOSDetails"  BorderBrush="Transparent"                    
+                          ItemsSource="{Binding ListOsMatches}" Foreground="White" Background="Transparent" Margin="0,35.4,0.4,100" Grid.Row="1" FontFamily="Arial">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Background"  Value="Gray" />
+                                    <Setter Property="Foreground"  Value="White" />
+                                    <Setter Property="FontFamily" Value="Arial"/>
+                                    <Setter Property="FontSize" Value="16"/>
+
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="Name"  Width="auto" DisplayMemberBinding="{Binding HostOsName}" />
+                            <GridViewColumn Header="Accuracy" Width="auto" DisplayMemberBinding="{Binding HostOsAccuracy}" />
+                            <GridViewColumn Header="Vendor" Width="auto" DisplayMemberBinding="{Binding HostOsVendor}" />
+                            <GridViewColumn Header="Family" Width="auto" DisplayMemberBinding="{Binding HostOsFamily}" />
+                            <GridViewColumn Header="Generation" Width="auto" DisplayMemberBinding="{Binding HostOsGen}" />
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontFamily" Value="Arial"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Expander IsExpanded="False">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Name}" FontWeight="DemiBold" Foreground="White" FontSize="16" VerticalAlignment="Bottom" />
+                                                            <TextBlock Text="{Binding ItemCount}" FontSize="14" Foreground="White" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                            <TextBlock Text=" OS Match(s)" FontSize="12" Foreground="White" VerticalAlignment="Bottom" />
+                                                        </StackPanel>
+                                                    </Expander.Header>
+                                                    <ItemsPresenter />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+                <TextBlock HorizontalAlignment="Center" Margin="117,279.4,98.4,0" Grid.Row="1" TextWrapping="Wrap" Text="NMAP doesn't always get all the results back, in that case, it'll just say no information." VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontWeight="Bold" Width="265" Height="28"/>
+
+            </Grid>
+
+            <Grid  Visibility="{Binding IsSavedScan, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="865,270,0,4.8">
+
+                <TextBlock Text="All Port(s) found on host:" Foreground="White" FontFamily="Arial" FontSize="16" FontWeight="Bold" Margin="0,0,95.4,364.4"  />
+
+                <ListView  ItemsSource="{Binding Items, Mode=TwoWay}"  BorderBrush="Transparent"
+                              Background="Transparent" Foreground="White"
+                               SelectedItem="{Binding SelectedPort, Mode=TwoWay}" Margin="0,20,205.4,0.4" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" MinWidth="100"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="1" Margin="5">
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Port ID:" Margin="0,0,5,0" Foreground="White" FontFamily="Arial"/>
+                                            <TextBlock Text="{Binding PortID, TargetNullValue=No Information}" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" FontFamily="Arial"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Protocol:" Margin="0,0,5,0" Foreground="White" FontFamily="Arial"/>
+                                            <TextBlock Text="{Binding PortProtocol, TargetNullValue=No Information}" Foreground="White" TextWrapping="Wrap" FontFamily="Arial"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Expander IsExpanded="True">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding Name}" FontWeight="DemiBold" Foreground="White" FontSize="20" VerticalAlignment="Bottom" />
+                                                            <TextBlock Text="{Binding ItemCount}" FontSize="18" Foreground="White" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
+                                                            <TextBlock Text=" port(s)" FontSize="16" Foreground="White" VerticalAlignment="Bottom" />
+                                                        </StackPanel>
+                                                    </Expander.Header>
+                                                    <ItemsPresenter />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+                <TextBlock TextWrapping="Wrap" Foreground="White" FontFamily="Arial" FontSize="12" Margin="210,35,9.4,277.4" TextAlignment="Center" ><Run Text="The number of port(s) shown will depend on which scan you selected"/><Run Text=". The fast scan will only scan the top 1000 ports where as the slow scan will scan all 65,535!"/></TextBlock>
+
+                <Border BorderBrush="White" BorderThickness="5" HorizontalAlignment="Left" Height="55" CornerRadius="50"  VerticalAlignment="Top" Width="180" Margin="205,140,0,0"/>
+
+                <TextBlock Text="Select a port to see its service information" TextWrapping="Wrap" Foreground="White" FontFamily="Arial" FontSize="14" Margin="200,152,10.4,215.4" TextAlignment="Center" FontWeight="Bold" />
+                <TextBlock Text="Below is the service information about the port:" TextWrapping="Wrap" Foreground="White" FontFamily="Arial" FontSize="14" Margin="191,246,-4.6,120.4" TextAlignment="Center" />
+
+                <ListView x:Name="lstPortServices"  BorderBrush="Transparent"
                           ItemContainerStyle="{StaticResource ListViewNoSelection}"
-                          ItemsSource="{Binding ListHostDetails}" Foreground="White" Background="Transparent"  >
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
+                            ItemsSource="{Binding ListHostPortDetails}" Foreground="White" Background="Transparent" Margin="220,280,34.4,6.4" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <StackPanel>
+                                    <TextBlock Text="Service Name:" FontWeight="Bold" TextWrapping="Wrap" FontFamily="Arial"/>
+                                    <TextBlock Text="{Binding ServiceName, TargetNullValue=No Information}"  FontFamily="Arial"/>
+                                    <TextBlock Text="Product:" FontWeight="Bold" TextWrapping="Wrap"  FontFamily="Arial"/>
+                                    <TextBlock Text="{Binding Product, TargetNullValue=No Information}"  FontFamily="Arial"/>
+                                    <TextBlock Text="Verison:" FontWeight="Bold" TextWrapping="Wrap"  FontFamily="Arial"/>
+                                    <TextBlock Text="{Binding Verison, TargetNullValue=No Information}"  FontFamily="Arial"/>
 
-                                <StackPanel >
-                                    <TextBlock Text="Host State:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding HostState, TargetNullValue=No Information}"/>
-                                    <TextBlock Text="Host Mac:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding HostMac, TargetNullValue=No Information}"/>
-                                    <TextBlock Text="Host Vendor:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding HostVendor, TargetNullValue=No Information}"/>
                                 </StackPanel>
 
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <ListView x:Name="lstHostOSDetails"  BorderBrush="Transparent"
-                          ItemContainerStyle="{StaticResource ListViewNoSelection}"
-                ItemsSource="{Binding ListHostDetails}" Foreground="White" Background="Transparent" Grid.Row="1"  >
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <StackPanel>
-                                        <TextBlock Text="OS Name:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding HostOsName, TargetNullValue=No Information}"/>
-                                        <TextBlock Text="OS Accuracy:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding HostOsAccuracy, TargetNullValue=No Information}"/>
-                                        <TextBlock Text="OS Vendor:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding HostOsVendor, TargetNullValue=No Information}"/>
-                                        <TextBlock Text="OS Family:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding HostOsFamily, TargetNullValue=No Information}"/>
-                                        <TextBlock Text="OS Type:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding HostOsType, TargetNullValue=No Information}"/>
-                                        <TextBlock Text="OS Generation:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding HostOsGen, TargetNullValue=No Information}"/>
-                                    </StackPanel>
-
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-
-                    </ListView>
-
-                </Grid>
-
-                <Grid Grid.Column="2" >
-                    <ListView  ItemsSource="{Binding Items, Mode=TwoWay}"  BorderBrush="Transparent"
-                              Background="Transparent" Foreground="White"
-                               SelectedItem="{Binding SelectedPort, Mode=TwoWay}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*" MinWidth="100"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="1" Margin="5">
-                                        <StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Port ID:" Margin="0,0,5,0" Foreground="White"/>
-                                                <TextBlock Text="{Binding PortID, TargetNullValue=No Information}" FontWeight="Bold" Foreground="White" TextWrapping="Wrap"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="Protocol:" Margin="0,0,5,0" Foreground="White"/>
-                                                <TextBlock Text="{Binding PortProtocol, TargetNullValue=No Information}" Foreground="White" TextWrapping="Wrap"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Border>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.GroupStyle>
-                            <GroupStyle>
-                                <GroupStyle.ContainerStyle>
-                                    <Style TargetType="{x:Type GroupItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-                                                    <Expander IsExpanded="False">
-                                                        <Expander.Header>
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Text="{Binding Name}" FontWeight="DemiBold" Foreground="White" FontSize="20" VerticalAlignment="Bottom" />
-                                                                <TextBlock Text="{Binding ItemCount}" FontSize="18" Foreground="White" FontWeight="Bold" FontStyle="Italic" Margin="10,0,0,0" VerticalAlignment="Bottom" />
-                                                                <TextBlock Text=" port(s)" FontSize="16" Foreground="White" VerticalAlignment="Bottom" />
-                                                            </StackPanel>
-                                                        </Expander.Header>
-                                                        <ItemsPresenter />
-                                                    </Expander>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </GroupStyle.ContainerStyle>
-                            </GroupStyle>
-                        </ListView.GroupStyle>
-                    </ListView>
-                </Grid>
-                <Grid Grid.Column="3" >
-                    <ListView x:Name="lstPortServices"  BorderBrush="Transparent"
-                          ItemContainerStyle="{StaticResource ListViewNoSelection}"
-                            ItemsSource="{Binding ListHostPortDetails}" Foreground="White" Background="Transparent">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <StackPanel>
-                                        <TextBlock Text="Service Name:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding ServiceName, TargetNullValue=No Information}"/>
-                                        <TextBlock Text="Product:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding Product, TargetNullValue=No Information}"/>
-                                        <TextBlock Text="Verison:" FontWeight="Bold" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding Verison, TargetNullValue=No Information}"/>
-
-                                    </StackPanel>
-
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-
-
-                    </ListView>
-                </Grid>
-
-            </Grid>
-            <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                    Margin="714,19,14.2,365.2" Background="Transparent">
-                <Grid.Resources>
-                    <Style TargetType="{x:Type local:MonitorView}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type local:MonitorView}">
-                                    <Viewbox>
-                                        <ContentPresenter />
-                                    </Viewbox>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Grid.Resources>
-
-
-
-                <ItemsControl ItemsSource="{Binding Monitors}" Background="Transparent"  >
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel >
-                                <StackPanel.Style>
-                                    <Style TargetType="{x:Type StackPanel}">
-                                        <Setter Property="Orientation"
-                                        Value="Vertical" />
-
-                                    </Style>
-                                </StackPanel.Style>
-                            </StackPanel>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:MonitorView />
+                            </Grid>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    </ListView.ItemTemplate>
+
+
+                </ListView>
+
             </Grid>
+
+
 
 
         </Grid>
