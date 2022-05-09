@@ -21,7 +21,7 @@ namespace CyberWatcher.View
         private void MinusSliderValue(object sender, RoutedEventArgs e)
         {
             
-            this.Slider_Lenght_Password.Value--;
+            this.SliderLenghtPassword.Value--;
 
         }
 
@@ -29,21 +29,27 @@ namespace CyberWatcher.View
         private void PlusSliderValue(object sender, RoutedEventArgs e)
         {
            
-            this.Slider_Lenght_Password.Value++;
+            this.SliderLenghtPassword.Value++;
         }
 
-        public void Generate(object sender, RoutedEventArgs e)
+        public void BtnGenerate(object sender, RoutedEventArgs e)
         {
             
             PasswordGenerate passwordGenerate = new PasswordGenerate();
             
-            RandomPassword.Text = passwordGenerate.GivePassword(int.Parse(RandomPasswordLength.Text), (bool)Numbers.IsChecked, (bool)Low.IsChecked, (bool)Uper.IsChecked, (bool)Special.IsChecked);
+            txtRandomPassword.Text = passwordGenerate.GivePassword(int.Parse(RandomPasswordLength.Text), (bool)Numbers.IsChecked, (bool)Low.IsChecked, (bool)Uper.IsChecked, (bool)Special.IsChecked);
 
             
-            Clipboard.SetDataObject(RandomPassword.Text);
+            Clipboard.SetDataObject(txtRandomPassword.Text);
         }
 
-
+        public void BtnCopy(object sender, RoutedEventArgs e)
+        {
+            string genPass = txtRandomPassword.Text;
+            TxtPassword.Text = genPass;
+            txtRandomPassword.Text = "";
+            SliderLenghtPassword.Value = 8;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propName)

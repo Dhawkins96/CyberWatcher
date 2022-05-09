@@ -99,8 +99,12 @@ namespace CyberWatcher.ViewModel
                         SqlParameter email = new SqlParameter("@PassEmail", SqlDbType.VarChar);
                         cmd.Parameters.Add(email).Value = TxtPassEmail;
 
-                        cmd.Parameters.AddWithValue("@UserID", DbType.Int32).Value = StaticUtilities.UserID;
-                        cmd.Parameters.AddWithValue("@PassSite", DbType.String).Value = TxtPassSite;
+                        SqlParameter userid = new SqlParameter("@UserID", SqlDbType.Int);
+                        cmd.Parameters.Add(userid).Value = StaticUtilities.UserID;
+
+                        SqlParameter site = new SqlParameter("@PassSite", SqlDbType.VarChar);
+                        cmd.Parameters.Add(site).Value = TxtPassSite;
+
                         cn.Open();
                         cmd.ExecuteNonQuery();
 

@@ -15,12 +15,17 @@ namespace CyberWatcher.Model.Bandwidth_Speed
 
         public string DisplayValue
         {
-            get => _displayValue;
-            private set => Set(ref _displayValue, value);
+            get { return _displayValue; }
+
+            private set 
+            { 
+                Set(ref _displayValue, value); 
+            }
         }
 
         public MonitorIcon Icon { get; protected set; }
 
+        //Updates the montiors display
         public Task UpdateAsync()
         {
             string GetUpdatedValue()
@@ -69,7 +74,7 @@ namespace CyberWatcher.Model.Bandwidth_Speed
                 return "<0B";
 
             var suffixIndex = 0;
-            while (bytes >= 1000) // Keep at 3 or less digits.
+            while (bytes >= 1000) // Keeps the output at 3 or less digits.
             {
                 bytes /= 1024;
                 suffixIndex++;

@@ -11,7 +11,7 @@ namespace CyberWatcher.Helper
 {
     public static class LocalAddress
     {
-        //Get local Ipv4 adress from local machine
+        //Get local Ip address from users' connection
         public static string GetLocalIPAddress()
         {
 
@@ -32,13 +32,14 @@ namespace CyberWatcher.Helper
 
     public static class PingState
     {
-        public static bool SuccessfulPing { get; set; } = false; //Change name
+        public static bool SuccessfulPing { get; set; } = false;
         public static string IPAddress { get; set; } = string.Empty;
     }
     
     public static class StaticUtilities
     {
         public static int UserID { get; set; }
+        //returns back that last XML scan in output folder
         public static FileInfo LastScan = new DirectoryInfo(@"C:\Users\Daisy\source\repos\WPF_CyberWatcher\CyberWatcher\Model\Nmap\NmapOutput").GetFiles().OrderByDescending(o => o.LastWriteTime).FirstOrDefault();
     }
 }

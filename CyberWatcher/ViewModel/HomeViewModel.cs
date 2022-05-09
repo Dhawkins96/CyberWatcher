@@ -190,7 +190,11 @@ namespace CyberWatcher.ViewModel
                 }
                 
             }
-            SelectedHost = Host.First();
+            if(SelectedHost != null)
+            {
+                SelectedHost = Host.First();
+            }
+            
         }
        
 
@@ -375,10 +379,7 @@ namespace CyberWatcher.ViewModel
             {
                 ResultCollection.Add(new DeviceInformationDisplay(deviceInfo));
             }
-            if (ResultCollection == null)
-            {
-
-            }
+           
 
         }
 

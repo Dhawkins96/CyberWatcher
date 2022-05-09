@@ -78,7 +78,7 @@
         </Grid>
         <TextBlock HorizontalAlignment="Left" Margin="1055,5,0,0" TextWrapping="Wrap" Text="Bandwidth Speed Monitor:" VerticalAlignment="Top" Width="195" Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="15"/>
         <TextBlock HorizontalAlignment="Left" Margin="1210,55,0,0" TextWrapping="Wrap" Text="Download Speed" VerticalAlignment="Top" Foreground="White" Width="65" TextAlignment="Center" FontFamily="Arial" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="1215,125,0,0" TextWrapping="Wrap" Text="Upload Speed" VerticalAlignment="Top" Foreground="White" Width="60" TextAlignment="Center" FontFamily="Arial" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1215,135,0,0" TextWrapping="Wrap" Text="Upload Speed" VerticalAlignment="Top" Foreground="White" Width="60" TextAlignment="Center" FontFamily="Arial" FontSize="14"/>
 
         <Grid HorizontalAlignment="Left" Height="70" Margin="980,190,0,0" VerticalAlignment="Top" Width="300">
             <StackPanel HorizontalAlignment="Center" Width="280" Margin="5,-2,15,0" >
@@ -112,7 +112,7 @@
 
 
 
-            <Border BorderBrush="White" BorderThickness="5" HorizontalAlignment="Left" Height="90" CornerRadius="35" Margin="-5,325,0,0" VerticalAlignment="Top" Width="195"/>
+            
 
 
             <StackPanel Margin="406,1,320,499.8">
@@ -138,7 +138,7 @@
 
                     <ListView Grid.Row="1" x:Name="resultsListView" Background="Transparent" Foreground="White"  BorderBrush="Transparent"
                         ItemsSource="{Binding ResultCollection}" ItemContainerStyle="{StaticResource ListViewNoSelection}"
-                         ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,23.2,8.6,14.2">
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0,23.2,8.4,-0.8">
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -239,6 +239,7 @@
 
                 <Grid Grid.Row="4" Visibility="{Binding IsSavedScan, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0.2,-0.6,0.2" >
 
+                    <Border BorderBrush="White" BorderThickness="5" HorizontalAlignment="Left" Height="90" CornerRadius="35" Margin="-5,4,0,0" VerticalAlignment="Top" Width="195"/>
 
                     <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" 
                            Text="A host (also known as 'network host') is a computer or other device that communicates with other hosts on a network"                           
